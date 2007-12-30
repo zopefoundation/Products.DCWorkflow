@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="cmf_default">
+
+  <include package=".browser"/>
+
+  <include file="exportimport.zcml"/>
+
+  <include file="tool.zcml"/>
+
+  <!-- profiles -->
+
+  <genericsetup:registerProfile
+      name="revision2"
+      title="CMF Default Workflow [Revision 2]"
+      description="Adds revision 2 of default workflow."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      />
+
+</configure>

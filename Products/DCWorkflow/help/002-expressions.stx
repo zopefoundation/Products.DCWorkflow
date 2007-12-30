@@ -1,0 +1,64 @@
+Expressions
+
+ Expressions in DCWorkflow are TALES expressions. See 
+ "TALES Overview":/Control_Panel/Products/PageTemplates/Help/tales.stx
+ for general TALES information. They are used as access guards and for
+ the setting variable values. 
+ 
+ [**Note:** I haven't figured out what all these contexts actually are
+ and what you can use them for. Explanations are is welcome!]
+
+ Some of the contexts have slightly different meanings from what is provided
+ for expressions in page templates:
+
+  'here' -- The content object (rather than the workflow object)
+  'container' -- The content object's container
+
+ Several other contexts are also 
+ provided:
+
+  'state_change' -- A special object containing information about the
+  state change (see below)
+  'transition' -- The transition object being executed
+  'status' -- The former status
+  'workflow' -- The workflow definition object
+  'scripts' -- The scripts in the workflow definition object
+
+ 'state_change' objects provide the following attributes, some of which
+ are duplicates of the above information:
+
+   - 'status' is a mapping containing the workflow status. This
+   includes all the variables defined in the variable tab with "store
+   in state" checked.
+
+   - 'object' is the object being modified by workflow.
+     (Same as the 'here' variable above.)
+
+   - 'workflow' is the workflow definition object.  (Same as the
+   'workflow' variable above.)
+  
+   - 'transition' is the transition object being executed.  (Same
+   as the 'transition' variable above.)
+
+   - 'old_state' is the former state object.  The name of the former state,
+   for example "published", is available as 'old_state.getId()'.  (Note
+   that DCWorkflow defines 'state' and 'status' as different entities;
+   the name of the current 'state' is stored in the 'status'.  The word
+   clash is unfortunate; patches welcome.)
+
+   - 'new_state' is the destination state object.  Use 'new_state.getId()'
+   to access the new state name.
+
+   - 'kwargs' is the keyword arguments passed to the doActionFor() method.
+
+   - 'getHistory()', a method that returns a copy of the object's workflow
+   history.
+
+   - 'getPortal()', which returns the root of the portal.
+
+   - 'ObjectDeleted' and 'ObjectMoved', exceptions that can be raised by
+   scripts to indicate to the workflow that an object has been moved or
+   deleted.
+
+   - 'getDateTime' is a method that returns the DateTime of the transition.
+

@@ -1,0 +1,30 @@
+Guards
+
+  Guard settings control access to the transitions, variables or work
+  lists. Guards can be applied based on permissions, roles, groups or
+  a TALES expression. These elements are applied sequentially if they
+  contain values. If one of the conditions in each of the specified
+  permissions, roles or groups is met the guard element will be
+  satisfied. For the guard to allow access, all specified element that
+  contain values must be satisfied.
+  If no permissions, roles or expressions are specified, access is 
+  automatically granted.
+ 
+  You can supply several options in each field by separating them with
+  a semicolon.
+
+  The context in which the guards evaluate permissions and roles is
+  obviously important. In the case of transitions and work lists, it 
+  depends on the category. If it's 'worklist', then the context is 
+  that of the content object, and local roles will behave just as
+  you'd expect. If the category is 'global', then the context will be
+  the site root, so the local roles between the site root and the
+  content won't be considered.
+
+  [**Note:** What about variables?]
+
+  
+
+
+
+

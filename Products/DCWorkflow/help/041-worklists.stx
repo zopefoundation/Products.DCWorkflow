@@ -1,0 +1,128 @@
+Worklists Tab
+
+ Work lists are a way to make people aware of tasks they are required
+ to perform, usually reviewing content in the publishing context.
+ Work lists are implemented as a catalog query that puts an action in
+ the actions box when there are some tasks the member needs to perform.  
+
+ From the work lists tab it's possible to add new work lists, and rename and
+ delete existing work lists. The list of existing work lists also
+ displays a short summary of each work list's description, the catalog query
+ it uses, and any guard conditions. You can access the details of each
+ work list by clicking on them.
+
+ In each work list's properties tab, you can set the description of 
+ the work list, and it's various behaviour defining properties. The
+ "Catalog variable matches" field sets the state that is work list
+ matches. The "variable_name = " text to the left of the text box is
+ the name of the state variable defined at the bottom of the variables
+ tab. The values can be set to a number of possible matches separated 
+ by semicolons. [**Note:** CVS feature. There's more in
+ doc/worklists.stx, but I'm not sure I understand the implications]
+
+ The action box fields are discussed in more detail in the Action Box
+ section. In this case, the url that the work list links to should
+ probably implement a search page with a catalog query similar to the
+ "Catalog variable matches", otherwise the difference between the
+ number of items waiting and the items reported in the search will be
+ confusing.
+
+ [**Note:** What we *really* need from the work list is a way to define
+  full catalog queries for the action, and a new action box variable
+  that urlquotes that query so it can be passed straight to the search
+  page. This way, the work list count and the number of items on the 
+  search page will be the same as they are derived from the same
+  query string, defined in one place.
+
+  Reply from Shane: work lists already exercise the catalog too heavily,
+  and most people don't understand their purpose.  Expanding their
+  capabilities further could impact performance.  I think perhaps
+  the UI should instead display work lists on a user's home page rather
+  than the actions box, which would open up new possibilities.]
+ 
+ The guard fields are described in detail in the "Guards"
+ section. It's probably better to avoid using permission and role
+ guards, as they're not really necessary - a user will see a
+ work list action only if they can see content in that particular
+ state, so the state guards are usually sufficient. In addition, as
+ the work lists are in the 'global' actions category by default, and
+ global actions are evaluated in the context of the site root, local
+ roles like Owner or locally set Reviewer roles, and the permissions
+ they grant, will not apply. [*Note:* Does anyone know a good reason
+ why work lists appear in the global box rather than in the workflow
+ box? This particular problem should vanish if they are moved there.]
+
+ Whether a work list action appears in the action box, and the 
+ number of items in the work list depends on several factors:
+
+  - The state that the work list is generated for
+
+  - The name of the state variable used to indicate the 
+  current state of an object
+ 
+  - Whether the user can view content which is in that
+  state
+
+ This has some unexpected consequences:
+
+  - If you have several workflow that use the same state variable,
+  and similar state names, and each has a work list on, say, the 
+  'pending' state, then both work lists will appear in the action box,
+  and the number of items in each will be the total of all the content
+  in a 'pending' state, regardless of which workflow manages that
+  content (except that if the work list action entries are exactly the 
+  same text, the action tool will filter out the duplicate).
+
+  - If each workflow manages the permissions on content in the
+  'pending' state differently, by, say, using two different reviewer
+  roles, then users who have one role and not the other will
+  see a single work list entry with the right number of items, but 
+  users with both roles will see the same as above.
+
+ So there are a few tricks to getting the work lists to do the kinds of
+ things we want. 
+
+ If you have several similar workflows, such as a standard one, and a 
+ couple of specialized ones for particular content, and you want to
+ have one reviewer role for the lot, then you should set up just one
+ work list in the standard workflow for the states that need them, and 
+ leave the other workflow to rely on that work list. 
+
+ If you have a workflow that uses a different reviewer role than
+ other workflows, and consequently, you want it to have it's own
+ separate work lists, you have two choices. One is to use state names
+ that are unique to each workflow, while the second is 
+ to use state variable name that is unique each workflow. The
+ second option is obviously a lot easier, however, if you change the
+ name of the state variable when there exists content that is using 
+ this workflow, they will immediately loose there workflow state
+ and default to the initial state. In addition, you'll need to add
+ a field index for the new state variable name in the portal_catalog
+ tool, by hand.
+
+ [Note: In the first instance, we could add an action box name field
+  to each state so that nicely formated names appear in the action
+  box for things like "Published (yet to be effective)" rather than
+  "published_not_yet_effective", and so we can lie about the names
+  to make them unique, so that "foo_workflow_pending" looks like
+  "Pending". In the second instance, I see no reason why the state
+  variable name change action shouldn't migrate the value of the old
+  state variable to the new for all the content managed by this
+  workflow, and it could probably automatically add indexes for 
+  new state variable names if they don't already exists (and 
+  perhaps remove indexes for state variable names not used elsewhere).
+
+  While we're thinking about ways to make sweeping workflow changes 
+  less painful, there are a couple of changes that could be made 
+  to the code that changes content type to workflow mappings: if a
+  content to workflow mapping has changed, then, for each instance of
+  that content type, attempt to keep the state variable the same
+  unless that state doesn't exist in the new workflow, then evaluate
+  any automatic transitions on that state. This way it's possible 
+  to migrate between workflows by ensuring that states with the same
+  name have the same semantics, or if they don't exists in the new 
+  workflow, we can create placeholder states with an automatic
+  transition to the state we want to be in.
+ ]
+
+

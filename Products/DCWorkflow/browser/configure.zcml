@@ -1,0 +1,14 @@
+<configure
+    xmlns:browser="http://namespaces.zope.org/browser"
+    package="Products.GenericSetup.browser"
+    >
+
+  <browser:page
+      for="zope.app.container.interfaces.IAdding"
+      name="addDCWorkflowDefinition.html"
+      template="addWithPresettings.pt"
+      class="Products.DCWorkflow.browser.workflow.DCWorkflowDefinitionAddView"
+      permission="cmf.ManagePortal"
+      />
+
+</configure>

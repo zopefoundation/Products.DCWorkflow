@@ -1,0 +1,57 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+<form action="&dtml-absolute_url;" method="POST">
+<table border="0" cellspacing="0" cellpadding="2" width="100%">
+<dtml-in values sort=id>
+ <tr bgcolor="#eeeeee">
+  <th align="left" colspan="2">
+   <input type="checkbox" name="ids:list" value="&dtml-id;" />
+   <a href="&dtml.url_quote-id;/manage_properties">&dtml-id;</a>
+   &nbsp;
+   &dtml-description;
+  </th>
+ </tr>
+
+ <tr>
+  <th width="10%"></th>
+  <td>
+   <dtml-if name_fmt>
+    Name format: <code>&dtml-name_fmt;</code><br />
+   </dtml-if>
+   <dtml-if getVarMatchKeys>
+    Catalog matches:
+    <dtml-in getVarMatchKeys sort>
+    <dtml-let key=sequence-item value="getVarMatch(key)">
+     <code>&dtml-key;</code> =
+     <dtml-in value>
+       <code>&dtml-sequence-item;</code>
+       <dtml-unless sequence-end>or</dtml-unless>
+     </dtml-in>
+     <dtml-unless sequence-end>;</dtml-unless>
+    </dtml-let>
+    </dtml-in>
+    <br />
+   </dtml-if>
+   <dtml-if getGuardSummary>
+    <dtml-var getGuardSummary><br />
+   </dtml-if>
+  </td>
+ </tr>
+<dtml-else>
+ <tr><td><em>No worklists defined.</em></td></tr>
+</dtml-in>
+</table>
+<dtml-if values>
+<input type="submit" name="manage_renameForm:method" value="Rename" />
+<input type="submit" name="deleteWorklists:method" value="Delete" />
+</dtml-if>
+</form>
+
+<hr />
+<form action="addWorklist" method="POST">
+<h3>Add a worklist</h3>
+<p>Id <input type="text" name="id" value="" />
+<input type="submit" name="submit" value="Add" /></p>
+</form>
+
+<dtml-var manage_page_footer>

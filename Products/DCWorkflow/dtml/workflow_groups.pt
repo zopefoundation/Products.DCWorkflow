@@ -1,0 +1,60 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message request/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+<form action="." method="POST" tal:attributes="action here/absolute_url"
+  tal:define="groups here/getGroups">
+<h3>Managed Groups</h3>
+<div class="form-help">
+This workflow controls access by the selected groups.  The mappings
+from group to role depend on the workflow state.
+</div>
+<div tal:repeat="group groups">
+<input type="checkbox" name="groups:list" tal:attributes="value group" />
+<span tal:replace="group">Everyone</span>
+</div>
+<div tal:condition="not:groups">
+<em>No groups are managed by this workflow.</em>
+</div>
+
+<div tal:condition="groups">
+<input type="submit" name="delGroups:method" value="Remove" />
+</div>
+
+<hr />
+
+<h3>Add a managed group</h3>
+<select name="group">
+ <option tal:repeat="group here/getAvailableGroups"
+   tal:attributes="value group" tal:content="group" />
+</select>
+<input type="submit" name="addGroup:method" value="Add" />
+</form>
+
+</td>
+<td width="50%" style="border-left: 1px solid black; padding-left: 1em;"
+  valign="top">
+
+<form method="POST" tal:attributes="action here/absolute_url">
+<h3>Roles Mapped to Groups</h3>
+<div class="form-help">
+This workflow maps the following roles to groups.  Roles not selected
+are managed outside this workflow.
+<div tal:define="roles here/getRoles"
+  tal:repeat="role here/getAvailableRoles">
+<input type="checkbox" name="roles:list" tal:attributes="value role;
+  checked python:role in roles" /><span tal:content="role" />
+</div>
+</div>
+<input type="submit" name="setRoles:method" value="Save Changes" />
+</form>
+
+</td>
+</tr>
+</table>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
