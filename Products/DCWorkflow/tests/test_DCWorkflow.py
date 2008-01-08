@@ -109,7 +109,6 @@ class DCWorkflowDefinitionTests(unittest.TestCase):
         wf = self._getDummyWorkflow()
 
         dummy = self.site._setObject( 'dummy', DummyContent() )
-        wftool.notifyCreated(dummy)
         wf.doActionFor(dummy, 'publish', comment='foo', test='bar')
 
         self.assertEquals(4, len(events))
