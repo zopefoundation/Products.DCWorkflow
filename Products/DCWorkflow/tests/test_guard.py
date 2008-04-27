@@ -27,12 +27,6 @@ from Products.CMFCore.WorkflowTool import WorkflowTool
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 
-# BBB for Zope < 2.10
-try:
-    from zope.tales.tales import CompilerError
-except ImportError:
-    from Products.PageTemplates.TALES import CompilerError
-
 
 class TestGuard(unittest.TestCase):
 
@@ -50,6 +44,7 @@ class TestGuard(unittest.TestCase):
         return self.site.portal_workflow['wf']
 
     def test_BaseGuardAPI(self):
+        from zope.tales.tales import CompilerError
 
         #
         # Test guard basic API
