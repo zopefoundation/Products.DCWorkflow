@@ -17,11 +17,8 @@ $Id$
 
 import unittest
 import Testing
-import warnings
 
 from AccessControl import getSecurityManager
-warnings.filterwarnings('ignore', "Products.PageTemplates.TALES has moved")
-from Products.PageTemplates.TALES import CompilerError
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummySite
 from Products.CMFCore.tests.base.dummy import DummyTool
@@ -29,6 +26,12 @@ from Products.CMFCore.WorkflowTool import WorkflowTool
 
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+
+# BBB for Zope < 2.10
+try:
+    from zope.tales.tales import CompilerError
+except ImportError:
+    from Products.PageTemplates.TALES import CompilerError
 
 
 class TestGuard(unittest.TestCase):

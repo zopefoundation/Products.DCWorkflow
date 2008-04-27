@@ -2,4 +2,5 @@ Products.DCWorkflow Changelog
 
   Products.DCWorkflow 2.2.0 (unreleased)
 
-    - 
+    - Fixed a deprecation warning for Products.PageTemplates.TALES by a
+      conditional import, so it still works on Zope 2.12.
