@@ -12,6 +12,8 @@ def _package_doc(name):
     return f.read()
 
 VERSION = _package_doc('version.txt').strip()
+if VERSION.startswith('CMF'):
+    VERSION = VERSION[len('CMF'):]
 if VERSION.startswith(NAME):
     VERSION = VERSION[len(NAME):]
 while VERSION and VERSION[0] in '-_.':
