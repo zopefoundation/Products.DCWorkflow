@@ -1,7 +1,117 @@
 Products.DCWorkflow Changelog
+=============================
 
-  Products.DCWorkflow 2.2.0 (unreleased)
+2.2.0 (unreleased)
+------------------
 
-    - Fixed an import error (Products.PageTemplates.TALES is gone on 
-      Zope trunk).  Because we require Zope >= 2.10, we don't need a
-      BBB conditional import.
+- Fixed an import error (Products.PageTemplates.TALES is gone on 
+  Zope trunk).  Because we require Zope >= 2.10, we don't need a
+  BBB conditional import.
+
+
+2.1.2 (2008-08-26)
+------------------
+
+- completed devolution from monolithic CMF package into its component
+  products that are distributed as eggs from PyPI.
+
+
+2.1.1 (2008-01-06)
+------------------
+
+- no changes
+
+
+2.1.1-beta(2007-12/29)
+----------------------
+
+- Testing: Derive test layers from ZopeLite layer if available.
+
+- exportimport: Scripts with invalid types imported
+  after scripts with valid types will no longer place the valid
+  script twice.  Scripts can also now be specified with meta_types
+  other than the hard-coded meta_types.
+
+- AfterTransitionEvent now passes along the new status of the
+  object, just as StateChangeInfo passes on the new status to
+  after-transition scripts.
+  (http://www.zope.org/Collectors/CMF/490)
+
+
+2.1.0 (2007-08-08)
+------------------
+
+- Fixed all componentregistry.xml files to use plain object paths and strip
+  and slashes. GenericSetup does only support registering objects which are
+  in the site root.
+
+
+2.1.0-beta2 (2007-07-12)
+------------------------
+
+- moved the Zope dependency to version 2.10.4
+
+- Remove antique usage of marker attributes in favor of interfaces,
+  leaving BBB behind for places potentially affecting third-party code.
+  (http://www.zope.org/Collectors/CMF/440)
+
+- Add POST-only protections to security critical methods.
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-0240)
+
+- Workflow definition instances now have a description field
+  (http://www.zope.org/Collectors/CMF/480)
+
+
+2.1.0-beta (2007-03-09)
+-----------------------
+
+- moved the Zope dependency to verson 2.10.2
+
+- Tool lookup and registration is now done "the Zope 3 way" as utilities, see
+  http://svn.zope.org/CMF/branches/2.1/docs/ToolsAreUtilities.stx?view=auto
+
+- Merged patches from Martin Aspeli to enable generating events before
+  and after DCWorkflow transitions, and in the 'notify' methods of the
+  workflow tool (http://www.zope.org/Collectors/CMF/461).
+
+
+2.1.0-alpha2 (2006-11-23)
+-------------------------
+
+- moved the Zope dependency to version 2.10.1
+
+- Fixed test breakage induced by use of Z3 pagetemplates in Zope 2.10+.
+
+- browser views: Added some zope.formlib based forms.
+
+- testing: Added test layers for setting up ZCML.
+
+
+2.1.0-alpha (2006-10-09)
+------------------------
+
+- skins: Changed encoding of translated portal_status_messages.
+  Now getBrowserCharset is used to play nice with Five forms. Customized
+  setRedirect and getMainGlobals scripts have to be updated.
+
+- Profiles: All profiles are now registered by ZCML.
+
+- ZClasses: Removed unmaintained support for ZClasses.
+  Marked the 'initializeBases*' methods as deprecated.
+
+- Content: Added IFactory utilities for all content classes.
+  They are now used by default instead of the old constructor methods.
+
+- Content: All content classes are now registered by ZCML.
+  ContentInit is still used to register oldstyle constructors.
+
+- setup handlers: Removed support for CMF 1.5 CMFSetup profiles.
+
+
+Earlier releases
+----------------
+
+For a complete list of changes before version 2.1.0-alpha, see the HISTORY.txt
+file on the CMF-2.1 branch:
+http://svn.zope.org/CMF/branches/2.1/HISTORY.txt?view=auto
+
