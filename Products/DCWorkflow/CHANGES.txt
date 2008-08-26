@@ -9,7 +9,7 @@ Products.DCWorkflow Changelog
   BBB conditional import.
 
 
-2.1.2 (2008-08-26)
+2.1.2-beta (2008-08-26)
 ------------------
 
 - completed devolution from monolithic CMF package into its component
