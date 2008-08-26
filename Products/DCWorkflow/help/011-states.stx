@@ -1,0 +1,45 @@
+States Tab
+
+ From the states tab it's possible to add new states, and rename and
+ delete existing states. It is also possible to set a particular state
+ to be the initial state that new content is set to when created.
+
+ The list of existing states also displays each state's title and all
+ the possible transitions from that state (and their titles). You can go
+ straight to the details of each state and transition from here.
+
+ Within a state's properties tab you can set the title, description, 
+ and the transitions that are possible from this state from a list of
+ all the available transitions created in the workflow's 
+ transitions tab.
+
+ In the state's permissions tab, you can set up the roles to
+ permissions mappings that will apply to roles when content 
+ managed by this workflow is in this state. It uses the usual cookie
+ cutter approach as do all other permissions tabs, except that the
+ only permissions listed are those that have been selected to be
+ managed by the workflow from the workflow's permissions tab.
+ 
+ A good strategy for managing permissions on each state is to rely on
+ acquisition for the "published" states, and to drop acquisition and
+ use explicit permissions on states that are private or interim
+ publishing states. This way, you can modify the access policy to 
+ "published" content at the site root or for specific folders without
+ having to modify each workflow's set of "published" states.
+ 
+ [**Note**: The available roles in the permissions tab will be
+ whatever is acquired from the site root, so I guess creating 
+ roles under sub-folders ought to be discouraged if people want
+ to use them in workflows]
+
+ Reviewer roles should either have view permissions on every
+ state or you should change the appropriate skins to take them
+ somewhere sensible after a transition or they'll end up with an ugly
+ access denied page after sending content back to private state.
+
+ In the state's variables tab, you can add, change and delete variables
+ that you want to assign a value to when objects move into 
+ this state. The available variables are set in the workflow's
+ variables tab, and the value is a TALES expression (see Expressions
+ for more details).
+

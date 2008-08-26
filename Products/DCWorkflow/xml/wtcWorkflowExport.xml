@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<dc-workflow
+        xmlns:tal="http://xml.zope.org/namespaces/tal"
+        workflow_id="dcworkflow"
+        title="Some DCWorkflow"
+        description="Some Description"
+        state_variable="review_state" 
+        initial_state="visible" 
+        tal:define="info python: here.getWorkflowInfo(
+                                                options[ 'workflow_id' ] )"
+        tal:attributes="workflow_id info/id;
+                        title info/title;
+                        description info/description;
+                        state_variable info/state_variable;
+                        initial_state info/initial_state">
+ <permission
+        tal:repeat="permission info/permissions"
+        tal:content="permission">PERMISSION</permission>
+ <state
+        state_id="pending"
+        title="Waiting for reviewer"
+        tal:repeat="state info/state_info"
+        tal:attributes="state_id state/id;
+                        title state/title;
+                       "
+ ><tal:case tal:condition="state/description">
+  <description
+        tal:content="state/description">DESCRIPTION</description></tal:case>
+  <exit-transition
+        transition_id="TRANSITION_ID"
+        tal:repeat="exit state/transitions"
+        tal:attributes="transition_id exit"
+        />
+  <permission-map
+        name=""
+        acquired="True"
+        tal:repeat="perm state/permissions"
+        tal:attributes="name perm/name;
+                        acquired perm/acquired;
+                       ">
+   <permission-role
+        tal:repeat="role perm/roles"
+        tal:content="role">ROLE</permission-role>
+  </permission-map>
+  <group-map
+        name=""
+        tal:repeat="group state/groups"
+        tal:attributes="name python: group[ 0 ];
+                       ">
+   <group-role
+        tal:repeat="role python: group[ 1 ]"
+        tal:content="role">ROLE</group-role>
+  </group-map>
+  <assignment
+        name="VAR_NAME"
+        type="VAR_TYPE"
+        tal:repeat="var state/variables"
+        tal:attributes="name var/name;
+                        type var/type;
+                       "
+        tal:content="var/value">VALUE</assignment>
+ </state>
+ <transition
+        transition_id="Publish"
+        title="Reviewer publishes content"
+        new_state="published"
+        trigger="USER"
+        before_script=""
+        after_script=""
+        tal:repeat="transition info/transition_info"
+        tal:attributes="transition_id transition/id;
+                        title transition/title;
+                        new_state transition/new_state_id;
+                        trigger transition/trigger_type;
+                        before_script transition/script_name;
+                        after_script transition/after_script_name;
+                       "
+ ><tal:case tal:condition="transition/description">
+  <description
+      tal:content="transition/description">DESCRIPTION</description></tal:case>
+  <action
+        url="URL"
+        category="CATEGORY"
+        tal:condition="transition/actbox_name"
+        tal:attributes="url transition/actbox_url;
+                        category transition/actbox_category;
+                       "
+        tal:content="transition/actbox_name">ACTION NAME</action>
+  <guard
+  ><tal:case tal:condition="transition/guard_permissions">
+   <guard-permission
+       tal:repeat="permission transition/guard_permissions"
+       tal:content="permission">PERMISSION</guard-permission></tal:case
+  ><tal:case tal:condition="transition/guard_roles">
+   <guard-role
+       tal:repeat="role transition/guard_roles"
+       tal:content="role">ROLE</guard-role></tal:case
+  ><tal:case tal:condition="transition/guard_groups">
+   <guard-group
+       tal:repeat="group transition/guard_groups"
+       tal:content="group">GROUP</guard-group></tal:case
+  ><tal:case tal:condition="transition/guard_expr">
+   <guard-expression
+       tal:content="transition/guard_expr">EXPRESSION</guard-expression
+  ></tal:case>
+  </guard>
+  <assignment
+        name="VAR_NAME"
+        tal:repeat="var transition/variables"
+        tal:attributes="name var/name"
+        tal:content="var/expr">EXPRESSION</assignment>
+ </transition>
+ <worklist
+        worklist_id="reviewer_queue"
+        title="For Review"
+        tal:repeat="worklist info/worklist_info"
+        tal:attributes="worklist_id worklist/id;
+                        title worklist/title;
+                       "
+ ><tal:case tal:condition="worklist/description">
+  <description
+        tal:content="worklist/description">DESCRIPTION</description></tal:case>
+  <action
+        url="URL"
+        category="CATEGORY"
+        tal:condition="worklist/actbox_name"
+        tal:attributes="url worklist/actbox_url;
+                        category worklist/actbox_category;
+                       "
+        tal:content="worklist/actbox_name">ACTION NAME</action>
+  <guard
+  ><tal:case tal:condition="worklist/guard_permissions">
+   <guard-permission
+       tal:repeat="permission worklist/guard_permissions"
+       tal:content="permission">PERMISSION</guard-permission></tal:case
+  ><tal:case tal:condition="worklist/guard_roles">
+   <guard-role
+       tal:repeat="role worklist/guard_roles"
+       tal:content="role">ROLE</guard-role></tal:case
+  ><tal:case tal:condition="worklist/guard_groups">
+   <guard-group
+       tal:repeat="group worklist/guard_groups"
+       tal:content="group">GROUP</guard-group></tal:case
+  ><tal:case tal:condition="worklist/guard_expr">
+   <guard-expression
+       tal:content="worklist/guard_expr">EXPRESSION</guard-expression
+  ></tal:case>
+  </guard>
+  <match
+        name="review_state"
+        values="pending" 
+        tal:repeat="match worklist/var_match"
+        tal:attributes="name python: match[ 0 ];
+                        values python: match[ 1 ];
+                       "
+        />
+ </worklist>
+ <variable
+        variable_id="action"
+        for_catalog="True"
+        for_status="True"
+        update_always="True" 
+        tal:repeat="variable info/variable_info"
+        tal:attributes="variable_id variable/id;
+                        for_catalog variable/for_catalog;
+                        for_status variable/for_status;
+                        update_always variable/update_always;
+                       "
+ ><tal:case tal:condition="variable/description">
+  <description
+       tal:content="variable/description">DESCRIPTION</description></tal:case>
+  <default>
+   <value
+       type="VAR_TYPE"
+       tal:attributes="type variable/default_type"
+       tal:condition="variable/default_value"
+       tal:content="variable/default_value">VALUE</value>
+   <expression
+       tal:condition="variable/default_expr"
+       tal:content="variable/default_expr">EXPRESSION</expression>
+  </default>
+  <guard
+  ><tal:case tal:condition="variable/guard_permissions">
+   <guard-permission
+       tal:repeat="permission variable/guard_permissions"
+       tal:content="permission">PERMISSION</guard-permission></tal:case
+  ><tal:case tal:condition="variable/guard_roles">
+   <guard-role
+       tal:repeat="role variable/guard_roles"
+       tal:content="role">ROLE</guard-role></tal:case
+  ><tal:case tal:condition="variable/guard_groups">
+   <guard-group
+       tal:repeat="group variable/guard_groups"
+       tal:content="group">GROUP</guard-group></tal:case
+  ><tal:case tal:condition="variable/guard_expr">
+   <guard-expression
+       tal:content="variable/guard_expr">EXPRESSION</guard-expression
+  ></tal:case>
+  </guard>
+ </variable>
+ <script
+        script_id="SCRIPT_ID"
+        type="Script (Python)"
+        filename="/path/to/SCRIPT_ID.py"
+        module=""
+        function=""
+        tal:repeat="script info/script_info"
+        tal:attributes="script_id script/id;
+                        type script/meta_type;
+                        filename script/filename;
+                        module script/module;
+                        function script/function
+                       "
+        />
+</dc-workflow>

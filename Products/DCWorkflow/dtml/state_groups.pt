@@ -1,0 +1,53 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message request/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<p class="form-help">
+When objects are in this state, they will take on the group to role
+mappings defined below.  Only the <a href="../manage_groups">groups
+and roles managed by this workflow</a> are shown.
+</p>
+
+<form action="setGroups" method="POST"
+  tal:define="wf here/getWorkflow; roles wf/getRoles">
+<table width="100%" cellspacing="0" cellpadding="2" border="0" nowrap>
+<tr class="list-header">
+  <td align="left">
+  <div class="form-label">
+  <strong>Group</strong>
+  </div>
+  </td>
+  <td align="left" tal:attributes="colspan python: len(roles)">
+  <div class="form-label">
+  <strong>Roles</strong>
+  </div>
+  </td>
+</tr>
+
+<tr class="row-normal">
+  <td></td>
+  <td tal:repeat="role roles" tal:content="role" class="list-item">
+    Authenticated
+  </td>
+</tr>
+
+<tr tal:repeat="group wf/getGroups" tal:attributes="class
+  python: repeat['group'].odd and 'row-normal' or 'row-hilite'">
+<td tal:content="group" class="list-item">
+  (Group) Everyone
+</td>
+<tal:block tal:define="group_roles python: here.getGroupInfo(group)">
+<td tal:repeat="role roles">
+  <input type="checkbox"
+    tal:attributes="name python: '%s|%s' % (group, role);
+      checked python: role in group_roles" />
+</td>
+</tal:block>
+</tr>
+</table>
+
+<input class="form-element" type="submit" name="submit" value="Save Changes" />
+
+</form>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

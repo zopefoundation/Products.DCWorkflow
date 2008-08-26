@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five">
+
+  <five:registerClass
+      class=".DCWorkflow.DCWorkflowDefinition"
+      meta_type="Workflow"
+      addview="addDCWorkflowDefinition.html"
+      permission="cmf.ManagePortal"
+      global="False"
+      />
+
+</configure>

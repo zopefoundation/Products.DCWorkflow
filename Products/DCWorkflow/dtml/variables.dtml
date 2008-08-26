@@ -1,0 +1,57 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+<form action="&dtml-absolute_url;" method="POST">
+<table border="0" cellspacing="0" cellpadding="2" width="100%">
+<dtml-in values sort=id>
+ <tr bgcolor="#eeeeee">
+  <th align="left" colspan="2">
+   <input type="checkbox" name="ids:list" value="&dtml-id;" />
+   <a href="&dtml.url_quote-id;/manage_properties">&dtml-id;</a>
+   &nbsp;
+   &dtml-description;
+  </th>
+ </tr>
+
+ <tr>
+  <th width="10%"></th>
+  <td>
+   Available to catalog:
+   <code><dtml-if for_catalog>Yes<dtml-else>No</dtml-if></code><br />
+   Stored in status:
+   <code><dtml-if for_status>Yes<dtml-else>No</dtml-if></code><br />
+   <dtml-if default_value>
+    Default value: <code>&dtml-default_value;</code><br />
+   </dtml-if>
+   <dtml-if getDefaultExprText>
+    Default expr: <code>&dtml-getDefaultExprText;</code><br />
+   </dtml-if>
+   <dtml-if getInfoGuardSummary>
+    <dtml-var getInfoGuardSummary><br />
+   </dtml-if>
+  </td>
+ </tr>
+<dtml-else>
+ <tr><td><em>No variables defined.</em></td></tr>
+</dtml-in>
+</table>
+<dtml-if values>
+<input type="submit" name="manage_renameForm:method" value="Rename" />
+<input type="submit" name="deleteVariables:method" value="Delete" />
+</dtml-if>
+</form>
+
+<hr />
+<form action="addVariable" method="POST">
+<h3>Add a variable</h3>
+<p>Id <input type="text" name="id" value="" />
+<input type="submit" name="submit" value="Add" /></p>
+</form>
+
+<hr />
+<form action="setStateVar" method="POST">
+State variable name: <input type="text" name="id" value="&dtml-getStateVar;" />
+<input type="submit" name="submit" value="Change" />
+<i class="form-help">(Be careful!)</i>
+</form>
+
+<dtml-var manage_page_footer>
