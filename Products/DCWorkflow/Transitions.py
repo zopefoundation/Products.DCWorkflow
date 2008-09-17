@@ -48,6 +48,7 @@ class TransitionDefinition (SimpleItem):
     guard = None
     actbox_name = ''
     actbox_url = ''
+    actbox_icon = ''
     actbox_category = 'workflow'
     var_exprs = None  # A mapping.
     script_name = None  # Executed before transition
@@ -112,7 +113,7 @@ class TransitionDefinition (SimpleItem):
                       trigger_type=TRIGGER_USER_ACTION, script_name='',
                       after_script_name='',
                       actbox_name='', actbox_url='',
-                      actbox_category='workflow',
+                      actbox_category='workflow', actbox_icon='',
                       props=None, REQUEST=None, description=''):
         '''
         '''
@@ -129,6 +130,7 @@ class TransitionDefinition (SimpleItem):
             self.guard = None
         self.actbox_name = str(actbox_name)
         self.actbox_url = str(actbox_url)
+        self.actbox_icon = str(actbox_icon)
         self.actbox_category = str(actbox_category)
         if REQUEST is not None:
             return self.manage_properties(REQUEST, 'Properties changed.')

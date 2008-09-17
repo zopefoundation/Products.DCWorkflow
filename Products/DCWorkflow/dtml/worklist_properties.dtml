@@ -58,6 +58,13 @@
    </td>
   </tr>
   <tr>
+   <th align="left">Icon URL (formatted)</th>
+   <td>
+    <input type="text" name="actbox_icon"
+     value="&dtml-actbox_icon;" size="50" />
+   </td>
+  </tr>
+  <tr>
    <th align="left">Category</th>
    <td>
     <input type="text" name="actbox_category"

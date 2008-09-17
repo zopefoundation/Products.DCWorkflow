@@ -41,6 +41,7 @@ class WorklistDefinition(SimpleItem):
     var_matches = None  # Compared with catalog when set.
     actbox_name = ''
     actbox_url = ''
+    actbox_icon = ''
     actbox_category = 'global'
     guard = None
 
@@ -108,7 +109,7 @@ class WorklistDefinition(SimpleItem):
 
     def setProperties(self, description,
                       actbox_name='', actbox_url='', actbox_category='global',
-                      props=None, REQUEST=None):
+                      actbox_icon='', props=None, REQUEST=None):
         '''
         '''
         if props is None:
@@ -129,6 +130,7 @@ class WorklistDefinition(SimpleItem):
         self.actbox_name = str(actbox_name)
         self.actbox_url = str(actbox_url)
         self.actbox_category = str(actbox_category)
+        self.actbox_icon = str(actbox_icon)
         g = Guard()
         if g.changeFromProperties(props or REQUEST):
             self.guard = g

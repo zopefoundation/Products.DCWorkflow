@@ -83,6 +83,7 @@
         category="CATEGORY"
         tal:condition="transition/actbox_name"
         tal:attributes="url transition/actbox_url;
+                        icon transition/actbox_icon;
                         category transition/actbox_category;
                        "
         tal:content="transition/actbox_name">ACTION NAME</action>
@@ -126,6 +127,7 @@
         tal:condition="worklist/actbox_name"
         tal:attributes="url worklist/actbox_url;
                         category worklist/actbox_category;
+                        icon worklist/actbox_icon;
                        "
         tal:content="worklist/actbox_name">ACTION NAME</action>
   <guard

@@ -4,6 +4,9 @@ Products.DCWorkflow Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Worklists and Transitions: Add icon expression properties to worklist
+  and transition actions and their GenericSetup profiles.
+
 - Fixed an import error (Products.PageTemplates.TALES is gone on 
   Zope trunk).  Because we require Zope >= 2.10, we don't need a
   BBB conditional import.

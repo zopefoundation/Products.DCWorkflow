@@ -200,6 +200,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                             'id': tid,
                             'name': tdef.actbox_name % info,
                             'url': tdef.actbox_url % info,
+                            'icon': tdef.actbox_icon % info,
                             'permissions': (),  # Predetermined.
                             'category': tdef.actbox_category,
                             'transition': tdef}))
@@ -243,6 +244,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                     res.append((id, {'id': id,
                                      'name': qdef.actbox_name % fmt_data,
                                      'url': qdef.actbox_url % fmt_data,
+                                     'icon': qdef.actbox_icon % fmt_data,
                                      'permissions': (),  # Predetermined.
                                      'category': qdef.actbox_category}))
                     fmt_data._pop()

@@ -437,6 +437,9 @@ class WorkflowDefinitionConfigurator( Implicit ):
           'actbox_url' -- the URL of the action by which the user
              triggers the transition
 
+          'actbox_icon' -- the icon URL for the action by which the user
+             triggers the transition
+
           'actbox_category' -- the category of the action by which the user
              triggers the transition
 
@@ -475,6 +478,7 @@ class WorkflowDefinitionConfigurator( Implicit ):
                    , 'after_script_name'    : v.after_script_name
                    , 'actbox_name'          : v.actbox_name
                    , 'actbox_url'           : v.actbox_url
+                   , 'actbox_icon'          : v.actbox_icon
                    , 'actbox_category'      : v.actbox_category
                    , 'variables'            : v_info
                    , 'guard_permissions'    : guard.permissions
@@ -509,6 +513,9 @@ class WorkflowDefinitionConfigurator( Implicit ):
           'actbox_url' -- the URL of the "action" corresponding to the
             worklist
 
+          'actbox_icon' -- the icon URL of the "action" corresponding to 
+            the worklist
+
           'actbox_category' -- the category of the "action" corresponding
             to the worklist
 
@@ -539,6 +546,7 @@ class WorkflowDefinitionConfigurator( Implicit ):
                    , 'var_match'            : var_match
                    , 'actbox_name'          : v.actbox_name
                    , 'actbox_url'           : v.actbox_url
+                   , 'actbox_icon'          : v.actbox_icon
                    , 'actbox_category'      : v.actbox_category
                    , 'guard_permissions'    : guard.permissions
                    , 'guard_roles'          : guard.roles
@@ -800,13 +808,14 @@ def _extractActionNode( parent, encoding=None ):
     assert len( nodes ) <= 1, nodes
 
     if len( nodes ) < 1:
-        return { 'name' : '', 'url' : '', 'category' : '' }
+        return { 'name' : '', 'url' : '', 'category' : '', 'icon': ''}
 
     node = nodes[ 0 ]
 
     return { 'name' : _coalesceTextNodeChildren( node, encoding )
            , 'url' : _getNodeAttribute( node, 'url', encoding )
            , 'category' : _getNodeAttribute( node, 'category', encoding )
+           , 'icon' : _queryNodeAttribute( node, 'icon', '', encoding )
            }
 
 def _extractGuardNode( parent, encoding=None ):
@@ -1087,6 +1096,7 @@ def _initDCWorkflowTransitions( workflow, transitions ):
                        , actbox_name = action[ 'name' ]
                        , actbox_url = action[ 'url' ]
                        , actbox_category = action[ 'category' ]
+                       , actbox_icon = action.get('icon', '')
                        , props = props
                        )
         var_mapping = [(name, Expression(text)) for name, text in
@@ -1121,6 +1131,7 @@ def _initDCWorkflowWorklists( workflow, worklists ):
                        , actbox_name = action[ 'name' ]
                        , actbox_url = action[ 'url' ]
                        , actbox_category = action[ 'category' ]
+                       , actbox_icon = action.get('icon', '')
                        , props = props
                        )
 
