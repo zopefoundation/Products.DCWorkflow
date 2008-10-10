@@ -4,6 +4,9 @@ Products.DCWorkflow Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Workflow UI: Remove ancient cruft to accommodate the proprietary
+  (and long dead) base_cms product.
+
 - Worklists and Transitions: Add icon expression properties to worklist
   and transition actions and their GenericSetup profiles.
 

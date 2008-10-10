@@ -29,19 +29,6 @@ from permissions import ManagePortal
 from Guard import Guard
 from utils import _dtmldir
 
-try:
-    #
-    #   XXX: 2004/04/28  This factoring *has* to go;  if necessary,
-    #         this module could have a hook function, which the dependent
-    #         module could replace.
-    #
-
-    # If base_cms exists, include the roles it defines.
-    from Products.base_cms.permissions import getDefaultRolePermissionMap
-except ImportError:
-    def getDefaultRolePermissionMap():
-        return {}
-
 
 class WorkflowUIMixin:
     '''
@@ -166,9 +153,6 @@ class WorkflowUIMixin:
         """Returns the acquired roles mixed with base_cms roles.
         """
         roles = list(self.valid_roles())
-        for role in getDefaultRolePermissionMap().keys():
-            if role not in roles:
-                roles.append(role)
         roles.sort()
         return roles
 
@@ -176,14 +160,8 @@ class WorkflowUIMixin:
     def getRoles(self):
         """Returns the list of roles managed by this workflow.
         """
-        roles = self.roles
-        if roles is not None:
-            return roles
-        roles = getDefaultRolePermissionMap().keys()
-        if roles:
-            # Map the base_cms roles by default.
-            roles.sort()
-            return roles
+        if self.roles is not None:
+            return self.roles
         return self.valid_roles()
 
     security.declareProtected(ManagePortal, 'setRoles')
