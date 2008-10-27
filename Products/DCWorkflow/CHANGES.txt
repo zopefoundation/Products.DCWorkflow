@@ -4,6 +4,9 @@ Products.DCWorkflow Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Strip trailing newlines in order to properly match with a msgid when
+  translating transition descriptions.
+
 - Workflow UI: Remove ancient cruft to accommodate the proprietary
   (and long dead) base_cms product.
 

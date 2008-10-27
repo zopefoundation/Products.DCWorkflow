@@ -1261,7 +1261,7 @@ def _coalesceTextNodeChildren( node, encoding=None ):
     if encoding is not None:
         joined = joined.encode( encoding )
 
-    return ''.join( [ line.lstrip() for line in joined.splitlines(True) ] )
+    return ''.join( [ line.lstrip() for line in joined.splitlines(True) ] ).rstrip()
 
 def _extractDescriptionNode(parent, encoding=None):
 
