@@ -16,11 +16,13 @@ $Id$
 """
 from warnings import warn
 
-import Globals
-from Globals import Persistent
-from Acquisition import aq_inner, aq_parent
-from AccessControl import getSecurityManager, ClassSecurityInfo
-from DateTime import DateTime
+from AccessControl.SecurityInfo import ClassSecurityInfo
+from AccessControl.SecurityManagement import getSecurityManager
+from Acquisition import aq_inner
+from Acquisition import aq_parent
+from App.class_init import default__class_init__ as InitializeClass
+from DateTime.DateTime import DateTime
+from Persistence import Persistent
 
 from Products.CMFCore.WorkflowCore import ObjectDeleted, ObjectMoved
 from Products.CMFCore.Expression import Expression
@@ -118,7 +120,7 @@ class StateChangeInfo:
             date = self._date = DateTime()
         return date
 
-Globals.InitializeClass(StateChangeInfo)
+InitializeClass(StateChangeInfo)
 
 
 def createExprContext(sci):

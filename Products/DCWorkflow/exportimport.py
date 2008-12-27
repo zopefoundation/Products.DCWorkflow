@@ -18,20 +18,20 @@ $Id$
 import re
 from xml.dom.minidom import parseString
 
-from Expression import Expression
-from AccessControl import ClassSecurityInfo
+from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
-from Globals import InitializeClass
+from App.class_init import default__class_init__ as InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import adapts
 
 from Products.GenericSetup.interfaces import ISetupEnviron
 from Products.GenericSetup.utils import BodyAdapterBase
 
-from utils import _xmldir
-from DCWorkflow import DCWorkflowDefinition
-from interfaces import IDCWorkflowDefinition
-from permissions import ManagePortal
+from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+from Products.DCWorkflow.Expression import Expression
+from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
+from Products.DCWorkflow.permissions import ManagePortal
+from Products.DCWorkflow.utils import _xmldir
 
 
 TRIGGER_TYPES = ( 'AUTOMATIC', 'USER' )

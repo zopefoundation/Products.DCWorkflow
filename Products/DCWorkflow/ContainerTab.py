@@ -15,7 +15,9 @@
 $Id$
 """
 
-from Acquisition import aq_base, aq_inner, aq_parent
+from Acquisition import aq_base
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from OFS.Folder import Folder
 
 _marker = []  # Create a new marker object.

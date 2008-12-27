@@ -17,20 +17,20 @@ $Id$
 
 from cgi import escape
 
-from Globals import DTMLFile
-from Globals import InitializeClass
-from Globals import Persistent
-from AccessControl import ClassSecurityInfo
+from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Explicit
 from Acquisition import aq_base
+from App.class_init import default__class_init__ as InitializeClass
+from App.special_dtml import DTMLFile
+from Persistence import Persistent
 
 from Products.CMFCore.utils import _checkPermission
 
-from Expression import Expression
-from Expression import StateChangeInfo
-from Expression import createExprContext
-from permissions import ManagePortal
-from utils import _dtmldir
+from Products.DCWorkflow.Expression import Expression
+from Products.DCWorkflow.Expression import StateChangeInfo
+from Products.DCWorkflow.Expression import createExprContext
+from Products.DCWorkflow.permissions import ManagePortal
+from Products.DCWorkflow.utils import _dtmldir
 
 
 class Guard (Persistent, Explicit):

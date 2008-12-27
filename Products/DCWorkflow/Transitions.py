@@ -15,19 +15,19 @@
 $Id$
 """
 
-from OFS.SimpleItem import SimpleItem
-from Globals import DTMLFile
-from Globals import PersistentMapping
-from Globals import InitializeClass
+from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from AccessControl import ClassSecurityInfo
+from App.class_init import default__class_init__ as InitializeClass
+from App.special_dtml import DTMLFile
+from OFS.SimpleItem import SimpleItem
+from Persistence import PersistentMapping
 
-from ContainerTab import ContainerTab
-from Guard import Guard
-from permissions import ManagePortal
-from utils import _dtmldir
-from Expression import Expression
+from Products.DCWorkflow.ContainerTab import ContainerTab
+from Products.DCWorkflow.Guard import Guard
+from Products.DCWorkflow.permissions import ManagePortal
+from Products.DCWorkflow.utils import _dtmldir
+from Products.DCWorkflow.Expression import Expression
 
 TRIGGER_AUTOMATIC = 0
 TRIGGER_USER_ACTION = 1

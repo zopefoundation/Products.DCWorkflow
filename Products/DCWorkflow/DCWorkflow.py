@@ -16,13 +16,13 @@ $Id$
 """
 
 # Zope
-from AccessControl import ClassSecurityInfo
-from AccessControl import getSecurityManager
-from AccessControl import Unauthorized
+from AccessControl.SecurityInfo import ClassSecurityInfo
+from AccessControl.SecurityManagement import getSecurityManager
+from AccessControl.unauthorized import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
+from App.class_init import default__class_init__ as InitializeClass
 from DocumentTemplate.DT_Util import TemplateDict
-from Globals import InitializeClass
 from OFS.Folder import Folder
 from OFS.ObjectManager import bad_id
 from zope.event import notify
@@ -36,17 +36,18 @@ from Products.CMFCore.WorkflowCore import ObjectMoved
 from Products.CMFCore.WorkflowCore import WorkflowException
 
 # DCWorkflow
-from events import BeforeTransitionEvent, AfterTransitionEvent
-from Expression import createExprContext
-from Expression import StateChangeInfo
-from interfaces import IDCWorkflowDefinition
-from permissions import ManagePortal
-from Transitions import TRIGGER_AUTOMATIC
-from Transitions import TRIGGER_USER_ACTION
-from utils import Message as _
-from utils import modifyRolesForGroup
-from utils import modifyRolesForPermission
-from WorkflowUIMixin import WorkflowUIMixin
+from Products.DCWorkflow.events import AfterTransitionEvent
+from Products.DCWorkflow.events import BeforeTransitionEvent
+from Products.DCWorkflow.Expression import createExprContext
+from Products.DCWorkflow.Expression import StateChangeInfo
+from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
+from Products.DCWorkflow.permissions import ManagePortal
+from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
+from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
+from Products.DCWorkflow.utils import Message as _
+from Products.DCWorkflow.utils import modifyRolesForGroup
+from Products.DCWorkflow.utils import modifyRolesForPermission
+from Products.DCWorkflow.WorkflowUIMixin import WorkflowUIMixin
 
 def checkId(id):
     res = bad_id(id)

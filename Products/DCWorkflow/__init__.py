@@ -15,12 +15,16 @@
 $Id$
 """
 
-from Products.CMFCore.utils import registerIcon
-
-import DCWorkflow, States, Transitions, Variables, Worklists, Scripts
-
-
 def initialize(context):
+
+    from Products.CMFCore.utils import registerIcon
+
+    import DCWorkflow
+    import States
+    import Transitions
+    import Variables
+    import Worklists
+    import Scripts
 
     context.registerHelp(directory='help')
     context.registerHelpTitle('DCWorkflow')

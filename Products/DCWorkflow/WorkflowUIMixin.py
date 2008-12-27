@@ -17,17 +17,17 @@ $Id$
 
 import os
 
-from Globals import DTMLFile
-from Globals import InitializeClass
-from AccessControl import ClassSecurityInfo
 from AccessControl.requestmethod import postonly
+from AccessControl.SecurityInfo import ClassSecurityInfo
+from App.class_init import default__class_init__ as InitializeClass
+from App.special_dtml import DTMLFile
 from Acquisition import aq_get
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
-from permissions import ManagePortal
-from Guard import Guard
-from utils import _dtmldir
+from Products.DCWorkflow.permissions import ManagePortal
+from Products.DCWorkflow.Guard import Guard
+from Products.DCWorkflow.utils import _dtmldir
 
 
 class WorkflowUIMixin:

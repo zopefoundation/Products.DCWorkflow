@@ -15,12 +15,12 @@
 $Id$
 """
 
+from AccessControl.SecurityInfo import ClassSecurityInfo
+from App.class_init import default__class_init__ as InitializeClass
 from OFS.Folder import Folder
-from Globals import InitializeClass
-from AccessControl import ClassSecurityInfo
 
-from ContainerTab import ContainerTab
-from permissions import ManagePortal
+from Products.DCWorkflow.ContainerTab import ContainerTab
+from Products.DCWorkflow.permissions import ManagePortal
 
 
 class Scripts (ContainerTab):
