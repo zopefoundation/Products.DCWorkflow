@@ -18,16 +18,16 @@ $Id$
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from App.class_init import default__class_init__ as InitializeClass
+from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from OFS.SimpleItem import SimpleItem
 from Persistence import PersistentMapping
 
+from Products.CMFCore.Expression import Expression
 from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
-from Products.DCWorkflow.Expression import Expression
 
 TRIGGER_AUTOMATIC = 0
 TRIGGER_USER_ACTION = 1

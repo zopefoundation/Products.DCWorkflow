@@ -15,27 +15,23 @@
 $Id$
 """
 
-# Zope
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.SecurityManagement import getSecurityManager
 from AccessControl.unauthorized import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from App.class_init import default__class_init__ as InitializeClass
+from App.class_init import InitializeClass
 from DocumentTemplate.DT_Util import TemplateDict
 from OFS.Folder import Folder
 from OFS.ObjectManager import bad_id
 from zope.event import notify
 from zope.interface import implements
 
-# CMFCore
 from Products.CMFCore.interfaces import IWorkflowDefinition
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved
 from Products.CMFCore.WorkflowCore import WorkflowException
-
-# DCWorkflow
 from Products.DCWorkflow.events import AfterTransitionEvent
 from Products.DCWorkflow.events import BeforeTransitionEvent
 from Products.DCWorkflow.Expression import createExprContext

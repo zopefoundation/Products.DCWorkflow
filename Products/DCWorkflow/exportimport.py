@@ -20,19 +20,18 @@ from xml.dom.minidom import parseString
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
-from App.class_init import default__class_init__ as InitializeClass
+from App.class_init import InitializeClass
+from Persistence import PersistentMapping
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import adapts
 
-from Products.GenericSetup.interfaces import ISetupEnviron
-from Products.GenericSetup.utils import BodyAdapterBase
-
+from Products.CMFCore.Expression import Expression
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
-from Products.DCWorkflow.Expression import Expression
 from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
 from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _xmldir
-
+from Products.GenericSetup.interfaces import ISetupEnviron
+from Products.GenericSetup.utils import BodyAdapterBase
 
 TRIGGER_TYPES = ( 'AUTOMATIC', 'USER' )
 _FILENAME = 'workflows.xml'
@@ -1027,7 +1026,6 @@ def _initDCWorkflowStates( workflow, states ):
 
     """ Initialize DCWorkflow states
     """
-    from Globals import PersistentMapping
     from Products.DCWorkflow.States import StateDefinition
 
     for s_info in states:
@@ -1065,7 +1063,6 @@ def _initDCWorkflowTransitions( workflow, transitions ):
 
     """ Initialize DCWorkflow transitions
     """
-    from Globals import PersistentMapping
     from Products.DCWorkflow.Transitions import TransitionDefinition
 
     for t_info in transitions:
@@ -1107,7 +1104,6 @@ def _initDCWorkflowWorklists( workflow, worklists ):
 
     """ Initialize DCWorkflow worklists
     """
-    from Globals import PersistentMapping
     from Products.DCWorkflow.Worklists import WorklistDefinition
 
     for w_info in worklists:

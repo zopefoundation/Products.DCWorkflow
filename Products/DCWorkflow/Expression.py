@@ -14,21 +14,21 @@
 
 $Id$
 """
+
 from warnings import warn
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from App.class_init import default__class_init__ as InitializeClass
+from App.class_init import InitializeClass
 from DateTime.DateTime import DateTime
-from Persistence import Persistent
-
-from Products.CMFCore.WorkflowCore import ObjectDeleted, ObjectMoved
-from Products.CMFCore.Expression import Expression
-from Products.CMFCore.interfaces import ISiteRoot
 from Products.PageTemplates.Expressions import getEngine
 from Products.PageTemplates.Expressions import SecureModuleImporter
+
+from Products.CMFCore.WorkflowCore import ObjectDeleted, ObjectMoved
+from Products.CMFCore.Expression import Expression # BBB: old location
+from Products.CMFCore.interfaces import ISiteRoot
 
 
 # We don't import SafeMapping from Products.PageTemplates.TALES

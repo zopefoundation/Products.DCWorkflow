@@ -20,13 +20,12 @@ from cgi import escape
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Explicit
 from Acquisition import aq_base
-from App.class_init import default__class_init__ as InitializeClass
+from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from Persistence import Persistent
 
+from Products.CMFCore.Expression import Expression
 from Products.CMFCore.utils import _checkPermission
-
-from Products.DCWorkflow.Expression import Expression
 from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.permissions import ManagePortal

@@ -19,10 +19,9 @@ import os
 
 from AccessControl.requestmethod import postonly
 from AccessControl.SecurityInfo import ClassSecurityInfo
-from App.class_init import default__class_init__ as InitializeClass
-from App.special_dtml import DTMLFile
 from Acquisition import aq_get
-
+from App.class_init import InitializeClass
+from App.special_dtml import DTMLFile
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 from Products.DCWorkflow.permissions import ManagePortal
