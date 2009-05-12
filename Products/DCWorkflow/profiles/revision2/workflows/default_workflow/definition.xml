@@ -2,7 +2,8 @@
 <dc-workflow workflow_id="default_workflow"
              title="CMF default workflow [Revision 2]"
              state_variable="review_state"
-             initial_state="visible">
+             initial_state="visible" 
+             manager_bypass="False">
  <permission>Access contents information</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>

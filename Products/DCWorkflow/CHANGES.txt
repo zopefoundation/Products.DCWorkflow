@@ -4,6 +4,10 @@ Products.DCWorkflow Changelog
 2.2.0 (unreleased)
 ------------------
 
+- exportimport: Support for instance creation guards and manager 
+  bypass added.
+  (https://bugs.launchpad.net/zope-cmf/+bug/308947)
+
 - Cleaned up / normalized imports:
 
   o Don't import from Globals;  instead, use real locations.

@@ -29,6 +29,7 @@ from Products.CMFCore.exportimport.tests.test_workflow \
         import _WorkflowSetup as WorkflowSetupBase
 from Products.CMFCore.testing import DummyWorkflow
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.testing import ExportImportZCMLLayer
 from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
@@ -189,6 +190,12 @@ class _WorkflowSetup(WorkflowSetupBase):
                 raise ValueError, 'Unknown script type: %s' % v[ 0 ]
 
             dcworkflow.scripts._setObject( k, script )
+    
+    def _initCreationGuard(self, dcworkflow) :
+        props = self._genGuardProps(*_CREATION_GUARD)
+        g = Guard()
+        g.changeFromProperties(props)
+        dcworkflow.creation_guard = g
 
 
 class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
@@ -465,6 +472,13 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
                                 , expected[ 2 ] % WF_ID )
             else:
                 self.assertEqual( info[ 'filename' ], expected[ 2 ] )
+    
+    def test_getWorkflowInfo_dcworkflow_creation_guard(self) :
+        WF_ID = 'dcworkflow_creation_guard'
+
+        site = self._initSite()
+        dcworkflow = self._initDCWorkflow( WF_ID )
+        self._initCreationGuard(dcworkflow)
 
     def test_generateXML_empty( self ):
 
@@ -596,6 +610,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML( _EMPTY_WORKFLOW_EXPORT
                                          % ( WF_ID
                                            , WF_TITLE
@@ -633,6 +649,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -670,6 +688,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -736,6 +756,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description 
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -805,6 +827,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -883,6 +907,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -946,6 +972,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -983,6 +1011,8 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = configurator.parseWorkflowXML(
                           _NORMAL_WORKFLOW_EXPORT
                           % { 'workflow_id' : WF_ID
@@ -1251,6 +1281,13 @@ _WF_SCRIPTS = \
                    )
 }
 
+_CREATION_GUARD = \
+(('Add portal content', 'Manage portal')
+,('Owner', 'Manager')
+,('group_readers', 'group_members')
+,'python:len(here.objectIds() <= 10)'
+)
+
 _NORMAL_TOOL_EXPORT = """\
 <?xml version="1.0"?>
 <object name="portal_workflow" meta_type="Dummy Workflow Tool">
@@ -1293,7 +1330,8 @@ _EMPTY_WORKFLOW_EXPORT = """\
     title="%s"
     description="%s"
     state_variable="state"
-    initial_state="%s">
+    initial_state="%s"
+    manager_bypass="0">
 </dc-workflow>
 """
 
@@ -1305,7 +1343,8 @@ _OLD_WORKFLOW_EXPORT = """\
     workflow_id="%(workflow_id)s"
     title="%(title)s"
     state_variable="state"
-    initial_state="%(initial_state)s">
+    initial_state="%(initial_state)s"
+    manager_bypass="0">
  <permission>Open content for modifications</permission>
  <permission>Modify content</permission>
  <permission>Query history</permission>
@@ -1549,7 +1588,8 @@ _NORMAL_WORKFLOW_EXPORT = """\
     title="%(title)s"
     description="%(description)s"
     state_variable="state"
-    initial_state="%(initial_state)s">
+    initial_state="%(initial_state)s"
+    manager_bypass="0">
  <permission>Open content for modifications</permission>
  <permission>Modify content</permission>
  <permission>Query history</permission>
@@ -1788,6 +1828,26 @@ _NORMAL_WORKFLOW_EXPORT = """\
     module=""
     function=""
     />
+</dc-workflow>
+"""
+
+_CREATION_GUARD_WORKFLOW_EXPORT = """\
+<?xml version="1.0"?>
+<dc-workflow
+    workflow_id="%s"
+    title="%s"
+    description="%s"
+    state_variable="state"
+    initial_state="%s"
+    manager_bypass="1">
+ <instance-creation-conditions>
+  <guard>
+   <guard-permission>Add portal content</guard-permission>
+   <guard-role>Owner</guard-role>
+   <guard-group>group_members</guard-group>
+   <guard-expression>python:len(here.objectIds() &lt;= 10)</guard-expression>
+  </guard>
+ </instance-creation-conditions>
 </dc-workflow>
 """
 

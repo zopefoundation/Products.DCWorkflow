@@ -27,6 +27,7 @@ from zope.component import adapts
 
 from Products.CMFCore.Expression import Expression
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
 from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _xmldir
@@ -67,11 +68,15 @@ class DCWorkflowDefinitionBodyAdapter(BodyAdapterBase):
         , permissions
         , scripts
         , description
+        , manager_bypass
+        , creation_guard
         ) = wfdc.parseWorkflowXML(body, encoding)
 
         _initDCWorkflow( self.context
                        , title
                        , description
+                       , manager_bypass
+                       , creation_guard
                        , state_variable
                        , initial_state
                        , states
@@ -157,6 +162,8 @@ class WorkflowDefinitionConfigurator( Implicit ):
         except ValueError:
             # Don't fail on export files that do not have the description field!
             description = ''
+        manager_bypass = _getNodeAttributeBoolean(root, 'manager_bypass')
+        creation_guard = _extractCreationGuard(root, encoding)
         state_variable = _getNodeAttribute( root, 'state_variable', encoding )
         initial_state = _getNodeAttribute( root, 'initial_state', encoding )
 
@@ -178,6 +185,8 @@ class WorkflowDefinitionConfigurator( Implicit ):
                , permissions
                , scripts
                , description
+               , manager_bypass
+               , creation_guard
                )
 
     security.declarePrivate( '_workflowConfig' )
@@ -197,9 +206,11 @@ class WorkflowDefinitionConfigurator( Implicit ):
 
         o The following keys will be added to 'workflow_info':
 
+          'creation_guard' -- the guard of 'Instance creation conditions'
+
           'permissions' -- a list of names of permissions managed
             by the workflow
-
+            
           'state_variable' -- the name of the workflow's "main"
             state variable
 
@@ -221,6 +232,8 @@ class WorkflowDefinitionConfigurator( Implicit ):
           'script_info' -- a list of mappings describing the scripts which
             provide added business logic (see '_extractScripts').
         """
+        workflow_info[ 'manager_bypass' ] = workflow.manager_bypass
+        workflow_info[ 'creation_guard' ] = self._extractCreationGuard(workflow)
         workflow_info[ 'state_variable' ] = workflow.state_var
         workflow_info[ 'initial_state' ] = workflow.initial_state
         workflow_info[ 'permissions' ] = workflow.permissions
@@ -230,6 +243,20 @@ class WorkflowDefinitionConfigurator( Implicit ):
                                                                    workflow )
         workflow_info[ 'worklist_info' ] = self._extractWorklists( workflow )
         workflow_info[ 'script_info' ] = self._extractScripts( workflow )
+
+    security.declarePrivate('_extractCreationGuard')
+    def _extractCreationGuard(self, workflow):
+        """ Return a mapping describing 'Instance creation conditions'
+            if 'creation_guard' is initialized or None
+        """
+        guard = workflow.creation_guard
+        if guard is not None :
+            info = { 'guard_permissions'    : guard.permissions
+                   , 'guard_roles'          : guard.roles
+                   , 'guard_groups'         : guard.groups
+                   , 'guard_expr'           : guard.getExprText()
+                   }
+            return info
 
     security.declarePrivate( '_extractVariables' )
     def _extractVariables( self, workflow ):
@@ -621,6 +648,15 @@ def _getScriptFilename( workflow_id, script_id, meta_type ):
 
     return 'workflows/%s/scripts/%s.%s' % ( wf_dir, script_id, suffix )
 
+def _extractCreationGuard(root, encoding=None) :
+    icc = root.getElementsByTagName('instance-creation-conditions')
+    assert len(icc) <= 1
+    if icc :
+        parent = icc[0]
+        return _extractGuardNode(parent, encoding)
+    else :
+        return None
+
 def _extractStateNodes( root, encoding=None ):
 
     result = []
@@ -959,6 +995,8 @@ _METATYPE_SUFFIXES = \
 def _initDCWorkflow( workflow
                    , title
                    , description
+                   , manager_bypass
+                   , creation_guard
                    , state_variable
                    , initial_state
                    , states
@@ -973,6 +1011,7 @@ def _initDCWorkflow( workflow
     """
     workflow.title = title
     workflow.description = description
+    workflow.manager_bypass = manager_bypass
     workflow.state_var = state_variable
     workflow.initial_state = initial_state
 
@@ -980,12 +1019,28 @@ def _initDCWorkflow( workflow
     permissions.sort()
     workflow.permissions = tuple(permissions)
 
+    _initDCWorkflowCreationGuard( workflow, creation_guard )
     _initDCWorkflowVariables( workflow, variables )
     _initDCWorkflowStates( workflow, states )
     _initDCWorkflowTransitions( workflow, transitions )
     _initDCWorkflowWorklists( workflow, worklists )
     _initDCWorkflowScripts( workflow, scripts, context )
 
+
+def _initDCWorkflowCreationGuard( workflow, guard ):
+    """Initialize Instance creation conditions guard
+    """
+    if guard is None :
+        workflow.creation_guard = None
+    else :
+        props = { 'guard_roles' : ';'.join( guard[ 'roles' ] )
+                , 'guard_permissions' : ';'.join( guard[ 'permissions' ] )
+                , 'guard_groups' : ';'.join( guard[ 'groups' ] )
+                , 'guard_expr' : guard[ 'expression' ]
+                }
+        g = Guard()
+        g.changeFromProperties(props)
+        workflow.creation_guard = g
 
 def _initDCWorkflowVariables( workflow, variables ):
 
