@@ -162,7 +162,7 @@ class WorkflowDefinitionConfigurator( Implicit ):
         except ValueError:
             # Don't fail on export files that do not have the description field!
             description = ''
-        manager_bypass = _getNodeAttributeBoolean(root, 'manager_bypass')
+        manager_bypass = _queryNodeAttributeBoolean(root,'manager_bypass',False)
         creation_guard = _extractCreationGuard(root, encoding)
         state_variable = _getNodeAttribute( root, 'state_variable', encoding )
         initial_state = _getNodeAttribute( root, 'initial_state', encoding )
