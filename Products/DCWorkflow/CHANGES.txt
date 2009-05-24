@@ -4,6 +4,11 @@ Products.DCWorkflow Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Worklists: The catalog variable match setting can now be a 
+  formatted string (as before), but also a qualified TAL 
+  expression, meaning it has a prefix like "string:", "python:".
+  (https://bugs.launchpad.net/zope-cmf/+bug/378292)
+
 - exportimport: Support for instance creation guards and manager 
   bypass added.
   (https://bugs.launchpad.net/zope-cmf/+bug/308947)

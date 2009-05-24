@@ -226,12 +226,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                     var_match_keys = qdef.getVarMatchKeys()
                     if var_match_keys:
                         # Check the catalog for items in the worklist.
-                        catalog = getToolByName(self, 'portal_catalog')
-                        kw = {}
-                        for k in var_match_keys:
-                            v = qdef.getVarMatch(k)
-                            kw[k] = [ x % info for x in v ]
-                        searchres = catalog.searchResults(**kw)
+                        searchres = qdef.search(info)
                         if not searchres:
                             continue
                     if fmt_data is None:

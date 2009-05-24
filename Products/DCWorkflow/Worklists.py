@@ -15,6 +15,8 @@
 $Id$
 """
 
+import re
+
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import aq_inner
 from Acquisition import aq_parent
@@ -23,10 +25,16 @@ from App.special_dtml import DTMLFile
 from OFS.SimpleItem import SimpleItem
 from Persistence import PersistentMapping
 
+from Products.CMFCore.utils import getToolByName
 from Products.DCWorkflow.ContainerTab import ContainerTab
+from Products.DCWorkflow.Expression import createExprContext
+from Products.DCWorkflow.Expression import Expression
+from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
+
+tales_re = re.compile(r'(\w+:)?(.*)')
 
 
 class WorklistDefinition(SimpleItem):
@@ -85,7 +93,7 @@ class WorklistDefinition(SimpleItem):
     def getVarMatch(self, id):
         if self.var_matches:
             matches = self.var_matches.get(id, ())
-            if not isinstance(matches, tuple):
+            if not isinstance(matches, (tuple, Expression)):
                 # Old version, convert it.
                 matches = (matches,)
                 self.var_matches[id] = matches
@@ -95,6 +103,8 @@ class WorklistDefinition(SimpleItem):
 
     def getVarMatchText(self, id):
         values = self.getVarMatch(id)
+        if isinstance(values, Expression):
+            return values.text
         return '; '.join(values)
 
     _properties_form = DTMLFile('worklist_properties', _dtmldir)
@@ -122,8 +132,15 @@ class WorklistDefinition(SimpleItem):
             if v:
                 if not self.var_matches:
                     self.var_matches = PersistentMapping()
-                v = [ var.strip() for var in v.split(';') ]
-                self.var_matches[key] = tuple(v)
+
+                if tales_re.match(v).group(1):
+                    # Found a TALES prefix
+                    self.var_matches[key] = Expression(v)
+                else:
+                    # Falling back to formatted string
+                    v = [ var.strip() for var in v.split(';') ]
+                    self.var_matches[key] = tuple(v)
+
             else:
                 if self.var_matches and self.var_matches.has_key(key):
                     del self.var_matches[key]
@@ -138,6 +155,36 @@ class WorklistDefinition(SimpleItem):
             self.guard = None
         if REQUEST is not None:
             return self.manage_properties(REQUEST, 'Properties changed.')
+
+    def search(self, info=None, **kw):
+        """ Perform the search corresponding to this worklist
+
+        Returns sequence of ZCatalog brains
+        - info is a mapping for resolving formatted string variable references
+        - additional keyword/value pairs may be used to restrict the query
+        """
+        if not self.var_matches:
+            return
+
+        if info is None:
+            info = {}
+
+        catalog = getToolByName(self, 'portal_catalog')
+        criteria = {}
+
+        for key, values in self.var_matches.items():
+            if isinstance(values, Expression):
+                wf = self.getWorkflow()
+                portal = wf._getPortalRoot()
+                context = createExprContext(StateChangeInfo(portal, wf))
+                criteria[key] = values(context)
+            else:
+                criteria[key] = [x % info for x in values]
+
+        criteria.update(kw)
+
+        return catalog.searchResults(**criteria)
+
 
 InitializeClass(WorklistDefinition)
 
