@@ -45,13 +45,14 @@ setup(name='Products.%s' % NAME,
       setup_requires=['eggtestinfo',
                      ],
       install_requires=[
-          #'Zope >= 2.10.4',
           'setuptools',
+          'Zope2 >= 2.12.0b3dev',
           'Products.CMFCore',
           'Products.GenericSetup',
           ],
-      tests_require=['zope.testing>=3.7.0',
-                    ],
+      tests_require=[
+          'zope.testing >= 3.7.0',
+          ],
       test_loader='zope.testing.testrunner.eggsupport:SkipLayers',
       test_suite='Products.%s.tests' % NAME,
       entry_points="""

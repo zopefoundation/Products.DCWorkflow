@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.2.0 (unreleased)
 ------------------
 
+- moved the Zope dependency to version 2.12.0b3dev
+
 - Worklists: The catalog variable match setting can now be a 
   formatted string (as before), but also a qualified TAL 
   expression, meaning it has a prefix like "string:", "python:".

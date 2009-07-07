@@ -16,12 +16,13 @@ $Id$
 """
 
 from Products.Five import zcml
+from Testing.ZopeTestCase.layer import ZopeLite
 from zope.testing.cleanup import cleanUp
 
 from Products.CMFCore.testing import _DUMMY_ZCML
 
 
-class ExportImportZCMLLayer:
+class ExportImportZCMLLayer(ZopeLite):
 
     @classmethod
     def setUp(cls):
@@ -44,13 +45,3 @@ class ExportImportZCMLLayer:
     @classmethod
     def tearDown(cls):
         cleanUp()
-
-
-# Derive from ZopeLite layer if available
-try:
-    from Testing.ZopeTestCase.layer import ZopeLite
-except ImportError:
-    pass # Zope < 2.11
-else:
-    ExportImportZCMLLayer.__bases__ = (ZopeLite,)
-

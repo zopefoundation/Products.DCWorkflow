@@ -4,7 +4,7 @@
     >
 
   <browser:page
-      for="zope.app.container.interfaces.IAdding"
+      for="zope.browser.interfaces.IAdding"
       name="addDCWorkflowDefinition.html"
       template="addWithPresettings.pt"
       class="Products.DCWorkflow.browser.workflow.DCWorkflowDefinitionAddView"
