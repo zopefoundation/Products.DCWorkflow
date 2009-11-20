@@ -232,7 +232,7 @@ class WorkflowDefinitionConfigurator( Implicit ):
           'script_info' -- a list of mappings describing the scripts which
             provide added business logic (see '_extractScripts').
         """
-        workflow_info[ 'manager_bypass' ] = workflow.manager_bypass
+        workflow_info[ 'manager_bypass' ] = bool(workflow.manager_bypass)
         workflow_info[ 'creation_guard' ] = self._extractCreationGuard(workflow)
         workflow_info[ 'state_variable' ] = workflow.state_var
         workflow_info[ 'initial_state' ] = workflow.initial_state
@@ -1011,7 +1011,7 @@ def _initDCWorkflow( workflow
     """
     workflow.title = title
     workflow.description = description
-    workflow.manager_bypass = manager_bypass
+    workflow.manager_bypass = manager_bypass and 1 or 0
     workflow.state_var = state_variable
     workflow.initial_state = initial_state
 

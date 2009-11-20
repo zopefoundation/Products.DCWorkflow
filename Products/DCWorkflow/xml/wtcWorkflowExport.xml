@@ -13,8 +13,9 @@
                         description info/description;
                         manager_bypass info/manager_bypass;
                         state_variable info/state_variable;
-                        initial_state info/initial_state">
- <instance-creation-conditions tal:define="creation_guard info/creation_guard" tal:condition="creation_guard">
+                        initial_state info/initial_state"
+><tal:case tal:condition="info/creation_guard">
+ <instance-creation-conditions tal:define="creation_guard info/creation_guard">
    <guard
    ><tal:case tal:condition="creation_guard/guard_permissions">
     <guard-permission
@@ -33,7 +34,7 @@
         tal:content="creation_guard/guard_expr">EXPRESSION</guard-expression
    ></tal:case>
    </guard>
- </instance-creation-conditions>
+ </instance-creation-conditions></tal:case>
  <permission
         tal:repeat="permission info/permissions"
         tal:content="permission">PERMISSION</permission>

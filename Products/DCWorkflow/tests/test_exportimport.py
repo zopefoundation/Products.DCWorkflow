@@ -1331,7 +1331,7 @@ _EMPTY_WORKFLOW_EXPORT = """\
     description="%s"
     state_variable="state"
     initial_state="%s"
-    manager_bypass="0">
+    manager_bypass="False">
 </dc-workflow>
 """
 
@@ -1344,7 +1344,7 @@ _OLD_WORKFLOW_EXPORT = """\
     title="%(title)s"
     state_variable="state"
     initial_state="%(initial_state)s"
-    manager_bypass="0">
+    manager_bypass="False">
  <permission>Open content for modifications</permission>
  <permission>Modify content</permission>
  <permission>Query history</permission>
@@ -1589,7 +1589,7 @@ _NORMAL_WORKFLOW_EXPORT = """\
     description="%(description)s"
     state_variable="state"
     initial_state="%(initial_state)s"
-    manager_bypass="0">
+    manager_bypass="False">
  <permission>Open content for modifications</permission>
  <permission>Modify content</permission>
  <permission>Query history</permission>
@@ -1839,7 +1839,7 @@ _CREATION_GUARD_WORKFLOW_EXPORT = """\
     description="%s"
     state_variable="state"
     initial_state="%s"
-    manager_bypass="1">
+    manager_bypass="True">
  <instance-creation-conditions>
   <guard>
    <guard-permission>Add portal content</guard-permission>
