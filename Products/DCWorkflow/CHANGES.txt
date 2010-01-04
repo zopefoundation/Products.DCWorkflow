@@ -1,8 +1,10 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.2.0 (unreleased)
+2.2.0 (2010-01-04)
 ------------------
+
+- no changes from version 2.2.0-beta
 
 
 2.2.0-beta (2009-12-06)
