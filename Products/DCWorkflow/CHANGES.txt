@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.3.0-alpha (unreleased)
 ------------------------
 
+- Deal with deprecation warnings for Zope 2.13.
+
 
 2.2.0-beta (2009-12-06)
 -----------------------
