@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Unit tests of role-mapping machinery.
-
-$Id$
 """
 
 import unittest
@@ -67,6 +65,3 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(RoleMapTests),
         ))
-
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')
