@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.2.2 (unreleased)
 ------------------
 
+- Fixed Chameleon compatibility in `state_groups.pt`.
+
 - Workflow states cannot be renamed through the ZMI.
   (https://bugs.launchpad.net/zope-cmf/+bug/625722)
 
