@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """DCWorkflow export / import unit tests.
-
-$Id$
 """
 
 import unittest
@@ -2549,13 +2547,10 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         self.assertEqual(scripts['doc'].meta_type, 'DTML Document')
         self.assertEqual(scripts['bar'].meta_type, 'Script (Python)')
 
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite( WorkflowDefinitionConfiguratorTests ),
         unittest.makeSuite( Test_exportWorkflow ),
         unittest.makeSuite( Test_importWorkflow ),
         ))
-
-if __name__ == '__main__':
-    from Products.CMFCore.testing import run
-    run(test_suite())

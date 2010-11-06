@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Unit tests for DCWorkflow module.
-
-$Id$
 """
 
 import unittest
@@ -184,7 +182,3 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(DCWorkflowDefinitionTests),
         ))
-
-if __name__ == '__main__':
-    from Products.CMFCore.testing import run
-    run(test_suite())
