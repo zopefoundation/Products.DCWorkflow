@@ -50,11 +50,6 @@
 </dtml-in>
 </table>
 <dtml-if values>
-<p>
-  <b>Note:</b> Renaming a state will not affect any items in that state. You
-  will need to fix them manually.
-</p>  
-<input type="submit" name="manage_renameForm:method" value="Rename" />
 <input type="submit" name="deleteStates:method" value="Delete" />
 <input type="submit" name="setInitialState:method" value="Set Initial State" />
 </dtml-if>

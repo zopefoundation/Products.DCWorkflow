@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.2.2 (unreleased)
 ------------------
 
+- Workflow states cannot be renamed through the ZMI.
+  (https://bugs.launchpad.net/zope-cmf/+bug/625722)
 
 2.2.1 (2010-07-04)
 ------------------
