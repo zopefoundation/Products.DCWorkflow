@@ -1,7 +1,7 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.2.2 (unreleased)
+2.2.2 (2010-11-11)
 ------------------
 
 - Fixed Chameleon compatibility in `state_groups.pt`.
