@@ -1,7 +1,7 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.2.3 (unreleased)
+2.2.3 (2011-01-12)
 ------------------
 
 - Explicitly include permissions from CMFCore, which are needed now that
