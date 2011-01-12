@@ -1,11 +1,16 @@
 Products.DCWorkflow Changelog
 =============================
 
+2.2.4 (unreleased)
+------------------
+
+
 2.2.3 (2011-01-12)
 ------------------
 
 - Explicitly include permissions from CMFCore, which are needed now that
   they aren't declared in Five in Zope 2.13.
+
 
 2.2.2 (2010-11-11)
 ------------------
@@ -14,6 +19,7 @@ Products.DCWorkflow Changelog
 
 - Workflow states cannot be renamed through the ZMI.
   (https://bugs.launchpad.net/zope-cmf/+bug/625722)
+
 
 2.2.1 (2010-07-04)
 ------------------
