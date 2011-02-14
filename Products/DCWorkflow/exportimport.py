@@ -678,7 +678,7 @@ def _extractStateNodes( root, encoding=None ):
         for p_map in s_node.getElementsByTagName( 'permission-map' ):
 
             name = _getNodeAttribute( p_map, 'name', encoding )
-            acquired = _getNodeAttributeBoolean( p_map, 'acquired' )
+            acquired = _queryNodeAttributeBoolean( p_map, 'acquired', False )
 
             roles = [ _coalesceTextNodeChildren( x, encoding )
                         for x in p_map.getElementsByTagName(
@@ -760,15 +760,18 @@ def _extractVariableNodes( root, encoding=None ):
         info = { 'variable_id' : _getNodeAttribute( v_node, 'variable_id'
                                                     , encoding )
                , 'description' : _extractDescriptionNode( v_node, encoding )
-               , 'for_catalog' : _getNodeAttributeBoolean( v_node
-                                                         , 'for_catalog'
-                                                         )
-               , 'for_status' : _getNodeAttributeBoolean( v_node
-                                                        , 'for_status'
-                                                        )
-               , 'update_always' : _getNodeAttributeBoolean( v_node
-                                                           , 'update_always'
+               , 'for_catalog' : _queryNodeAttributeBoolean( v_node
+                                                           , 'for_catalog'
+                                                           , False
                                                            )
+               , 'for_status' : _queryNodeAttributeBoolean( v_node
+                                                          , 'for_status'
+                                                          , False
+                                                          )
+               , 'update_always' : _queryNodeAttributeBoolean( v_node
+                                                             , 'update_always'
+                                                             , False
+                                                             )
                , 'default' : _extractDefaultNode( v_node, encoding )
                , 'guard' : _extractGuardNode( v_node, encoding )
                }

@@ -4,7 +4,13 @@ Products.DCWorkflow Changelog
 2.3.0-alpha (unreleased)
 ------------------------
 
-- Fixed Chameleon compatibility in `state_groups.pt`.
+- Hardened XML import parsing against missing boolean attributes.
+  (https://bugs.launchpad.net/zope-cmf/+bug/707927)
+
+- Ensured that emitted XML export has a valid encoding, even when passed
+  'None'.  (https://bugs.launchpad.net/zope-cmf/+bug/707927)
+
+- Fixed Chameleon compatibility in 'state_groups.pt'.
 
 - Workflow states cannot be renamed through the ZMI.
   (https://bugs.launchpad.net/zope-cmf/+bug/625722)

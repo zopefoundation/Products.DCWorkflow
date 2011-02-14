@@ -730,6 +730,58 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
                 elif isinstance( exp_value, basestring ):
                     self.assertEqual( v_info[ 'type' ], 'string' )
 
+    def test_parseWorkflowXML_state_w_missing_acquired( self ):
+
+        WF_ID = 'missing_acquired'
+        WF_TITLE = 'DCWorkflow w/o acquired on state'
+        WF_DESCRIPTION = WF_TITLE
+        WF_INITIAL_STATE = 'closed'
+
+        site = self._initSite()
+
+        configurator = self._makeOne( site ).__of__( site )
+
+        ( workflow_id
+        , title
+        , state_variable
+        , initial_state
+        , states
+        , transitions
+        , variables
+        , worklists
+        , permissions
+        , scripts
+        , description
+        , manager_bypass
+        , creation_guard
+        ) = configurator.parseWorkflowXML(
+                          _WORKFLOW_EXPORT_WO_ACQUIRED
+                          % { 'workflow_id' : WF_ID
+                            , 'title' : WF_TITLE
+                            , 'description' : WF_DESCRIPTION
+                            , 'initial_state' : WF_INITIAL_STATE
+                            , 'workflow_filename' : WF_ID.replace(' ', '_')
+                            } )
+
+        self.assertEqual( len( states ), len( _WF_STATES_MISSING_ACQUIRED ) )
+
+        for state in states:
+
+            state_id = state[ 'state_id' ]
+            self.failUnless( state_id in _WF_STATES_MISSING_ACQUIRED )
+
+            expected = _WF_STATES_MISSING_ACQUIRED[ state_id ]
+
+            self.assertEqual( state[ 'title' ], expected[ 0 ] )
+
+            description = ''.join( state[ 'description' ] )
+            self.failUnless( expected[ 1 ] in description )
+
+            self.assertEqual( tuple( state[ 'transitions' ] ), expected[ 2 ] )
+            self.assertEqual( state[ 'permissions' ], expected[ 3 ] )
+            self.assertEqual( tuple( state[ 'groups' ] )
+                            , tuple( expected[ 4 ] ) )
+
     def test_parseWorkflowXML_normal_transitions( self ):
 
         from Products.DCWorkflow.exportimport import TRIGGER_TYPES
@@ -844,6 +896,86 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
             self.failUnless( variable_id in _WF_VARIABLES )
 
             expected = _WF_VARIABLES[ variable_id ]
+
+            description = ''.join( variable[ 'description' ] )
+            self.failUnless( expected[ 0 ] in description )
+
+            default = variable[ 'default' ]
+            self.assertEqual( default[ 'value' ], expected[ 1 ] )
+
+            exp_type = 'n/a'
+
+            if expected[ 1 ]:
+                exp_value = expected[ 1 ]
+
+                if isinstance( exp_value, bool ):
+                    exp_type = 'bool'
+                elif isinstance( exp_value, int ):
+                    exp_type = 'int'
+                elif isinstance( exp_value, float ):
+                    exp_type = 'float'
+                elif isinstance( exp_value, basestring ):
+                    exp_type = 'string'
+                else:
+                    exp_type = 'XXX'
+
+            self.assertEqual( default[ 'type' ], exp_type )
+            self.assertEqual( default[ 'expression' ], expected[ 2 ] )
+
+            self.assertEqual( variable[ 'for_catalog' ], expected[ 3 ] )
+            self.assertEqual( variable[ 'for_status' ], expected[ 4 ] )
+            self.assertEqual( variable[ 'update_always' ], expected[ 5 ] )
+
+            guard = variable[ 'guard' ]
+            self.assertEqual( tuple( guard.get( 'permissions', () ) )
+                            , expected[ 6 ] )
+            self.assertEqual( tuple( guard.get( 'roles', () ) )
+                            , expected[ 7 ] )
+            self.assertEqual( tuple( guard.get( 'groups', () ) )
+                            , expected[ 8 ] )
+            self.assertEqual( guard.get( 'expression', '' ), expected[ 9 ] )
+
+    def test_parseWorkflowXML_w_variables_missing_attrs( self ):
+
+        WF_ID = 'normal'
+        WF_TITLE = 'DCWorkflow w/ missing attrs'
+        WF_DESCRIPTION = WF_TITLE
+        WF_INITIAL_STATE = 'closed'
+
+        site = self._initSite()
+
+        configurator = self._makeOne( site ).__of__( site )
+
+        ( workflow_id
+        , title
+        , state_variable
+        , initial_state
+        , states
+        , transitions
+        , variables
+        , worklists
+        , permissions
+        , scripts
+        , description
+        , manager_bypass
+        , creation_guard
+        ) = configurator.parseWorkflowXML(
+                          _WORKFLOW_EXPORT_W_MISSING_VARIABLE_ATTRS
+                          % { 'workflow_id' : WF_ID
+                            , 'title' : WF_TITLE
+                            , 'description' : WF_DESCRIPTION
+                            , 'initial_state' : WF_INITIAL_STATE
+                            , 'workflow_filename' : WF_ID.replace(' ', '_')
+                            } )
+
+        self.assertEqual( len( variables ), len( _WF_VARIABLES_MISSING_ATTRS ) )
+
+        for variable in variables:
+
+            variable_id = variable[ 'variable_id' ]
+            self.failUnless( variable_id in _WF_VARIABLES_MISSING_ATTRS )
+
+            expected = _WF_VARIABLES_MISSING_ATTRS[ variable_id ]
 
             description = ''.join( variable[ 'description' ] )
             self.failUnless( expected[ 0 ] in description )
@@ -1088,6 +1220,42 @@ _WF_VARIABLES = \
                   )
 }
 
+_WF_VARIABLES_MISSING_ATTRS = \
+{ 'when_opened':  ( 'Opened when'
+                  , ''
+                  , "python:None"
+                  , False
+                  , False
+                  , False
+                  , ( 'Query history', 'Open content for modifications' )
+                  , ()
+                  , ()
+                  , ""
+                  )
+, 'when_expired': ( 'Expired when'
+                  , ''
+                  , "nothing"
+                  , False
+                  , False
+                  , False
+                  , ( 'Query history', 'Open content for modifications' )
+                  , ()
+                  , ()
+                  , ""
+                  )
+, 'killed_by':    ( 'Killed by'
+                  , 'n/a'
+                  , ""
+                  , False
+                  , False
+                  , False
+                  , ()
+                  , ( 'Hangman', 'Sherrif' )
+                  , ()
+                  , ""
+                  )
+}
+
 _WF_STATES = \
 { 'closed':  ( 'Closed'
              , 'Closed for modifications'
@@ -1114,6 +1282,37 @@ _WF_STATES = \
              , 'Expiration date has passed'
              , ( 'open', )
              , { 'Modify content':  [ 'Owner', 'Manager' ] }
+             , ()
+             , { 'is_opened':  False, 'is_closed':  False }
+             )
+}
+
+_WF_STATES_MISSING_ACQUIRED = \
+{ 'closed':  ( 'Closed'
+             , 'Closed for modifications'
+             , ( 'open', 'kill', 'expire' )
+             , { 'Modify content':  () }
+             , ()
+             , { 'is_opened':  False, 'is_closed':  True }
+             )
+, 'opened':  ( 'Opened'
+             , 'Open for modifications'
+             , ( 'close', 'kill', 'expire' )
+             , { 'Modify content':  ( 'Owner', 'Manager' ) }
+             , [ ( 'Content_owners', ( 'Owner', ) ) ]
+             , { 'is_opened':  True, 'is_closed':  False }
+             )
+, 'killed':  ( 'Killed'
+             , 'Permanently unavailable'
+             , ()
+             , {}
+             , ()
+             , {}
+             )
+, 'expired': ( 'Expired'
+             , 'Expiration date has passed'
+             , ( 'open', )
+             , { 'Modify content':  ( 'Owner', 'Manager' ) }
              , ()
              , { 'is_opened':  False, 'is_closed':  False }
              )
@@ -1789,6 +1988,494 @@ _NORMAL_WORKFLOW_EXPORT = """\
     for_catalog="True"
     for_status="False"
     update_always="True">
+   <description>Opened when</description>
+   <default>
+    <expression>python:None</expression>
+   </default>
+   <guard>
+    <guard-permission>Query history</guard-permission>
+    <guard-permission>Open content for modifications</guard-permission>
+   </guard>
+ </variable>
+ <script
+    script_id="after_close"
+    type="Script (Python)"
+    filename="workflows/%(workflow_filename)s/scripts/after_close.py"
+    module=""
+    function=""
+    />
+ <script
+    script_id="after_kill"
+    type="Script (Python)"
+    filename="workflows/%(workflow_filename)s/scripts/after_kill.py"
+    module=""
+    function=""
+    />
+ <script
+    script_id="before_expire"
+    type="External Method"
+    filename=""
+    module="DCWorkflow.test_method"
+    function="test"
+    />
+ <script
+    script_id="before_open"
+    type="Script (Python)"
+    filename="workflows/%(workflow_filename)s/scripts/before_open.py"
+    module=""
+    function=""
+    />
+</dc-workflow>
+"""
+
+_WORKFLOW_EXPORT_WO_ACQUIRED = """\
+<?xml version="1.0"?>
+<dc-workflow
+    workflow_id="%(workflow_id)s"
+    title="%(title)s"
+    description="%(description)s"
+    state_variable="state"
+    initial_state="%(initial_state)s"
+    manager_bypass="False">
+ <permission>Open content for modifications</permission>
+ <permission>Modify content</permission>
+ <permission>Query history</permission>
+ <permission>Restore expired content</permission>
+ <state
+    state_id="closed"
+    title="Closed">
+  <description>Closed for modifications</description>
+  <exit-transition
+    transition_id="open"/>
+  <exit-transition
+    transition_id="kill"/>
+  <exit-transition
+    transition_id="expire"/>
+  <permission-map
+    name="Modify content">
+  </permission-map>
+  <assignment
+    name="is_closed"
+    type="bool">True</assignment>
+  <assignment
+    name="is_opened"
+    type="bool">False</assignment>
+ </state>
+ <state
+    state_id="expired"
+    title="Expired">
+  <description>Expiration date has passed</description>
+  <exit-transition
+    transition_id="open"/>
+  <permission-map
+    name="Modify content">
+   <permission-role>Owner</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <assignment
+    name="is_closed"
+    type="bool">False</assignment>
+  <assignment
+    name="is_opened"
+    type="bool">False</assignment>
+ </state>
+ <state
+    state_id="killed"
+    title="Killed">
+  <description>Permanently unavailable</description>
+ </state>
+ <state
+    state_id="opened"
+    title="Opened">
+  <description>Open for modifications</description>
+  <exit-transition
+    transition_id="close"/>
+  <exit-transition
+    transition_id="kill"/>
+  <exit-transition
+    transition_id="expire"/>
+  <permission-map
+    name="Modify content">
+   <permission-role>Owner</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <group-map name="Content_owners">
+   <group-role>Owner</group-role>
+  </group-map>
+  <assignment
+    name="is_closed"
+    type="bool">False</assignment>
+  <assignment
+    name="is_opened"
+    type="bool">True</assignment>
+ </state>
+ <transition
+    transition_id="close"
+    title="Close"
+    trigger="USER"
+    new_state="closed"
+    before_script=""
+    after_script="after_close">
+  <description>Close the object for modifications</description>
+  <action
+    category="workflow"
+    url="string:${object_url}/close_for_modifications"
+    icon="string:${portal_url}/close.png">Close</action>
+  <guard>
+   <guard-role>Owner</guard-role>
+   <guard-role>Manager</guard-role>
+  </guard>
+ </transition>
+ <transition
+    transition_id="expire"
+    title="Expire"
+    trigger="AUTOMATIC"
+    new_state="expired"
+    before_script="before_expire"
+    after_script="">
+  <description>Retire objects whose expiration is past.</description>
+  <guard>
+   <guard-expression>python: object.expiration() &lt;= object.ZopeTime()</guard-expression>
+  </guard>
+  <assignment
+    name="when_expired">object/ZopeTime</assignment>
+ </transition>
+ <transition
+    transition_id="kill"
+    title="Kill"
+    trigger="USER"
+    new_state="killed"
+    before_script=""
+    after_script="after_kill">
+  <description>Make the object permanently unavailable.</description>
+  <action
+    category="workflow"
+    url="string:${object_url}/kill_object"
+    icon="string:${portal_url}/kill.png">Kill</action>
+  <guard>
+   <guard-group>Content_assassins</guard-group>
+  </guard>
+  <assignment
+    name="killed_by">string:${user/getId}</assignment>
+ </transition>
+ <transition
+    transition_id="open"
+    title="Open"
+    trigger="USER"
+    new_state="opened"
+    before_script="before_open"
+    after_script="">
+  <description>Open the object for modifications</description>
+  <action
+    category="workflow"
+    url="string:${object_url}/open_for_modifications"
+    icon="string:${portal_url}/open.png">Open</action>
+  <guard>
+   <guard-permission>Open content for modifications</guard-permission>
+  </guard>
+  <assignment
+    name="when_opened">object/ZopeTime</assignment>
+ </transition>
+ <worklist
+    worklist_id="alive_list"
+    title="Alive">
+  <description>Worklist for content not yet expired / killed</description>
+  <action
+    category="workflow"
+    url="string:${portal_url}/expired_items"
+    icon="string:${portal_url}/alive.png">Expired items</action>
+  <guard>
+   <guard-permission>Restore expired content</guard-permission>
+  </guard>
+  <match name="state" values="open; closed"/>
+ </worklist>
+ <worklist
+    worklist_id="expired_list"
+    title="Expired">
+  <description>Worklist for expired content</description>
+  <action
+    category="workflow"
+    url="string:${portal_url}/expired_items"
+    icon="string:${portal_url}/expired.png">Expired items</action>
+  <guard>
+   <guard-permission>Restore expired content</guard-permission>
+  </guard>
+  <match name="state" values="expired"/>
+ </worklist>
+ <variable
+    variable_id="killed_by"
+    for_catalog="True"
+    for_status="False"
+    update_always="True">
+   <description>Killed by</description>
+   <default>
+    <value type="string">n/a</value>
+   </default>
+   <guard>
+    <guard-role>Hangman</guard-role>
+    <guard-role>Sherrif</guard-role>
+   </guard>
+ </variable>
+ <variable
+    variable_id="when_expired"
+    for_catalog="True"
+    for_status="False"
+    update_always="True">
+   <description>Expired when</description>
+   <default>
+    <expression>nothing</expression>
+   </default>
+   <guard>
+    <guard-permission>Query history</guard-permission>
+    <guard-permission>Open content for modifications</guard-permission>
+   </guard>
+ </variable>
+ <variable
+    variable_id="when_opened"
+    for_catalog="True"
+    for_status="False"
+    update_always="True">
+   <description>Opened when</description>
+   <default>
+    <expression>python:None</expression>
+   </default>
+   <guard>
+    <guard-permission>Query history</guard-permission>
+    <guard-permission>Open content for modifications</guard-permission>
+   </guard>
+ </variable>
+ <script
+    script_id="after_close"
+    type="Script (Python)"
+    filename="workflows/%(workflow_filename)s/scripts/after_close.py"
+    module=""
+    function=""
+    />
+ <script
+    script_id="after_kill"
+    type="Script (Python)"
+    filename="workflows/%(workflow_filename)s/scripts/after_kill.py"
+    module=""
+    function=""
+    />
+ <script
+    script_id="before_expire"
+    type="External Method"
+    filename=""
+    module="DCWorkflow.test_method"
+    function="test"
+    />
+ <script
+    script_id="before_open"
+    type="Script (Python)"
+    filename="workflows/%(workflow_filename)s/scripts/before_open.py"
+    module=""
+    function=""
+    />
+</dc-workflow>
+"""
+
+_WORKFLOW_EXPORT_W_MISSING_VARIABLE_ATTRS = """\
+<?xml version="1.0"?>
+<dc-workflow
+    workflow_id="%(workflow_id)s"
+    title="%(title)s"
+    description="%(description)s"
+    state_variable="state"
+    initial_state="%(initial_state)s"
+    manager_bypass="False">
+ <permission>Open content for modifications</permission>
+ <permission>Modify content</permission>
+ <permission>Query history</permission>
+ <permission>Restore expired content</permission>
+ <state
+    state_id="closed"
+    title="Closed">
+  <description>Closed for modifications</description>
+  <exit-transition
+    transition_id="open"/>
+  <exit-transition
+    transition_id="kill"/>
+  <exit-transition
+    transition_id="expire"/>
+  <permission-map
+    acquired="False"
+    name="Modify content">
+  </permission-map>
+  <assignment
+    name="is_closed"
+    type="bool">True</assignment>
+  <assignment
+    name="is_opened"
+    type="bool">False</assignment>
+ </state>
+ <state
+    state_id="expired"
+    title="Expired">
+  <description>Expiration date has passed</description>
+  <exit-transition
+    transition_id="open"/>
+  <permission-map
+    acquired="True"
+    name="Modify content">
+   <permission-role>Owner</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <assignment
+    name="is_closed"
+    type="bool">False</assignment>
+  <assignment
+    name="is_opened"
+    type="bool">False</assignment>
+ </state>
+ <state
+    state_id="killed"
+    title="Killed">
+  <description>Permanently unavailable</description>
+ </state>
+ <state
+    state_id="opened"
+    title="Opened">
+  <description>Open for modifications</description>
+  <exit-transition
+    transition_id="close"/>
+  <exit-transition
+    transition_id="kill"/>
+  <exit-transition
+    transition_id="expire"/>
+  <permission-map
+    acquired="True"
+    name="Modify content">
+   <permission-role>Owner</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <group-map name="Content_owners">
+   <group-role>Owner</group-role>
+  </group-map>
+  <assignment
+    name="is_closed"
+    type="bool">False</assignment>
+  <assignment
+    name="is_opened"
+    type="bool">True</assignment>
+ </state>
+ <transition
+    transition_id="close"
+    title="Close"
+    trigger="USER"
+    new_state="closed"
+    before_script=""
+    after_script="after_close">
+  <description>Close the object for modifications</description>
+  <action
+    category="workflow"
+    url="string:${object_url}/close_for_modifications"
+    icon="string:${portal_url}/close.png">Close</action>
+  <guard>
+   <guard-role>Owner</guard-role>
+   <guard-role>Manager</guard-role>
+  </guard>
+ </transition>
+ <transition
+    transition_id="expire"
+    title="Expire"
+    trigger="AUTOMATIC"
+    new_state="expired"
+    before_script="before_expire"
+    after_script="">
+  <description>Retire objects whose expiration is past.</description>
+  <guard>
+   <guard-expression>python: object.expiration() &lt;= object.ZopeTime()</guard-expression>
+  </guard>
+  <assignment
+    name="when_expired">object/ZopeTime</assignment>
+ </transition>
+ <transition
+    transition_id="kill"
+    title="Kill"
+    trigger="USER"
+    new_state="killed"
+    before_script=""
+    after_script="after_kill">
+  <description>Make the object permanently unavailable.</description>
+  <action
+    category="workflow"
+    url="string:${object_url}/kill_object"
+    icon="string:${portal_url}/kill.png">Kill</action>
+  <guard>
+   <guard-group>Content_assassins</guard-group>
+  </guard>
+  <assignment
+    name="killed_by">string:${user/getId}</assignment>
+ </transition>
+ <transition
+    transition_id="open"
+    title="Open"
+    trigger="USER"
+    new_state="opened"
+    before_script="before_open"
+    after_script="">
+  <description>Open the object for modifications</description>
+  <action
+    category="workflow"
+    url="string:${object_url}/open_for_modifications"
+    icon="string:${portal_url}/open.png">Open</action>
+  <guard>
+   <guard-permission>Open content for modifications</guard-permission>
+  </guard>
+  <assignment
+    name="when_opened">object/ZopeTime</assignment>
+ </transition>
+ <worklist
+    worklist_id="alive_list"
+    title="Alive">
+  <description>Worklist for content not yet expired / killed</description>
+  <action
+    category="workflow"
+    url="string:${portal_url}/expired_items"
+    icon="string:${portal_url}/alive.png">Expired items</action>
+  <guard>
+   <guard-permission>Restore expired content</guard-permission>
+  </guard>
+  <match name="state" values="open; closed"/>
+ </worklist>
+ <worklist
+    worklist_id="expired_list"
+    title="Expired">
+  <description>Worklist for expired content</description>
+  <action
+    category="workflow"
+    url="string:${portal_url}/expired_items"
+    icon="string:${portal_url}/expired.png">Expired items</action>
+  <guard>
+   <guard-permission>Restore expired content</guard-permission>
+  </guard>
+  <match name="state" values="expired"/>
+ </worklist>
+ <variable
+    variable_id="killed_by">
+   <description>Killed by</description>
+   <default>
+    <value type="string">n/a</value>
+   </default>
+   <guard>
+    <guard-role>Hangman</guard-role>
+    <guard-role>Sherrif</guard-role>
+   </guard>
+ </variable>
+ <variable
+    variable_id="when_expired">
+   <description>Expired when</description>
+   <default>
+    <expression>nothing</expression>
+   </default>
+   <guard>
+    <guard-permission>Query history</guard-permission>
+    <guard-permission>Open content for modifications</guard-permission>
+   </guard>
+ </variable>
+ <variable
+    variable_id="when_opened">
    <description>Opened when</description>
    <default>
     <expression>python:None</expression>
