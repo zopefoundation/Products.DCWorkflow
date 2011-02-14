@@ -4,4 +4,4 @@
 object = sci.object
 vt = object.portal_versions
 if vt.isCheckedOut(object):
-  vt.checkin(object, sci.kwargs.get('comment', ''))
+    vt.checkin(object, sci.kwargs.get('comment', ''))

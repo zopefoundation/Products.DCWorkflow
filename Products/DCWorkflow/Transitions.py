@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Transitions in a web-configurable workflow.
-
-$Id$
 """
 
 from AccessControl import ClassSecurityInfo
@@ -179,7 +177,7 @@ class TransitionDefinition (SimpleItem):
 
         expr = None
         if text:
-          expr = Expression(str(text))
+            expr = Expression(str(text))
         self.var_exprs[id] = expr
 
         if REQUEST is not None:

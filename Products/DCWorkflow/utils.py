@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Some common utilities.
-
-$Id$
 """
 
 import os
@@ -38,13 +36,13 @@ def ac_inherited_permissions(ob, all=0):
     for p in perms: d[p[0]] = None
     r = gather_permissions(ob.__class__, [], d)
     if all:
-       if hasattr(ob, '_subobject_permissions'):
-           for p in ob._subobject_permissions():
-               pname=p[0]
-               if not d.has_key(pname):
-                   d[pname]=1
-                   r.append(p)
-       r = list(perms) + r
+        if hasattr(ob, '_subobject_permissions'):
+            for p in ob._subobject_permissions():
+                pname=p[0]
+                if not d.has_key(pname):
+                    d[pname]=1
+                    r.append(p)
+        r = list(perms) + r
     return r
 
 def modifyRolesForPermission(ob, pname, roles):

@@ -7,4 +7,4 @@
 object = sci.object
 vt = object.portal_versions
 if not vt.isCheckedOut(object):
-  vt.checkout(object)
+    vt.checkout(object)
