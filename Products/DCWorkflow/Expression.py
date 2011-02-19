@@ -11,11 +11,7 @@
 # 
 ##############################################################################
 """ Expressions in a web-configurable workflow.
-
-$Id$
 """
-
-from warnings import warn
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.SecurityManagement import getSecurityManager
@@ -26,9 +22,10 @@ from DateTime.DateTime import DateTime
 from Products.PageTemplates.Expressions import getEngine
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
-from Products.CMFCore.WorkflowCore import ObjectDeleted, ObjectMoved
 from Products.CMFCore.Expression import Expression # BBB: old location
 from Products.CMFCore.interfaces import ISiteRoot
+from Products.CMFCore.WorkflowCore import ObjectDeleted
+from Products.CMFCore.WorkflowCore import ObjectMoved
 
 
 # We don't import SafeMapping from Products.PageTemplates.TALES
@@ -103,14 +100,6 @@ class StateChangeInfo:
         while ob is not None:
             if ISiteRoot.providedBy(ob):
                 return ob
-            if getattr(ob, '_isPortalRoot', None) is not None:
-                # BBB
-                warn("The '_isPortalRoot' marker attribute for site "
-                     "roots is deprecated and will be removed in "
-                     "CMF 2.3;  please mark the root object with "
-                     "'ISiteRoot' instead.",
-                     DeprecationWarning, stacklevel=2)
-                return ob
             ob = aq_parent(ob)
         return None
 
@@ -148,4 +137,3 @@ def createExprContext(sci):
         'scripts':      wf.scripts,
         }
     return getEngine().getContext(data)
-

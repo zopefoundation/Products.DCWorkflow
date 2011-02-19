@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.3.0-alpha (unreleased)
 ------------------------
 
+- StateChangeInfo: Removed support for deprecated '_isPortalRoot' marker.
+
 - Hardened XML import parsing against missing boolean attributes.
   (https://bugs.launchpad.net/zope-cmf/+bug/707927)
 
