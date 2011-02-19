@@ -11,20 +11,13 @@
 #
 ##############################################################################
 """ Unit test layers.
-
-$Id$
 """
 
 from Testing.ZopeTestCase.layer import ZopeLite
 from zope.testing.cleanup import cleanUp
+from Zope2.App import zcml
 
 from Products.CMFCore.testing import _DUMMY_ZCML
-
-# BBB for Zope 2.12
-try:
-    from Zope2.App import zcml
-except ImportError:
-    from Products.Five import zcml
 
 
 class ExportImportZCMLLayer(ZopeLite):

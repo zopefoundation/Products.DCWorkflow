@@ -46,11 +46,11 @@ setup(name='Products.%s' % NAME,
                      ],
       install_requires=[
           'setuptools',
-          'Zope2 >= 2.12.11',
+          'Zope2 >= 2.13.4',
           'Products.CMFCore',
-#          'Products.ExternalMethod', # BBB: disabled for Zope 2.12
+          'Products.ExternalMethod',
           'Products.GenericSetup',
-#          'Products.PythonScripts', # BBB: disabled for Zope 2.12
+          'Products.PythonScripts',
           ],
       tests_require=[
           'zope.testing >= 3.7.0',
