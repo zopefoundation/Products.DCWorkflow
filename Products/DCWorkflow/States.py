@@ -265,6 +265,7 @@ class States(ContainerTab):
 
     all_meta_types = ({'name':StateDefinition.meta_type,
                        'action':'addState',
+                       'permission': ManagePortal,
                        },)
 
     _manage_states = DTMLFile('states', _dtmldir)

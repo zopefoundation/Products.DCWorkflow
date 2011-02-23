@@ -115,6 +115,7 @@ class Variables(ContainerTab):
 
     all_meta_types = ({'name':VariableDefinition.meta_type,
                        'action':'addVariable',
+                       'permission': ManagePortal,
                        },)
 
     _manage_variables = DTMLFile('variables', _dtmldir)
