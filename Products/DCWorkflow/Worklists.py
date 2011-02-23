@@ -199,6 +199,7 @@ class Worklists(ContainerTab):
 
     all_meta_types = ({'name':WorklistDefinition.meta_type,
                        'action':'addWorklist',
+                       'permission': ManagePortal,
                        },)
 
     _manage_worklists = DTMLFile('worklists', _dtmldir)

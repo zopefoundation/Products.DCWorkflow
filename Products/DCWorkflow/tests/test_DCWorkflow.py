@@ -16,28 +16,35 @@
 import unittest
 import Testing
 
+import transaction
 from zope.component import adapter
 from zope.component import provideHandler
 from zope.interface.verify import verifyClass
+from AccessControl.SecurityManagement import newSecurityManager
 
 from Products.CMFCore.testing import TraversingEventZCMLLayer
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummySite
 from Products.CMFCore.tests.base.dummy import DummyTool
+from Products.CMFCore.tests.base.security import OmnipotentUser
+from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFCore.WorkflowTool import WorkflowTool
 from Products.DCWorkflow.interfaces import IAfterTransitionEvent
 from Products.DCWorkflow.interfaces import IBeforeTransitionEvent
 
-
-class DCWorkflowDefinitionTests(unittest.TestCase):
+class DCWorkflowDefinitionTests(SecurityTest):
 
     layer = TraversingEventZCMLLayer
 
     def setUp(self):
+        SecurityTest.setUp(self)
         self.site = DummySite('site')
+        self.root._setObject( 'site', self.site )
         self.site._setObject( 'portal_types', DummyTool() )
         self.site._setObject( 'portal_workflow', WorkflowTool() )
         self._constructDummyWorkflow()
+        transaction.savepoint(optimistic=True)
+        newSecurityManager(None, OmnipotentUser().__of__(self.site))
 
     def test_interfaces(self):
         from Products.CMFCore.interfaces import IWorkflowDefinition
@@ -69,6 +76,9 @@ class DCWorkflowDefinitionTests(unittest.TestCase):
         vdef.setProperties(description='',
                  default_expr="python:state_change.kwargs.get('comment', '')",
                  for_status=1, update_always=1)
+
+        wf.worklists.addWorklist('published_documents')
+
 
     def _getDummyWorkflow(self):
         wftool = self.site.portal_workflow
@@ -174,6 +184,26 @@ class DCWorkflowDefinitionTests(unittest.TestCase):
 
         # Check with kwargs.
         self.assert_(wf.isActionSupported(dummy, 'publish', arg1=1, arg2=2))
+
+    def test_rename(self):
+
+        wftool = self.site.portal_workflow
+        wf = self._getDummyWorkflow()
+
+        wf.states.manage_renameObject('private', 'private_new')
+        self.assertNotEquals(None, wf.states._getOb('private_new', None))
+
+        wf.transitions.manage_renameObject('publish', 'publish_new')
+        self.assertNotEquals(None, wf.transitions._getOb('publish_new', None))
+        
+        wf.variables.manage_renameObject('comments', 'comments_new')
+        self.assertNotEquals(None, wf.variables._getOb('comments_new', None))
+
+        wf.worklists.manage_renameObject('published_documents',
+                                         'published_documents_new')
+        self.assertNotEquals(None,
+            wf.worklists._getOb('published_documents_new', None))
+
 
     # XXX more tests...
 
