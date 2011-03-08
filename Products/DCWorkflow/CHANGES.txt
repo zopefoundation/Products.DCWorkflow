@@ -4,6 +4,9 @@ Products.DCWorkflow Changelog
 2.3.0-alpha (unreleased)
 ------------------------
 
+- Don't crash worklist's ``manage_main`` if variables are Expression objects.
+  (https://bugs.launchpad.net/zope-cmf/+bug/731394)
+
 - Require at least Zope 2.13.4.
 
 - StateChangeInfo: Removed support for deprecated '_isPortalRoot' marker.
