@@ -38,8 +38,8 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
     def setUp(self):
         SecurityTest.setUp(self)
-        self.site = DummySite('site')
-        self.root._setObject( 'site', self.site )
+        self.root._setObject('site', DummySite('site') )
+        self.site = self.root._getOb('site')
         self.site._setObject( 'portal_types', DummyTool() )
         self.site._setObject( 'portal_workflow', WorkflowTool() )
         self._constructDummyWorkflow()
@@ -203,6 +203,16 @@ class DCWorkflowDefinitionTests(SecurityTest):
                                          'published_documents_new')
         self.assertNotEquals(None,
             wf.worklists._getOb('published_documents_new', None))
+
+    def test_worklists(self):
+        wf = self._getDummyWorkflow()
+        worklist =  wf.worklists._getOb('published_documents')
+        # check ZMI
+        wf.worklists.manage_main(self.REQUEST)
+        # store an Expression
+        worklist.setProperties('', props={'var_match_state': 'string:private'})
+        # check ZMI
+        wf.worklists.manage_main(self.app.REQUEST)
 
 
     # XXX more tests...

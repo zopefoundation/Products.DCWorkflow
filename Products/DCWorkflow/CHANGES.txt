@@ -4,6 +4,11 @@ Products.DCWorkflow Changelog
 2.2.4 (unreleased)
 ------------------
 
+- Don't crash worklist's ``manage_main`` if variables are Expression objects.
+  (https://bugs.launchpad.net/zope-cmf/+bug/731394)
+
+- Allow renaming of states, transitions, variables and worklists
+
 
 2.2.3 (2011-01-12)
 ------------------

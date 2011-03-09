@@ -21,12 +21,8 @@
    <dtml-if getVarMatchKeys>
     Catalog matches:
     <dtml-in getVarMatchKeys sort>
-    <dtml-let key=sequence-item value="getVarMatch(key)">
-     <code>&dtml-key;</code> =
-     <dtml-in value>
-       <code>&dtml-sequence-item;</code>
-       <dtml-unless sequence-end>or</dtml-unless>
-     </dtml-in>
+    <dtml-let key=sequence-item value="getVarMatchText(key)">
+     <code>&dtml-key;</code> = <code>&dtml-value;</code>
      <dtml-unless sequence-end>;</dtml-unless>
     </dtml-let>
     </dtml-in>
