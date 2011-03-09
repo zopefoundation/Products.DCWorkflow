@@ -212,7 +212,7 @@ class DCWorkflowDefinitionTests(SecurityTest):
         # store an Expression
         worklist.setProperties('', props={'var_match_state': 'string:private'})
         # check ZMI
-        wf.worklists.manage_main(self.app.REQUEST)
+        wf.worklists.manage_main(self.REQUEST)
 
 
     # XXX more tests...
