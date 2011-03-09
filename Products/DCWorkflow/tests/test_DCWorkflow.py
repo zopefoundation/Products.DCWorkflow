@@ -205,8 +205,6 @@ class DCWorkflowDefinitionTests(SecurityTest):
             wf.worklists._getOb('published_documents_new', None))
 
     def test_worklists(self):
-        wftool = self.root.site.portal_workflow
-
         wf = self._getDummyWorkflow()
         worklist =  wf.worklists._getOb('published_documents')
         # check ZMI
@@ -214,7 +212,7 @@ class DCWorkflowDefinitionTests(SecurityTest):
         # store an Expression
         worklist.setProperties('', props={'var_match_state': 'string:private'})
         # check ZMI
-        wf.worklists.manage_main(self.app.REQUEST)
+        wf.worklists.manage_main(self.REQUEST)
 
 
     # XXX more tests...
