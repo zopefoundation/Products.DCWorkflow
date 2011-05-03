@@ -49,7 +49,9 @@ class DCWorkflowDefinitionBodyAdapter(BodyAdapterBase):
         """Export the object as a file body.
         """
         wfdc = WorkflowDefinitionConfigurator(self.context)
-        return wfdc.__of__(self.context).generateWorkflowXML()
+        body = wfdc.__of__(self.context).generateWorkflowXML()
+        body = body.encode('utf-8')
+        return body
 
     def _importBody(self, body):
         """Import the object from the file body.

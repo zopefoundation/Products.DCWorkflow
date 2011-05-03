@@ -1,4 +1,5 @@
-##############################################################################
+# -*- coding:utf-8 -*-
+###############################################################################
 #
 # Copyright (c) 2004 Zope Foundation and Contributors.
 #
@@ -15,6 +16,8 @@
 
 import unittest
 import Testing
+
+from StringIO import StringIO
 
 from Products.PythonScripts.PythonScript import PythonScript
 from Products.ExternalMethod.ExternalMethod import ExternalMethod
@@ -33,6 +36,7 @@ from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.GenericSetup.tests.common import DummyExportContext
 from Products.GenericSetup.tests.common import DummyImportContext
+from Products.GenericSetup.tests.common import TarballTester
 
 
 class _GuardChecker:
@@ -1978,6 +1982,47 @@ class Test_exportWorkflow(_WorkflowSetup, _GuardChecker):
         self.assertEqual( text, _AFTER_CLOSE_SCRIPT)
         self.assertEqual( content_type, 'text/plain' )
 
+class Test_exportUTFWorkflow(Test_exportWorkflow,TarballTester):
+
+    layer = ExportImportZCMLLayer
+
+    def test_utf_strings( self ):
+        from Products.CMFCore.exportimport.workflow import exportWorkflowTool
+        from Products.GenericSetup.context import TarballExportContext
+        
+        WF_ID_DC = 'workflow'
+        WF_TITLE_DC = u'A workflow with special chars like è é'
+        WF_DESCRIPTION_DC = u'A workflow with lots of special chars ç'
+        WF_INITIAL_STATE = 'closed'
+
+        site = self._initSite()
+
+        dcworkflow = self._initDCWorkflow( WF_ID_DC )
+        dcworkflow.title = WF_TITLE_DC
+        dcworkflow.description = WF_DESCRIPTION_DC
+        dcworkflow.initial_state = WF_INITIAL_STATE
+        dcworkflow.permissions = _WF_PERMISSIONS
+        self._initVariables( dcworkflow )
+        self._initStates( dcworkflow )
+        self._initTransitions( dcworkflow )
+        self._initWorklists( dcworkflow )
+        ctx = TarballExportContext(site)
+        
+        context = DummyExportContext( site )
+        exportWorkflowTool( context )
+        self.assertEqual( len( context._wrote ), 2 )
+        for filename, text, content_type in context._wrote:
+            ctx.writeDataFile( filename, text, content_type)
+        fileish = StringIO( ctx.getArchive() )
+        self._verifyTarballContents( fileish, 
+                                     ['workflows/workflow', 'workflows',
+                                      'workflows.xml',
+                                      'workflows/workflow/definition.xml'])
+        self._verifyTarballEntry( fileish, 'workflows.xml', 
+                                           context._wrote[0][1] )
+        self._verifyTarballEntry( fileish, 'workflows/workflow/definition.xml', 
+                                           context._wrote[1][1] )
+        
 
 class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
@@ -2552,5 +2597,6 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite( WorkflowDefinitionConfiguratorTests ),
         unittest.makeSuite( Test_exportWorkflow ),
+        unittest.makeSuite( Test_exportUTFWorkflow),
         unittest.makeSuite( Test_importWorkflow ),
         ))
