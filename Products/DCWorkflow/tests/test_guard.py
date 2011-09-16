@@ -17,29 +17,35 @@ import unittest
 import Testing
 
 from AccessControl import getSecurityManager
+from zope.component import getSiteManager
+from zope.testing.cleanup import cleanUp
+
+from Products.CMFCore.interfaces import IWorkflowTool
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummySite
 from Products.CMFCore.tests.base.dummy import DummyTool
 from Products.CMFCore.WorkflowTool import WorkflowTool
-
-from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+from Products.DCWorkflow.Guard import Guard
 
 
 class TestGuard(unittest.TestCase):
 
     def setUp(self):
         self.site = DummySite('site')
-        self.site._setObject( 'portal_types', DummyTool() )
-        self.site._setObject( 'portal_workflow', WorkflowTool() )
+        self.site._setObject('portal_types', DummyTool())
 
         # Construct a workflow
-        wftool = self.site.portal_workflow
-        wftool._setObject('wf', DCWorkflowDefinition('wf'))
-        wftool.setDefaultChain('wf')
+        self.wtool = WorkflowTool()
+        self.wtool._setObject('wf', DCWorkflowDefinition('wf'))
+        self.wtool.setDefaultChain('wf')
+        getSiteManager().registerUtility(self.wtool, IWorkflowTool)
+
+    def tearDown(self):
+        cleanUp()
 
     def _getDummyWorkflow(self):
-        return self.site.portal_workflow['wf']
+        return self.wtool.wf
 
     def test_BaseGuardAPI(self):
         from zope.tales.tales import CompilerError

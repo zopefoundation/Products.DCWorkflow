@@ -17,11 +17,13 @@ import unittest
 import Testing
 
 import transaction
+from AccessControl.SecurityManagement import newSecurityManager
 from zope.component import adapter
+from zope.component import getSiteManager
 from zope.component import provideHandler
 from zope.interface.verify import verifyClass
-from AccessControl.SecurityManagement import newSecurityManager
 
+from Products.CMFCore.interfaces import IWorkflowTool
 from Products.CMFCore.testing import TraversingEventZCMLLayer
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummySite
@@ -32,16 +34,18 @@ from Products.CMFCore.WorkflowTool import WorkflowTool
 from Products.DCWorkflow.interfaces import IAfterTransitionEvent
 from Products.DCWorkflow.interfaces import IBeforeTransitionEvent
 
+
 class DCWorkflowDefinitionTests(SecurityTest):
 
     layer = TraversingEventZCMLLayer
 
     def setUp(self):
         SecurityTest.setUp(self)
-        self.root._setObject('site', DummySite('site') )
-        self.site = self.root._getOb('site')
-        self.site._setObject( 'portal_types', DummyTool() )
-        self.site._setObject( 'portal_workflow', WorkflowTool() )
+        self.app._setObject('site', DummySite('site'))
+        self.site = self.app._getOb('site')
+        self.site._setObject('portal_types', DummyTool())
+        self.wtool = self.site._setObject('portal_workflow', WorkflowTool())
+        getSiteManager().registerUtility(self.wtool, IWorkflowTool)
         self._constructDummyWorkflow()
         transaction.savepoint(optimistic=True)
         newSecurityManager(None, OmnipotentUser().__of__(self.site))
@@ -55,10 +59,10 @@ class DCWorkflowDefinitionTests(SecurityTest):
     def _constructDummyWorkflow(self):
         from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 
-        wftool = self.site.portal_workflow
-        wftool._setObject('wf', DCWorkflowDefinition('wf'))
-        wftool.setDefaultChain('wf')
-        wf = wftool.wf
+        wtool = self.wtool
+        wtool._setObject('wf', DCWorkflowDefinition('wf'))
+        wtool.setDefaultChain('wf')
+        wf = wtool.wf
 
         wf.states.addState('private')
         sdef = wf.states['private']
@@ -79,18 +83,15 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
         wf.worklists.addWorklist('published_documents')
 
-
     def _getDummyWorkflow(self):
-        wftool = self.site.portal_workflow
-        return wftool.wf
+        return self.wtool.wf
 
     def test_doActionFor(self):
-
-        wftool = self.site.portal_workflow
+        wtool = self.wtool
         wf = self._getDummyWorkflow()
 
         dummy = self.site._setObject( 'dummy', DummyContent() )
-        wftool.notifyCreated(dummy)
+        wtool.notifyCreated(dummy)
         self.assertEqual( wf._getStatusOf(dummy),
                           {'state': 'private', 'comments': ''} )
         wf.doActionFor(dummy, 'publish', comment='foo' )
@@ -100,7 +101,6 @@ class DCWorkflowDefinitionTests(SecurityTest):
         # XXX more
 
     def test_events(self):
-
         events = []
 
         @adapter(IBeforeTransitionEvent)
@@ -113,7 +113,6 @@ class DCWorkflowDefinitionTests(SecurityTest):
             events.append(event)
         provideHandler(_handleAfter)
 
-        wftool = self.site.portal_workflow
         wf = self._getDummyWorkflow()
 
         dummy = self.site._setObject( 'dummy', DummyContent() )
@@ -158,11 +157,10 @@ class DCWorkflowDefinitionTests(SecurityTest):
         self.assertEquals({'test' : 'bar', 'comment' : 'foo'}, evt.kwargs)
 
     def test_checkTransitionGuard(self):
-
-        wftool = self.site.portal_workflow
+        wtool = self.wtool
         wf = self._getDummyWorkflow()
         dummy = self.site._setObject( 'dummy', DummyContent() )
-        wftool.notifyCreated(dummy)
+        wtool.notifyCreated(dummy)
         self.assertEqual( wf._getStatusOf(dummy),
                           {'state': 'private', 'comments': ''} )
 
@@ -175,7 +173,6 @@ class DCWorkflowDefinitionTests(SecurityTest):
                                               dummy, arg1=1, arg2=2))
 
     def test_isActionSupported(self):
-
         wf = self._getDummyWorkflow()
         dummy = self.site._setObject( 'dummy', DummyContent() )
 
@@ -186,8 +183,6 @@ class DCWorkflowDefinitionTests(SecurityTest):
         self.assert_(wf.isActionSupported(dummy, 'publish', arg1=1, arg2=2))
 
     def test_rename(self):
-
-        wftool = self.site.portal_workflow
         wf = self._getDummyWorkflow()
 
         wf.states.manage_renameObject('private', 'private_new')

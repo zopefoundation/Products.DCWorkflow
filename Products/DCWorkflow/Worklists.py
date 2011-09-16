@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Worklists in a web-configurable workflow.
-
-$Id$
 """
 
 import re
@@ -24,8 +22,9 @@ from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from OFS.SimpleItem import SimpleItem
 from Persistence import PersistentMapping
+from zope.component import getUtility
 
-from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.interfaces import ICatalogTool
 from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.Expression import Expression
@@ -169,7 +168,6 @@ class WorklistDefinition(SimpleItem):
         if info is None:
             info = {}
 
-        catalog = getToolByName(self, 'portal_catalog')
         criteria = {}
 
         for key, values in self.var_matches.items():
@@ -183,7 +181,8 @@ class WorklistDefinition(SimpleItem):
 
         criteria.update(kw)
 
-        return catalog.searchResults(**criteria)
+        ctool = getUtility(ICatalogTool)
+        return ctool.searchResults(**criteria)
 
 
 InitializeClass(WorklistDefinition)
