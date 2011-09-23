@@ -20,6 +20,7 @@ from AccessControl import getSecurityManager
 from zope.component import getSiteManager
 from zope.testing.cleanup import cleanUp
 
+from Products.CMFCore.interfaces import ITypesTool
 from Products.CMFCore.interfaces import IWorkflowTool
 from Products.CMFCore.tests.base.dummy import DummyContent
 from Products.CMFCore.tests.base.dummy import DummySite
@@ -33,13 +34,14 @@ class TestGuard(unittest.TestCase):
 
     def setUp(self):
         self.site = DummySite('site')
-        self.site._setObject('portal_types', DummyTool())
 
         # Construct a workflow
         self.wtool = WorkflowTool()
         self.wtool._setObject('wf', DCWorkflowDefinition('wf'))
         self.wtool.setDefaultChain('wf')
-        getSiteManager().registerUtility(self.wtool, IWorkflowTool)
+        sm = getSiteManager()
+        sm.registerUtility(self.wtool, IWorkflowTool)
+        sm.registerUtility(DummyTool(), ITypesTool)
 
     def tearDown(self):
         cleanUp()

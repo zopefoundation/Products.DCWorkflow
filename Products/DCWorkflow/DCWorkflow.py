@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Web-configurable workflow.
-
-$Id$
 """
 
 from AccessControl.SecurityInfo import ClassSecurityInfo
@@ -28,7 +26,6 @@ from zope.event import notify
 from zope.interface import implements
 
 from Products.CMFCore.interfaces import IWorkflowDefinition
-from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved
 from Products.CMFCore.WorkflowCore import WorkflowException

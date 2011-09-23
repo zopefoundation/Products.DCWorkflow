@@ -23,6 +23,7 @@ from zope.component import getSiteManager
 from zope.component import provideHandler
 from zope.interface.verify import verifyClass
 
+from Products.CMFCore.interfaces import ITypesTool
 from Products.CMFCore.interfaces import IWorkflowTool
 from Products.CMFCore.testing import TraversingEventZCMLLayer
 from Products.CMFCore.tests.base.dummy import DummyContent
@@ -43,12 +44,13 @@ class DCWorkflowDefinitionTests(SecurityTest):
         SecurityTest.setUp(self)
         self.app._setObject('site', DummySite('site'))
         self.site = self.app._getOb('site')
-        self.site._setObject('portal_types', DummyTool())
         self.wtool = self.site._setObject('portal_workflow', WorkflowTool())
-        getSiteManager().registerUtility(self.wtool, IWorkflowTool)
         self._constructDummyWorkflow()
         transaction.savepoint(optimistic=True)
         newSecurityManager(None, OmnipotentUser().__of__(self.site))
+        sm = getSiteManager()
+        sm.registerUtility(self.wtool, IWorkflowTool)
+        sm.registerUtility(DummyTool(), ITypesTool)
 
     def test_interfaces(self):
         from Products.CMFCore.interfaces import IWorkflowDefinition
