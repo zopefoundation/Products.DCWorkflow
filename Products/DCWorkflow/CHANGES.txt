@@ -1,7 +1,7 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.2.4 (unreleased)
+2.2.4 (2011-11-01)
 ------------------
 
 - Fixed issue with non-ascii chars in workflow definitions
