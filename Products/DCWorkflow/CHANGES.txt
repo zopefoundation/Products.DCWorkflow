@@ -28,6 +28,8 @@ Products.DCWorkflow Changelog
 
 - Deal with deprecation warnings for Zope 2.13.
 
+- Change default encoding of exports from None to utf-8.
+
 
 2.2.0-beta (2009-12-06)
 -----------------------

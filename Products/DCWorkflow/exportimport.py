@@ -148,7 +148,7 @@ class WorkflowDefinitionConfigurator( Implicit ):
         return self._extractScripts(self._obj)
 
     security.declareProtected( ManagePortal, 'parseWorkflowXML' )
-    def parseWorkflowXML( self, xml, encoding=None ):
+    def parseWorkflowXML( self, xml, encoding='utf-8' ):
         """ Pseudo API.
         """
         dom = parseString( xml )
@@ -648,7 +648,7 @@ def _getScriptFilename( workflow_id, script_id, meta_type ):
 
     return 'workflows/%s/scripts/%s.%s' % ( wf_dir, script_id, suffix )
 
-def _extractCreationGuard(root, encoding=None) :
+def _extractCreationGuard(root, encoding='utf-8') :
     icc = root.getElementsByTagName('instance-creation-conditions')
     assert len(icc) <= 1
     if icc :
@@ -657,7 +657,7 @@ def _extractCreationGuard(root, encoding=None) :
     else :
         return None
 
-def _extractStateNodes( root, encoding=None ):
+def _extractStateNodes( root, encoding='utf-8' ):
 
     result = []
 
@@ -718,7 +718,7 @@ def _extractStateNodes( root, encoding=None ):
 
     return result
 
-def _extractTransitionNodes( root, encoding=None ):
+def _extractTransitionNodes( root, encoding='utf-8' ):
 
     result = []
 
@@ -751,7 +751,7 @@ def _extractTransitionNodes( root, encoding=None ):
 
     return result
 
-def _extractVariableNodes( root, encoding=None ):
+def _extractVariableNodes( root, encoding='utf-8' ):
 
     result = []
 
@@ -780,7 +780,7 @@ def _extractVariableNodes( root, encoding=None ):
 
     return result
 
-def _extractWorklistNodes( root, encoding=None ):
+def _extractWorklistNodes( root, encoding='utf-8' ):
 
     result = []
 
@@ -799,7 +799,7 @@ def _extractWorklistNodes( root, encoding=None ):
 
     return result
 
-def _extractScriptNodes( root, encoding=None ):
+def _extractScriptNodes( root, encoding='utf-8' ):
 
     result = []
 
@@ -830,7 +830,7 @@ def _extractScriptNodes( root, encoding=None ):
 
     return result
 
-def _extractPermissionNodes( root, encoding=None ):
+def _extractPermissionNodes( root, encoding='utf-8' ):
 
     result = []
 
@@ -840,7 +840,7 @@ def _extractPermissionNodes( root, encoding=None ):
 
     return result
 
-def _extractActionNode( parent, encoding=None ):
+def _extractActionNode( parent, encoding='utf-8' ):
 
     nodes = parent.getElementsByTagName( 'action' )
     assert len( nodes ) <= 1, nodes
@@ -856,7 +856,7 @@ def _extractActionNode( parent, encoding=None ):
            , 'icon' : _queryNodeAttribute( node, 'icon', '', encoding )
            }
 
-def _extractGuardNode( parent, encoding=None ):
+def _extractGuardNode( parent, encoding='utf-8' ):
 
     nodes = parent.getElementsByTagName( 'guard' )
     assert len( nodes ) <= 1, nodes
@@ -883,7 +883,7 @@ def _extractGuardNode( parent, encoding=None ):
            , 'expression' : expr_text
            }
 
-def _extractDefaultNode( parent, encoding=None ):
+def _extractDefaultNode( parent, encoding='utf-8' ):
 
     nodes = parent.getElementsByTagName( 'default' )
     assert len( nodes ) <= 1, nodes
@@ -918,7 +918,7 @@ def _extractDefaultNode( parent, encoding=None ):
 
 _SEMICOLON_LIST_SPLITTER = re.compile( r';[ ]*' )
 
-def _extractMatchNode( parent, encoding=None ):
+def _extractMatchNode( parent, encoding='utf-8' ):
 
     nodes = parent.getElementsByTagName( 'match' )
 
@@ -1242,7 +1242,7 @@ def _initDCWorkflowScripts( workflow, scripts, context ):
 #
 _marker = object()
 
-def _queryNodeAttribute( node, attr_name, default, encoding=None ):
+def _queryNodeAttribute( node, attr_name, default, encoding='utf-8' ):
 
     """ Extract a string-valued attribute from node.
 
@@ -1260,7 +1260,7 @@ def _queryNodeAttribute( node, attr_name, default, encoding=None ):
 
     return value
 
-def _getNodeAttribute( node, attr_name, encoding=None ):
+def _getNodeAttribute( node, attr_name, encoding='utf-8' ):
 
     """ Extract a string-valued attribute from node.
     """
@@ -1294,7 +1294,7 @@ def _getNodeAttributeBoolean( node, attr_name ):
 
     return value in ( 'true', 'yes', '1' )
 
-def _coalesceTextNodeChildren( node, encoding=None ):
+def _coalesceTextNodeChildren( node, encoding='utf-8' ):
 
     """ Concatenate all childe text nodes into a single string.
     """
@@ -1317,7 +1317,7 @@ def _coalesceTextNodeChildren( node, encoding=None ):
 
     return ''.join( [ line.lstrip() for line in joined.splitlines(True) ] ).rstrip()
 
-def _extractDescriptionNode(parent, encoding=None):
+def _extractDescriptionNode(parent, encoding='utf-8'):
 
     d_nodes = parent.getElementsByTagName('description')
     if d_nodes:
