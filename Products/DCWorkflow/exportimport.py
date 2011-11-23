@@ -139,7 +139,8 @@ class WorkflowDefinitionConfigurator( Implicit ):
     def generateWorkflowXML(self):
         """ Pseudo API.
         """
-        return self._workflowConfig(workflow_id=self._obj.getId())
+        return self._workflowConfig(workflow_id=self._obj.getId())\
+            .encode('utf-8')
 
     security.declareProtected( ManagePortal, 'getWorkflowScripts' )
     def getWorkflowScripts(self):
