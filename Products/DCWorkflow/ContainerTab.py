@@ -19,6 +19,7 @@ from Acquisition import aq_base
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from OFS.Folder import Folder
+from zExceptions import BadRequest
 
 _marker = []  # Create a new marker object.
 
@@ -53,7 +54,7 @@ class ContainerTab(Folder):
     def _checkId(self, id, allow_dup=0):
         if not allow_dup:
             if self._mapping.has_key(id):
-                raise 'Bad Request', 'The id "%s" is already in use.' % id
+                raise BadRequest('The id "%s" is already in use.' % id)
         return Folder._checkId(self, id, allow_dup)
 
     def _getOb(self, name, default=_marker):
@@ -111,7 +112,7 @@ class ContainerTab(Folder):
     def manage_renameObjects(self, ids=[], new_ids=[], REQUEST=None):
         """Rename several sub-objects"""
         if len(ids) != len(new_ids):
-            raise 'Bad Request', 'Please rename each listed object.'
+            raise BadRequest('Please rename each listed object.')
         for i in range(len(ids)):
             if ids[i] != new_ids[i]:
                 self.manage_renameObject(ids[i], new_ids[i])

@@ -21,6 +21,7 @@ from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from OFS.SimpleItem import SimpleItem
+from zExceptions import BadRequest
 
 from Products.CMFCore.Expression import Expression
 from Products.DCWorkflow.ContainerTab import ContainerTab
@@ -148,7 +149,7 @@ class Variables(ContainerTab):
     def _checkId(self, id, allow_dup=0):
         wf_def = aq_parent(aq_inner(self))
         if id == wf_def.state_var:
-            raise 'Bad Request', '"%s" is used for keeping state.' % id
+            raise BadRequest('"%s" is used for keeping state.' % id)
         return ContainerTab._checkId(self, id, allow_dup)
 
     def getStateVar(self):

@@ -4,6 +4,9 @@ Products.DCWorkflow Changelog
 2.3.0-alpha (unreleased)
 ------------------------
 
+- Removed string exceptions.
+  (https://bugs.launchpad.net/zope-cmf/+bug/952301)
+
 - Made sure converted tools are used as utilities.
 
 - Don't crash worklist's ``manage_main`` if variables are Expression objects.
