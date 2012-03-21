@@ -1,8 +1,8 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.3.0-alpha (unreleased)
-------------------------
+2.3.0-beta (2012-03-21)
+-----------------------
 
 - Removed string exceptions.
   (https://bugs.launchpad.net/zope-cmf/+bug/952301)
