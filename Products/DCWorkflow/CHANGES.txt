@@ -13,11 +13,6 @@ Products.DCWorkflow Changelog
 
 - Made sure converted tools are used as utilities.
 
-- Don't crash worklist's ``manage_main`` if variables are Expression objects.
-  (https://bugs.launchpad.net/zope-cmf/+bug/731394)
-
-- Allow renaming of states, transitions, variables and worklists
-
 - Require at least Zope 2.13.4.
 
 - StateChangeInfo: Removed support for deprecated '_isPortalRoot' marker.
@@ -28,14 +23,45 @@ Products.DCWorkflow Changelog
 - Ensured that emitted XML export has a valid encoding, even when passed
   'None'.  (https://bugs.launchpad.net/zope-cmf/+bug/707927)
 
-- Fixed Chameleon compatibility in 'state_groups.pt'.
+- Change default encoding of exports from None to utf-8.
+
+2.2.4 (2011-11-01)
+------------------
+
+- Fixed issue with non-ascii chars in workflow definitions
+
+- Don't crash worklist's ``manage_main`` if variables are Expression objects.
+  (https://bugs.launchpad.net/zope-cmf/+bug/731394)
+
+- Allow renaming of states, transitions, variables and worklists
+
+
+2.2.3 (2011-01-12)
+------------------
+
+- Explicitly include permissions from CMFCore, which are needed now that
+  they aren't declared in Five in Zope 2.13.
+
+
+2.2.2 (2010-11-11)
+------------------
+
+- Fixed Chameleon compatibility in `state_groups.pt`.
 
 - Workflow states cannot be renamed through the ZMI.
   (https://bugs.launchpad.net/zope-cmf/+bug/625722)
 
+
+2.2.1 (2010-07-04)
+------------------
+
 - Deal with deprecation warnings for Zope 2.13.
 
-- Change default encoding of exports from None to utf-8.
+
+2.2.0 (2010-01-04)
+------------------
+
+- no changes from version 2.2.0-beta
 
 
 2.2.0-beta (2009-12-06)
