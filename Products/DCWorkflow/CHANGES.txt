@@ -13,8 +13,6 @@ Products.DCWorkflow Changelog
 
 - Made sure converted tools are used as utilities.
 
-- Require at least Zope 2.13.4.
-
 - StateChangeInfo: Removed support for deprecated '_isPortalRoot' marker.
 
 - Hardened XML import parsing against missing boolean attributes.
@@ -24,6 +22,9 @@ Products.DCWorkflow Changelog
   'None'.  (https://bugs.launchpad.net/zope-cmf/+bug/707927)
 
 - Change default encoding of exports from None to utf-8.
+
+- Require at least Zope 2.13.12.
+
 
 2.2.4 (2011-11-01)
 ------------------
