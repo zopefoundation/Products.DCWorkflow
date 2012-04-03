@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Guard conditions in a web-configurable workflow.
-
-$Id$
 """
 
 from cgi import escape

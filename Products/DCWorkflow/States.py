@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ States in a web-configurable workflow.
-
-$Id$
 """
 
 from AccessControl.requestmethod import postonly

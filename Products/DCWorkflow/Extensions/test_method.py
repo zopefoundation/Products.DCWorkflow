@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ External method used for unit tests - do not remove
-
-$Id: test_method.py 37115 2005-07-07 15:50:07Z jens $
 """ 
 
 def test(self):

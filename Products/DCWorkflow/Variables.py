@@ -11,8 +11,6 @@
 #
 ##############################################################################
 """ Variables in a web-configurable workflow.
-
-$Id$
 """
 
 from AccessControl.SecurityInfo import ClassSecurityInfo

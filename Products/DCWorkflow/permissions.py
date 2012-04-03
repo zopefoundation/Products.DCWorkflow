@@ -1,6 +1,4 @@
 """ DCWorkflow product permissions
-
-$Id$
 """
 from AccessControl import ModuleSecurityInfo
 
