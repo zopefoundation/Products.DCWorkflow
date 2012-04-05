@@ -7,4 +7,5 @@ Contents:
    :maxdepth: 2
 
    narrative/index
+   api/modules
 
