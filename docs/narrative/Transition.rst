@@ -37,7 +37,7 @@ of properties the define the transtion's behaviour, as follows:
  object. See Expressions for more details.
 
 **Guards and Action boxes** --
- See the :doc:`Gaurds` and :doc:`ActionBoxes` sections for specific details
+ See the :doc:`Guards` and :doc:`ActionBoxes` sections for specific details
  about those fields. Note that automatic transitions don't need the action box
  fields to be filled out.
 

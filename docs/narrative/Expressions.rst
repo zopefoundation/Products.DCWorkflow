@@ -16,7 +16,7 @@ for expressions in page templates:
 Several other contexts are also provided:
 
 * 'state_change' -- A special object containing information about the state
-change (see below)
+  change (see below)
 
 * 'transition' -- The transition object being executed
 
@@ -36,7 +36,7 @@ are duplicates of the above information:
 * 'workflow' is the workflow definition object. (Same as the 'workflow'
   variable above.)
 
-*- 'transition' is the transition object being executed. (Same as the
+* transition' is the transition object being executed. (Same as the
   'transition' variable above.)
 
 * 'old_state' is the former state object. The name of the former state, for
