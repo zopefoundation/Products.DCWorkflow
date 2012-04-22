@@ -66,11 +66,11 @@ class TestGuard(unittest.TestCase):
 
         # Initialize the guard with empty values
         # not initialization
-        guard_props = {'guard_permissions':'',
-                       'guard_roles':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_permissions': '',
+                       'guard_roles': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==0)
+        self.assertTrue(res == 0)
 
         # Test default values
         self.assertEqual(guard.getPermissionsText(), '')
@@ -78,102 +78,102 @@ class TestGuard(unittest.TestCase):
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager;',
-                       'guard_permissions':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager;',
+                       'guard_permissions': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         # With one space after the ';'
         self.assertEqual(guard.getRolesText(), 'Manager; ')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager;Member',
-                       'guard_permissions':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager;Member',
+                       'guard_permissions': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         # With one space after the ';'
         self.assertEqual(guard.getRolesText(), 'Manager; Member')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager;Member',
-                       'guard_permissions':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager;Member',
+                       'guard_permissions': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         # With one space after the ';'
         self.assertEqual(guard.getRolesText(), 'Manager; Member')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'ManagePortal;',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': 'ManagePortal;',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal; ')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'ManagePortal',
-                       'guard_expr' :''}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': 'ManagePortal',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal')
         self.assertEqual(guard.getExprText(), '')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'ManagePortal',
-                       'guard_expr' :'python:1'}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': 'ManagePortal',
+                       'guard_expr': 'python:1'}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal')
         self.assertEqual(guard.getExprText(), 'python:1')
 
         # Change guard
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'ManagePortal',
-                       'guard_expr' :'string:'}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': 'ManagePortal',
+                       'guard_expr': 'string:'}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==1)
+        self.assertTrue(res == 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal')
         self.assertEqual(guard.getExprText(), 'string:')
 
         # Change guard with wrong TALES
-        guard_props = {'guard_roles':'Manager',
-                       'guard_permissions':'ManagePortal',
-                       'guard_expr' :'python:'}
+        guard_props = {'guard_roles': 'Manager',
+                       'guard_permissions': 'ManagePortal',
+                       'guard_expr': 'python:'}
         self.assertRaises(CompilerError,
                           guard.changeFromProperties, guard_props)
 
@@ -182,11 +182,11 @@ class TestGuard(unittest.TestCase):
         self.assertEqual(guard.getExprText(), 'string:')
 
         # reinit the guard
-        guard_props = {'guard_permissions':'',
-                       'guard_roles':'',
-                       'guard_expr' :''}
+        guard_props = {'guard_permissions': '',
+                       'guard_roles': '',
+                       'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res==0)
+        self.assertTrue(res == 0)
 
         # No API on DCWorkflow guard to reset properly....
         guard.permissions = ''
@@ -215,21 +215,21 @@ class TestGuard(unittest.TestCase):
         wf_def = self._getDummyWorkflow()
 
         # Initialize the guard with an ok guard
-        guard_props = {'guard_permissions':'',
-                       'guard_roles':'',
-                       'guard_expr' :'python:1'}
+        guard_props = {'guard_permissions': '',
+                       'guard_roles': '',
+                       'guard_expr': 'python:1'}
 
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res)
-        self.assert_(guard.check(sm, wf_def, ob))
+        self.assertTrue(res)
+        self.assertTrue(guard.check(sm, wf_def, ob))
 
         # Initialize the guard with a not ok guard
-        guard_props = {'guard_permissions':'',
-                       'guard_roles':'',
-                       'guard_expr' :'python:0'}
+        guard_props = {'guard_permissions': '',
+                       'guard_roles': '',
+                       'guard_expr': 'python:0'}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res)
-        self.assert_(not guard.check(sm, wf_def, ob))
+        self.assertTrue(res)
+        self.assertTrue(not guard.check(sm, wf_def, ob))
 
         # XXX more tests with permissions and roles
 
@@ -248,21 +248,21 @@ class TestGuard(unittest.TestCase):
         wf_def = self._getDummyWorkflow()
 
         # Initialize the guard with an ok guard
-        guard_props = {'guard_permissions':'',
-                       'guard_roles':'',
-                       'guard_expr' :'python:1'}
+        guard_props = {'guard_permissions': '',
+                       'guard_roles': '',
+                       'guard_expr': 'python:1'}
 
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res)
-        self.assert_(guard.check(sm, wf_def, ob, arg1=1, arg2=2))
+        self.assertTrue(res)
+        self.assertTrue(guard.check(sm, wf_def, ob, arg1=1, arg2=2))
 
         # Initialize the guard with a not ok guard
-        guard_props = {'guard_permissions':'',
-                       'guard_roles':'',
-                       'guard_expr' :'python:0'}
+        guard_props = {'guard_permissions': '',
+                       'guard_roles': '',
+                       'guard_expr': 'python:0'}
         res = guard.changeFromProperties(guard_props)
-        self.assert_(res)
-        self.assert_(not guard.check(sm, wf_def, ob, arg1=1, arg2=2))
+        self.assertTrue(res)
+        self.assertTrue(not guard.check(sm, wf_def, ob, arg1=1, arg2=2))
 
         # XXX more tests with permissions and roles
 

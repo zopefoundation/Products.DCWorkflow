@@ -68,7 +68,7 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
         wf.states.addState('private')
         sdef = wf.states['private']
-        sdef.setProperties( transitions=('publish',) )
+        sdef.setProperties(transitions=('publish',))
 
         wf.states.addState('published')
         wf.states.setInitialState('private')
@@ -92,13 +92,13 @@ class DCWorkflowDefinitionTests(SecurityTest):
         wtool = self.wtool
         wf = self._getDummyWorkflow()
 
-        dummy = self.site._setObject( 'dummy', DummyContent() )
+        dummy = self.site._setObject('dummy', DummyContent())
         wtool.notifyCreated(dummy)
-        self.assertEqual( wf._getStatusOf(dummy),
-                          {'state': 'private', 'comments': ''} )
-        wf.doActionFor(dummy, 'publish', comment='foo' )
-        self.assertEqual( wf._getStatusOf(dummy),
-                          {'state': 'published', 'comments': 'foo'} )
+        self.assertEqual(wf._getStatusOf(dummy),
+                         {'state': 'private', 'comments': ''})
+        wf.doActionFor(dummy, 'publish', comment='foo')
+        self.assertEqual(wf._getStatusOf(dummy),
+                         {'state': 'published', 'comments': 'foo'})
 
         # XXX more
 
@@ -117,93 +117,93 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
         wf = self._getDummyWorkflow()
 
-        dummy = self.site._setObject( 'dummy', DummyContent() )
+        dummy = self.site._setObject('dummy', DummyContent())
         wf.doActionFor(dummy, 'publish', comment='foo', test='bar')
 
-        self.assertEquals(4, len(events))
+        self.assertEqual(4, len(events))
 
         evt = events[0]
-        self.failUnless(IBeforeTransitionEvent.providedBy(evt))
-        self.assertEquals(dummy, evt.object)
-        self.assertEquals('private', evt.old_state.id)
-        self.assertEquals('private', evt.new_state.id)
-        self.assertEquals(None, evt.transition)
-        self.assertEquals({}, evt.status)
-        self.assertEquals(None, evt.kwargs)
+        self.assertTrue(IBeforeTransitionEvent.providedBy(evt))
+        self.assertEqual(dummy, evt.object)
+        self.assertEqual('private', evt.old_state.id)
+        self.assertEqual('private', evt.new_state.id)
+        self.assertEqual(None, evt.transition)
+        self.assertEqual({}, evt.status)
+        self.assertEqual(None, evt.kwargs)
 
         evt = events[1]
-        self.failUnless(IAfterTransitionEvent.providedBy(evt))
-        self.assertEquals(dummy, evt.object)
-        self.assertEquals('private', evt.old_state.id)
-        self.assertEquals('private', evt.new_state.id)
-        self.assertEquals(None, evt.transition)
-        self.assertEquals({'state': 'private', 'comments': ''}, evt.status)
-        self.assertEquals(None, evt.kwargs)
+        self.assertTrue(IAfterTransitionEvent.providedBy(evt))
+        self.assertEqual(dummy, evt.object)
+        self.assertEqual('private', evt.old_state.id)
+        self.assertEqual('private', evt.new_state.id)
+        self.assertEqual(None, evt.transition)
+        self.assertEqual({'state': 'private', 'comments': ''}, evt.status)
+        self.assertEqual(None, evt.kwargs)
 
         evt = events[2]
-        self.failUnless(IBeforeTransitionEvent.providedBy(evt))
-        self.assertEquals(dummy, evt.object)
-        self.assertEquals('private', evt.old_state.id)
-        self.assertEquals('published', evt.new_state.id)
-        self.assertEquals('publish', evt.transition.id)
-        self.assertEquals({'state': 'private', 'comments': ''}, evt.status)
-        self.assertEquals({'test' : 'bar', 'comment' : 'foo'}, evt.kwargs)
+        self.assertTrue(IBeforeTransitionEvent.providedBy(evt))
+        self.assertEqual(dummy, evt.object)
+        self.assertEqual('private', evt.old_state.id)
+        self.assertEqual('published', evt.new_state.id)
+        self.assertEqual('publish', evt.transition.id)
+        self.assertEqual({'state': 'private', 'comments': ''}, evt.status)
+        self.assertEqual({'test': 'bar', 'comment': 'foo'}, evt.kwargs)
 
         evt = events[3]
-        self.failUnless(IAfterTransitionEvent.providedBy(evt))
-        self.assertEquals(dummy, evt.object)
-        self.assertEquals('private', evt.old_state.id)
-        self.assertEquals('published', evt.new_state.id)
-        self.assertEquals('publish', evt.transition.id)
-        self.assertEquals({'state': 'published', 'comments': 'foo'}, evt.status)
-        self.assertEquals({'test' : 'bar', 'comment' : 'foo'}, evt.kwargs)
+        self.assertTrue(IAfterTransitionEvent.providedBy(evt))
+        self.assertEqual(dummy, evt.object)
+        self.assertEqual('private', evt.old_state.id)
+        self.assertEqual('published', evt.new_state.id)
+        self.assertEqual('publish', evt.transition.id)
+        self.assertEqual({'state': 'published', 'comments': 'foo'}, evt.status)
+        self.assertEqual({'test': 'bar', 'comment': 'foo'}, evt.kwargs)
 
     def test_checkTransitionGuard(self):
         wtool = self.wtool
         wf = self._getDummyWorkflow()
-        dummy = self.site._setObject( 'dummy', DummyContent() )
+        dummy = self.site._setObject('dummy', DummyContent())
         wtool.notifyCreated(dummy)
-        self.assertEqual( wf._getStatusOf(dummy),
-                          {'state': 'private', 'comments': ''} )
+        self.assertEqual(wf._getStatusOf(dummy),
+                         {'state': 'private', 'comments': ''})
 
         # Check
-        self.assert_(wf._checkTransitionGuard(wf.transitions['publish'],
-                                              dummy))
+        self.assertTrue(wf._checkTransitionGuard(wf.transitions['publish'],
+                                                 dummy))
 
         # Check with kwargs propagation
-        self.assert_(wf._checkTransitionGuard(wf.transitions['publish'],
-                                              dummy, arg1=1, arg2=2))
+        self.assertTrue(wf._checkTransitionGuard(wf.transitions['publish'],
+                                                 dummy, arg1=1, arg2=2))
 
     def test_isActionSupported(self):
         wf = self._getDummyWorkflow()
-        dummy = self.site._setObject( 'dummy', DummyContent() )
+        dummy = self.site._setObject('dummy', DummyContent())
 
         # check publish
-        self.assert_(wf.isActionSupported(dummy, 'publish'))
+        self.assertTrue(wf.isActionSupported(dummy, 'publish'))
 
         # Check with kwargs.
-        self.assert_(wf.isActionSupported(dummy, 'publish', arg1=1, arg2=2))
+        self.assertTrue(wf.isActionSupported(dummy, 'publish', arg1=1, arg2=2))
 
     def test_rename(self):
         wf = self._getDummyWorkflow()
 
         wf.states.manage_renameObject('private', 'private_new')
-        self.assertNotEquals(None, wf.states._getOb('private_new', None))
+        self.assertNotEqual(None, wf.states._getOb('private_new', None))
 
         wf.transitions.manage_renameObject('publish', 'publish_new')
-        self.assertNotEquals(None, wf.transitions._getOb('publish_new', None))
-        
+        self.assertNotEqual(None, wf.transitions._getOb('publish_new', None))
+
         wf.variables.manage_renameObject('comments', 'comments_new')
-        self.assertNotEquals(None, wf.variables._getOb('comments_new', None))
+        self.assertNotEqual(None, wf.variables._getOb('comments_new', None))
 
         wf.worklists.manage_renameObject('published_documents',
                                          'published_documents_new')
-        self.assertNotEquals(None,
-            wf.worklists._getOb('published_documents_new', None))
+        self.assertNotEqual(None,
+                          wf.worklists._getOb('published_documents_new', None))
 
     def test_worklists(self):
         wf = self._getDummyWorkflow()
-        worklist =  wf.worklists._getOb('published_documents')
+        worklist = wf.worklists._getOb('published_documents')
         # check ZMI
         wf.worklists.manage_main(self.REQUEST)
         # store an Expression
