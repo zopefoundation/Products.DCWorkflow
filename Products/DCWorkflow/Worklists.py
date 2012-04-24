@@ -37,6 +37,7 @@ tales_re = re.compile(r'(\w+:)?(.*)')
 
 
 class WorklistDefinition(SimpleItem):
+
     """Worklist definiton"""
 
     meta_type = 'Worklist'
@@ -52,9 +53,7 @@ class WorklistDefinition(SimpleItem):
     actbox_category = 'global'
     guard = None
 
-    manage_options = (
-        {'label': 'Properties', 'action': 'manage_properties'},
-        )
+    manage_options = ({'label': 'Properties', 'action': 'manage_properties'},)
 
     def __init__(self, id):
         self.id = id
@@ -141,7 +140,7 @@ class WorklistDefinition(SimpleItem):
                     self.var_matches[key] = tuple(v)
 
             else:
-                if self.var_matches and self.var_matches.has_key(key):
+                if self.var_matches and key in self.var_matches:
                     del self.var_matches[key]
         self.actbox_name = str(actbox_name)
         self.actbox_url = str(actbox_url)
@@ -189,6 +188,7 @@ InitializeClass(WorklistDefinition)
 
 
 class Worklists(ContainerTab):
+
     """A container for worklist definitions"""
 
     meta_type = 'Worklists'
@@ -196,10 +196,9 @@ class Worklists(ContainerTab):
     security = ClassSecurityInfo()
     security.declareObjectProtected(ManagePortal)
 
-    all_meta_types = ({'name':WorklistDefinition.meta_type,
-                       'action':'addWorklist',
-                       'permission': ManagePortal,
-                       },)
+    all_meta_types = ({'name': WorklistDefinition.meta_type,
+                       'action': 'addWorklist',
+                       'permission': ManagePortal},)
 
     _manage_worklists = DTMLFile('worklists', _dtmldir)
 

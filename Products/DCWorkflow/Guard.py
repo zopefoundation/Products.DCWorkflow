@@ -30,7 +30,8 @@ from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
 
 
-class Guard (Persistent, Explicit):
+class Guard(Persistent, Explicit):
+
     permissions = ()
     roles = ()
     groups = ()
@@ -68,10 +69,10 @@ class Guard (Persistent, Explicit):
         if self.groups:
             # Require at least one of the specified groups.
             u = sm.getUser()
-            b = aq_base( u )
-            if hasattr( b, 'getGroupsInContext' ):
-                u_groups = u.getGroupsInContext( ob )
-            elif hasattr( b, 'getGroups' ):
+            b = aq_base(u)
+            if hasattr(b, 'getGroupsInContext'):
+                u_groups = u.getGroupsInContext(ob)
+            elif hasattr(b, 'getGroups'):
                 u_groups = u.getGroups()
             else:
                 u_groups = ()

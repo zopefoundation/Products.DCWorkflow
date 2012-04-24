@@ -23,8 +23,8 @@ from zope.i18nmessageid import MessageFactory
 
 security = ModuleSecurityInfo('Products.DCWorkflow.utils')
 
-_dtmldir = os.path.join( package_home( globals() ), 'dtml' )
-_xmldir = os.path.join( package_home( globals() ), 'xml' )
+_dtmldir = os.path.join(package_home(globals()), 'dtml')
+_xmldir = os.path.join(package_home(globals()), 'xml')
 
 
 def ac_inherited_permissions(ob, all=0):
@@ -33,14 +33,15 @@ def ac_inherited_permissions(ob, all=0):
     # an empty tuple as the second.
     d = {}
     perms = getattr(ob, '__ac_permissions__', ())
-    for p in perms: d[p[0]] = None
+    for p in perms:
+        d[p[0]] = None
     r = gather_permissions(ob.__class__, [], d)
     if all:
         if hasattr(ob, '_subobject_permissions'):
             for p in ob._subobject_permissions():
-                pname=p[0]
-                if not d.has_key(pname):
-                    d[pname]=1
+                pname = p[0]
+                if not pname in d:
+                    d[pname] = 1
                     r.append(p)
         r = list(perms) + r
     return r
@@ -92,7 +93,7 @@ def modifyRolesForGroup(ob, group, grant_roles, managed_roles):
             roles.remove(role)
             changed = 1
     if changed:
-        if not roles and local_roles.has_key(group):
+        if not roles and group in local_roles:
             del local_roles[group]
         else:
             local_roles[group] = roles

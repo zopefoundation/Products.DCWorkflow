@@ -29,6 +29,7 @@ from Products.DCWorkflow.utils import _dtmldir
 
 
 class StateDefinition(SimpleItem):
+
     """State definition"""
 
     meta_type = 'Workflow State'
@@ -37,8 +38,7 @@ class StateDefinition(SimpleItem):
         {'label': 'Properties', 'action': 'manage_properties'},
         {'label': 'Permissions', 'action': 'manage_permissions'},
         {'label': 'Groups', 'action': 'manage_groups'},
-        {'label': 'Variables', 'action': 'manage_variables'},
-        )
+        {'label': 'Variables', 'action': 'manage_variables'})
 
     title = ''
     description = ''
@@ -60,8 +60,8 @@ class StateDefinition(SimpleItem):
         return aq_parent(aq_inner(aq_parent(aq_inner(self))))
 
     def getTransitions(self):
-        return filter(self.getWorkflow().transitions.has_key,
-                      self.transitions)
+        return [ t for t in self.transitions
+                 if t in self.getWorkflow().transitions ]
 
     def getTransitionTitle(self, tid):
         t = self.getWorkflow().transitions.get(tid, None)
@@ -88,13 +88,13 @@ class StateDefinition(SimpleItem):
         if self.permission_roles:
             roles = self.permission_roles.get(p, None)
         if roles is None:
-            return {'acquired':1, 'roles':[]}
+            return {'acquired': 1, 'roles': []}
         else:
             if isinstance(roles, tuple):
                 acq = 0
             else:
                 acq = 1
-            return {'acquired':acq, 'roles':list(roles)}
+            return {'acquired': acq, 'roles': list(roles)}
 
     def getGroupInfo(self, group):
         """Returns the list of roles to be assigned to a group.
@@ -112,14 +112,14 @@ class StateDefinition(SimpleItem):
                                      manage_tabs_message=manage_tabs_message,
                                      )
 
-    def setProperties(self, title='', transitions=(), REQUEST=None, description=''):
+    def setProperties(self, title='', transitions=(), REQUEST=None,
+                      description=''):
         """Set the properties for this State."""
         self.title = str(title)
         self.description = str(description)
         self.transitions = tuple(map(str, transitions))
         if REQUEST is not None:
             return self.manage_properties(REQUEST, 'Properties changed.')
-
 
     _variables_form = DTMLFile('state_variables', _dtmldir)
 
@@ -147,11 +147,11 @@ class StateDefinition(SimpleItem):
             return wf_vars
         ret = []
         for vid in wf_vars:
-            if not self.var_values.has_key(vid):
+            if not vid in self.var_values:
                 ret.append(vid)
         return ret
 
-    def addVariable(self,id,value,REQUEST=None):
+    def addVariable(self, id, value, REQUEST=None):
         """Add a WorkflowVariable to State."""
         if self.var_values is None:
             self.var_values = PersistentMapping()
@@ -161,11 +161,11 @@ class StateDefinition(SimpleItem):
         if REQUEST is not None:
             return self.manage_variables(REQUEST, 'Variable added.')
 
-    def deleteVariables(self,ids=[],REQUEST=None):
+    def deleteVariables(self, ids=[], REQUEST=None):
         """Delete a WorkflowVariable from State."""
         vv = self.var_values
         for id in ids:
-            if vv.has_key(id):
+            if id in vv:
                 del vv[id]
 
         if REQUEST is not None:
@@ -183,8 +183,6 @@ class StateDefinition(SimpleItem):
                 fname = 'varval_%s' % id
                 vv[id] = str(REQUEST[fname])
             return self.manage_variables(REQUEST, 'Variables changed.')
-
-
 
     _permissions_form = DTMLFile('state_permissions', _dtmldir)
 
@@ -254,6 +252,7 @@ InitializeClass(StateDefinition)
 
 
 class States(ContainerTab):
+
     """A container for state definitions"""
 
     meta_type = 'Workflow States'
@@ -261,10 +260,9 @@ class States(ContainerTab):
     security = ClassSecurityInfo()
     security.declareObjectProtected(ManagePortal)
 
-    all_meta_types = ({'name':StateDefinition.meta_type,
-                       'action':'addState',
-                       'permission': ManagePortal,
-                       },)
+    all_meta_types = ({'name': StateDefinition.meta_type,
+                       'action': 'addState',
+                       'permission': ManagePortal},)
 
     _manage_states = DTMLFile('states', _dtmldir)
 
@@ -297,7 +295,7 @@ class States(ContainerTab):
         '''
         if not id:
             if len(ids) != 1:
-                raise ValueError, 'One and only one state must be selected'
+                raise ValueError('One and only one state must be selected')
             id = ids[0]
         id = str(id)
         aq_parent(aq_inner(self)).initial_state = id

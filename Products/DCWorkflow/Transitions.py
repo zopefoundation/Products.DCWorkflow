@@ -31,7 +31,8 @@ TRIGGER_AUTOMATIC = 0
 TRIGGER_USER_ACTION = 1
 
 
-class TransitionDefinition (SimpleItem):
+class TransitionDefinition(SimpleItem):
+
     """Transition definition"""
 
     meta_type = 'Workflow Transition'
@@ -54,8 +55,7 @@ class TransitionDefinition (SimpleItem):
 
     manage_options = (
         {'label': 'Properties', 'action': 'manage_properties'},
-        {'label': 'Variables', 'action': 'manage_variables'},
-        )
+        {'label': 'Variables', 'action': 'manage_variables'})
 
     def __init__(self, id):
         self.id = id
@@ -152,7 +152,7 @@ class TransitionDefinition (SimpleItem):
         else:
             ret = []
             for key in ve.keys():
-                ret.append((key,self.getVarExprText(key)))
+                ret.append((key, self.getVarExprText(key)))
             return ret
 
     def getWorkflowVariables(self):
@@ -164,7 +164,7 @@ class TransitionDefinition (SimpleItem):
                 return wf_vars
         ret = []
         for vid in wf_vars:
-            if not self.var_exprs.has_key(vid):
+            if not vid in self.var_exprs:
                 ret.append(vid)
         return ret
 
@@ -183,12 +183,12 @@ class TransitionDefinition (SimpleItem):
         if REQUEST is not None:
             return self.manage_variables(REQUEST, 'Variable added.')
 
-    def deleteVariables(self,ids=[],REQUEST=None):
+    def deleteVariables(self, ids=[], REQUEST=None):
         ''' delete a WorkflowVariable from State
         '''
         ve = self.var_exprs
         for id in ids:
-            if ve.has_key(id):
+            if id in ve:
                 del ve[id]
 
         if REQUEST is not None:
@@ -217,7 +217,8 @@ class TransitionDefinition (SimpleItem):
 InitializeClass(TransitionDefinition)
 
 
-class Transitions (ContainerTab):
+class Transitions(ContainerTab):
+
     """A container for transition definitions"""
 
     meta_type = 'Workflow Transitions'
@@ -225,10 +226,9 @@ class Transitions (ContainerTab):
     security = ClassSecurityInfo()
     security.declareObjectProtected(ManagePortal)
 
-    all_meta_types = ({'name':TransitionDefinition.meta_type,
-                       'action':'addTransition',
-                       'permission': ManagePortal,
-                       },)
+    all_meta_types = ({'name': TransitionDefinition.meta_type,
+                       'action': 'addTransition',
+                       'permission': ManagePortal},)
 
     _manage_transitions = DTMLFile('transitions', _dtmldir)
 

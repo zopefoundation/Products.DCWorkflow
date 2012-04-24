@@ -1,14 +1,14 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
-# 
+#
 ##############################################################################
 """ A convenient base class for representing a container as a management tab.
 """
@@ -51,27 +51,27 @@ class ContainerTab(Folder):
 
     def _checkId(self, id, allow_dup=0):
         if not allow_dup:
-            if self._mapping.has_key(id):
+            if id in self._mapping:
                 raise BadRequest('The id "%s" is already in use.' % id)
         return Folder._checkId(self, id, allow_dup)
 
     def _getOb(self, name, default=_marker):
         mapping = self._mapping
-        if mapping.has_key(name):
+        if name in mapping:
             res = mapping[name]
             if hasattr(res, '__of__'):
                 res = res.__of__(self)
             return res
         else:
             if default is _marker:
-                raise KeyError, name
+                raise KeyError(name)
             return default
 
     def __getattr__(self, name):
         ob = self._mapping.get(name, None)
         if ob is not None:
             return ob
-        raise AttributeError, name
+        raise AttributeError(name)
 
     def _setOb(self, name, value):
         mapping = self._mapping
@@ -84,13 +84,13 @@ class ContainerTab(Folder):
         self._mapping = mapping  # Trigger persistence.
 
     def get(self, name, default=None):
-        if self._mapping.has_key(name):
+        if name in self._mapping:
             return self[name]
         else:
             return default
 
     def has_key(self, key):
-        return self._mapping.has_key(key)
+        return key in self._mapping
 
     def objectIds(self, spec=None):
         # spec is not important for now...

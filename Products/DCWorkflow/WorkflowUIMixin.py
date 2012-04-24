@@ -1,14 +1,14 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
-# 
+#
 ##############################################################################
 """ Web-configurable workflow UI.
 """
@@ -27,7 +27,8 @@ from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.utils import _dtmldir
 
 
-class WorkflowUIMixin:
+class WorkflowUIMixin(object):
+
     '''
     '''
 
@@ -39,7 +40,7 @@ class WorkflowUIMixin:
 
     security.declareProtected(ManagePortal, 'setProperties')
     @postonly
-    def setProperties(self, title, manager_bypass=0, props=None, 
+    def setProperties(self, title, manager_bypass=0, props=None,
                       REQUEST=None, description=''):
         """Sets basic properties.
         """
@@ -72,9 +73,9 @@ class WorkflowUIMixin:
         """Adds to the list of permissions to manage.
         """
         if p in self.permissions:
-            raise ValueError, 'Already a managed permission: ' + p
+            raise ValueError('Already a managed permission: ' + p)
         if REQUEST is not None and p not in self.getPossiblePermissions():
-            raise ValueError, 'Not a valid permission name:' + p
+            raise ValueError('Not a valid permission name:' + p)
         self.permissions = self.permissions + (p,)
         if REQUEST is not None:
             return self.manage_permissions(
@@ -111,7 +112,7 @@ class WorkflowUIMixin:
     def getAvailableGroups(self):
         """Returns a list of available group names.
         """
-        gf = aq_get( self, '__allow_groups__', None, 1 )
+        gf = aq_get(self, '__allow_groups__', None, 1)
         if gf is None:
             return ()
         try:

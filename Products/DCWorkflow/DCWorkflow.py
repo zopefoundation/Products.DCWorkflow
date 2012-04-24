@@ -45,7 +45,7 @@ from Products.DCWorkflow.WorkflowUIMixin import WorkflowUIMixin
 def checkId(id):
     res = bad_id(id)
     if res != -1 and res is not None:
-        raise ValueError, 'Illegal ID'
+        raise ValueError('Illegal ID')
     return 1
 
 
@@ -88,8 +88,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         {'label': 'Worklists', 'action': 'worklists/manage_main'},
         {'label': 'Scripts', 'action': 'scripts/manage_main'},
         {'label': 'Permissions', 'action': 'manage_permissions'},
-        {'label': 'Groups', 'action': 'manage_groups'},
-        )
+        {'label': 'Groups', 'action': 'manage_groups'})
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(ManagePortal)
@@ -155,7 +154,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         status = self._getStatusOf(ob)
         for id, vdef in self.variables.items():
             if vdef.for_catalog:
-                if status.has_key(id):
+                if id in status:
                     value = status[id]
 
                 # Not set yet.  Use a default.
@@ -195,7 +194,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                             'name': tdef.actbox_name % info,
                             'url': tdef.actbox_url % info,
                             'icon': tdef.actbox_icon % info,
-                            'permissions': (),  # Predetermined.
+                            'permissions': (), # Predetermined.
                             'category': tdef.actbox_category,
                             'transition': tdef}))
         res.sort()
@@ -234,7 +233,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                                      'name': qdef.actbox_name % fmt_data,
                                      'url': qdef.actbox_url % fmt_data,
                                      'icon': qdef.actbox_icon % fmt_data,
-                                     'permissions': (),  # Predetermined.
+                                     'permissions': (), # Predetermined.
                                      'category': qdef.actbox_category}))
                     fmt_data._pop()
         res.sort()
@@ -303,7 +302,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             getSecurityManager(), self, ob):
             return default
         status = self._getStatusOf(ob)
-        if status is not None and status.has_key(name):
+        if status is not None and name in status:
             value = status[name]
 
         # Not set yet.  Use a default.
@@ -332,7 +331,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         """
         try:
             self._changeStateOf(ob, None)
-        except ( ObjectDeleted, ObjectMoved ):
+        except (ObjectDeleted, ObjectMoved):
             # Swallow.
             pass
 
@@ -459,7 +458,8 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             raise WorkflowException(msg)
 
         # Fire "before" event
-        notify(BeforeTransitionEvent(ob, self, old_sdef, new_sdef, tdef, former_status, kwargs))
+        notify(BeforeTransitionEvent(ob, self, old_sdef, new_sdef, tdef,
+                                     former_status, kwargs))
 
         # Execute the "before" script.
         if tdef is not None and tdef.script_name:
@@ -475,20 +475,23 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
 
         # Update variables.
         state_values = new_sdef.var_values
-        if state_values is None: state_values = {}
+        if state_values is None:
+            state_values = {}
         tdef_exprs = None
-        if tdef is not None: tdef_exprs = tdef.var_exprs
-        if tdef_exprs is None: tdef_exprs = {}
+        if tdef is not None:
+            tdef_exprs = tdef.var_exprs
+        if tdef_exprs is None:
+            tdef_exprs = {}
         status = {}
         for id, vdef in self.variables.items():
             if not vdef.for_status:
                 continue
             expr = None
-            if state_values.has_key(id):
+            if id in state_values:
                 value = state_values[id]
-            elif tdef_exprs.has_key(id):
+            elif id in tdef_exprs:
                 expr = tdef_exprs[id]
-            elif not vdef.update_always and former_status.has_key(id):
+            elif not vdef.update_always and id in former_status:
                 # Preserve former value
                 value = former_status[id]
             else:
@@ -525,7 +528,8 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             script(sci)  # May throw an exception.
 
         # Fire "after" event
-        notify(AfterTransitionEvent(ob, self, old_sdef, new_sdef, tdef, status, kwargs))
+        notify(AfterTransitionEvent(ob, self, old_sdef, new_sdef, tdef, status,
+                                    kwargs))
 
         # Return the new state object.
         if moved_exc is not None:

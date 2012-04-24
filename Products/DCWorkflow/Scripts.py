@@ -21,7 +21,7 @@ from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.permissions import ManagePortal
 
 
-class Scripts (ContainerTab):
+class Scripts(ContainerTab):
     """A container for workflow scripts"""
 
     meta_type = 'Workflow Scripts'

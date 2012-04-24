@@ -1,14 +1,14 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
-# 
+#
 ##############################################################################
 """ Expressions in a web-configurable workflow.
 """
@@ -19,6 +19,7 @@ from Acquisition import aq_inner
 from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from DateTime.DateTime import DateTime
+from MultiMapping import MultiMapping
 from Products.PageTemplates.Expressions import getEngine
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
@@ -28,10 +29,8 @@ from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved
 
 
-# We don't import SafeMapping from Products.PageTemplates.TALES
-# because it's deprecated in Zope 2.10
-from MultiMapping import MultiMapping
 class SafeMapping(MultiMapping):
+
     """Mapping with security declarations and limited method exposure.
 
     Since it subclasses MultiMapping, this class can be used to wrap
@@ -45,7 +44,8 @@ class SafeMapping(MultiMapping):
     _pop = MultiMapping.pop
 
 
-class StateChangeInfo:
+class StateChangeInfo(object):
+
     '''
     Provides information for expressions and scripts.
     '''
@@ -83,7 +83,7 @@ class StateChangeInfo:
     def __getitem__(self, name):
         if name[:1] != '_' and hasattr(self, name):
             return getattr(self, name)
-        raise KeyError, name
+        raise KeyError(name)
 
     def getHistory(self):
         wf = self.workflow
@@ -126,7 +126,7 @@ def createExprContext(sci):
         'folder':       container,
         'nothing':      None,
         'root':         ob.getPhysicalRoot(),
-        'request':      getattr( ob, 'REQUEST', None ),
+        'request':      getattr(ob, 'REQUEST', None),
         'modules':      SecureModuleImporter,
         'user':         getSecurityManager().getUser(),
         'state_change': sci,
