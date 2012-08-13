@@ -97,7 +97,7 @@
              title="Member makes content private"
              new_state="private" trigger="USER"
              before_script="" after_script="">
-  <action url="%(content_url)s/content_hide_form"
+  <action url="%(object_url)s/content_hide_form"
           icon="%(portal_url)s/retract_icon.png"
           category="workflow">Make private</action>
   <guard>
@@ -145,7 +145,7 @@
              title="Member makes content visible"
              new_state="visible" trigger="USER"
              before_script="" after_script="">
-  <action url="%(content_url)s/content_show_form"
+  <action url="%(object_url)s/content_show_form"
           icon="%(portal_url)s/approve_icon.png"
           category="workflow">Make visible</action>
   <guard>

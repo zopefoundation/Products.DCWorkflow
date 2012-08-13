@@ -9,16 +9,16 @@ link to.
 Names and URLs for the actions box can be formatted using standard Python
 string formatting. An example::
 
-  %(content_url)s/content_submit_form
+  %(object_url)s/content_submit_form
 
-The string '%(content_url)s' will be replaced by the value of content_url.
+The string '%(object_url)s' will be replaced by the value of object_url.
 The following names are available:
 
 * portal_url
 
 * folder_url
 
-* content_url
+* object_url
 
 * count (Available in work lists only. Represents the number of items in the
   work list.)
@@ -30,7 +30,7 @@ They are not strings.
 
 * folder
 
-* content
+* object
 
 * isAnonymous
 
