@@ -1,7 +1,0 @@
-
-Worklists are predefined catalog queries.
-
-When defining a variable match, you can enter a list of possible matches
-separated by semicolons. In addition, the matches will be formatted
-according to the rules described in "actbox.stx":actbox.stx.
-This way you can enter "%(user_id)s" to match only the current user.
