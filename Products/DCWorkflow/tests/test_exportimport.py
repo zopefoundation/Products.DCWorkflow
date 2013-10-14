@@ -251,9 +251,9 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
             self.assertEqual(info['description'], expected[0])
             self.assertEqual(info['default_value'], expected[1])
             self.assertEqual(info['default_expr'], expected[2])
-            self.assertEqual(info['for_catalog'], expected[3])
-            self.assertEqual(info['for_status'], expected[4])
-            self.assertEqual(info['update_always'], expected[5])
+            self.assertEqual(info['for_catalog'], str(expected[3]))
+            self.assertEqual(info['for_status'], str(expected[4]))
+            self.assertEqual(info['update_always'], str(expected[5]))
 
             self._assertGuard(info, *expected[-4:])
 
@@ -297,7 +297,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                 fp = [ x for x in permissions if x['name'] == ep_id ][0]
 
                 self.assertEqual(fp['acquired'],
-                                 not isinstance(ep_roles, tuple))
+                                 str(not isinstance(ep_roles, tuple)))
 
                 self.assertEqual(len(fp['roles']), len(ep_roles))
 

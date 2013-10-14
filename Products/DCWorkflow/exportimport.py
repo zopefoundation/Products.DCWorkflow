@@ -226,7 +226,7 @@ class WorkflowDefinitionConfigurator(Implicit):
           'script_info' -- a list of mappings describing the scripts which
             provide added business logic (see '_extractScripts').
         """
-        workflow_info['manager_bypass'] = bool(workflow.manager_bypass)
+        workflow_info['manager_bypass'] = str(bool(workflow.manager_bypass))
         workflow_info['creation_guard'] = self._extractCreationGuard(workflow)
         workflow_info['state_variable'] = workflow.state_var
         workflow_info['initial_state'] = workflow.initial_state
@@ -294,9 +294,9 @@ class WorkflowDefinitionConfigurator(Implicit):
 
             info = {'id': k,
                     'description': v.description,
-                    'for_catalog': bool(v.for_catalog),
-                    'for_status': bool(v.for_status),
-                    'update_always': bool(v.update_always),
+                    'for_catalog': str(bool(v.for_catalog)),
+                    'for_status': str(bool(v.for_status)),
+                    'update_always': str(bool(v.update_always)),
                     'default_value': v.default_value,
                     'default_type': default_type,
                     'default_expr': v.getDefaultExprText(),
@@ -406,7 +406,7 @@ class WorkflowDefinitionConfigurator(Implicit):
             for k, v in items:
                 result.append({'name': k,
                                'roles': v,
-                               'acquired': not isinstance(v, tuple)})
+                               'acquired': str(not isinstance(v, tuple))})
 
         return result
 
