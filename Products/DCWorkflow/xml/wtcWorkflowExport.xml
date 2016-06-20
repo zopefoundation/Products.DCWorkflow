@@ -35,6 +35,9 @@
    ></tal:case>
    </guard>
  </instance-creation-conditions></tal:case>
+ <group
+        tal:repeat="group info/groups"
+        tal:content="group">GROUP</group>
  <permission
         tal:repeat="permission info/permissions"
         tal:content="permission">PERMISSION</permission>

@@ -610,6 +610,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -649,6 +650,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -688,6 +690,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -756,6 +759,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description 
         , manager_bypass
@@ -826,6 +830,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , transitions
         , variables
         , worklists
+        , groups
         , permissions
         , scripts
         , description
@@ -907,6 +912,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -972,6 +978,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -990,6 +997,42 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         for permission in permissions:
 
             self.failUnless( permission in _WF_PERMISSIONS )
+
+    def test_parseWorkflowXML_normal_groups( self ):
+
+        WF_ID = 'normal'
+        WF_TITLE = 'Normal DCWorkflow'
+        WF_DESCRIPTION = 'Normal workflow'
+        WF_INITIAL_STATE = 'closed'
+
+        site = self._initSite()
+
+        configurator = self._makeOne( site ).__of__( site )
+
+        ( workflow_id
+        , title
+        , state_variable
+        , initial_state
+        , states
+        , transitions
+        , variables
+        , worklists
+        , permissions
+        , groups
+        , scripts
+        , description
+        , manager_bypass
+        , creation_guard
+        ) = configurator.parseWorkflowXML(
+                          _NORMAL_WORKFLOW_EXPORT
+                          % { 'workflow_id' : WF_ID
+                            , 'title' : WF_TITLE
+                            , 'description' : WF_DESCRIPTION
+                            , 'initial_state' : WF_INITIAL_STATE
+                            , 'workflow_filename' : WF_ID.replace(' ', '_')
+                            } )
+
+        self.assertEqual(set(groups), set(_WF_GROUPS))
 
     def test_parseWorkflowXML_normal_scripts( self ):
 
@@ -1011,6 +1054,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -1592,6 +1636,8 @@ _NORMAL_WORKFLOW_EXPORT = """\
     state_variable="state"
     initial_state="%(initial_state)s"
     manager_bypass="False">
+ <group>Content_owners</group>
+ <group>Content_assassins</group>
  <permission>Open content for modifications</permission>
  <permission>Modify content</permission>
  <permission>Query history</permission>
