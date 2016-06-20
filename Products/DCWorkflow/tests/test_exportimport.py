@@ -998,6 +998,46 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
 
             self.failUnless( permission in _WF_PERMISSIONS )
 
+    def test_parseWorkflowXML_normal_groups( self ):
+
+        WF_ID = 'normal'
+        WF_TITLE = 'Normal DCWorkflow'
+        WF_DESCRIPTION = 'Normal workflow'
+        WF_INITIAL_STATE = 'closed'
+
+        site = self._initSite()
+
+        configurator = self._makeOne( site ).__of__( site )
+
+        ( workflow_id
+        , title
+        , state_variable
+        , initial_state
+        , states
+        , transitions
+        , variables
+        , worklists
+        , permissions
+        , groups
+        , scripts
+        , description
+        , manager_bypass
+        , creation_guard
+        ) = configurator.parseWorkflowXML(
+                          _NORMAL_WORKFLOW_EXPORT
+                          % { 'workflow_id' : WF_ID
+                            , 'title' : WF_TITLE
+                            , 'description' : WF_DESCRIPTION
+                            , 'initial_state' : WF_INITIAL_STATE
+                            , 'workflow_filename' : WF_ID.replace(' ', '_')
+                            } )
+
+        self.assertEqual( len( groups ), len( _WF_GROUPS ) )
+
+        for group in groups:
+
+            self.failUnless( group in _WF_GROUPS )
+
     def test_parseWorkflowXML_normal_scripts( self ):
 
         WF_ID = 'normal'
