@@ -610,6 +610,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -649,6 +650,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -688,6 +690,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -756,6 +759,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description 
         , manager_bypass
@@ -826,6 +830,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , transitions
         , variables
         , worklists
+        , groups
         , permissions
         , scripts
         , description
@@ -907,6 +912,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -972,6 +978,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -1011,6 +1018,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , variables
         , worklists
         , permissions
+        , groups
         , scripts
         , description
         , manager_bypass
@@ -1592,6 +1600,8 @@ _NORMAL_WORKFLOW_EXPORT = """\
     state_variable="state"
     initial_state="%(initial_state)s"
     manager_bypass="False">
+ <group>Content_owners</group>
+ <group>Content_assassins</group>
  <permission>Open content for modifications</permission>
  <permission>Modify content</permission>
  <permission>Query history</permission>
