@@ -1032,11 +1032,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
                             , 'workflow_filename' : WF_ID.replace(' ', '_')
                             } )
 
-        self.assertEqual( len( groups ), len( _WF_GROUPS ) )
-
-        for group in groups:
-
-            self.failUnless( group in _WF_GROUPS )
+        self.assertEqual(set(groups), set(_WF_GROUPS))
 
     def test_parseWorkflowXML_normal_scripts( self ):
 
