@@ -64,6 +64,7 @@ class DCWorkflowDefinitionBodyAdapter(BodyAdapterBase):
          variables,
          worklists,
          permissions,
+         groups,
          scripts,
          description,
          manager_bypass,
@@ -82,6 +83,7 @@ class DCWorkflowDefinitionBodyAdapter(BodyAdapterBase):
                         variables,
                         worklists,
                         permissions,
+                        groups,
                         scripts,
                         self.environ)
 
@@ -170,6 +172,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         variables = _extractVariableNodes(root, encoding)
         worklists = _extractWorklistNodes(root, encoding)
         permissions = _extractPermissionNodes(root, encoding)
+        groups = _extractGroupNodes(root, encoding)
         scripts = _extractScriptNodes(root, encoding)
 
         return (workflow_id,
@@ -181,6 +184,7 @@ class WorkflowDefinitionConfigurator(Implicit):
                 variables,
                 worklists,
                 permissions,
+                groups,
                 scripts,
                 description,
                 manager_bypass,
@@ -204,6 +208,8 @@ class WorkflowDefinitionConfigurator(Implicit):
 
           'permissions' -- a list of names of permissions managed
             by the workflow
+
+          'groups' -- a list of names of groups managed by the workflow
 
           'state_variable' -- the name of the workflow's "main"
             state variable
@@ -231,6 +237,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         workflow_info['state_variable'] = workflow.state_var
         workflow_info['initial_state'] = workflow.initial_state
         workflow_info['permissions'] = workflow.permissions
+        workflow_info['groups'] = workflow.groups
         workflow_info['variable_info'] = self._extractVariables(workflow)
         workflow_info['state_info'] = self._extractStates(workflow)
         workflow_info['transition_info'] = self._extractTransitions(workflow)
@@ -791,6 +798,15 @@ def _extractPermissionNodes(root, encoding='utf-8'):
 
     return result
 
+def _extractGroupNodes(root, encoding='utf-8'):
+    result = []
+
+    for p_node in root.getElementsByTagName('group'):
+
+        result.append(_coalesceTextNodeChildren(p_node, encoding))
+
+    return result
+
 def _extractActionNode(parent, encoding='utf-8'):
     nodes = parent.getElementsByTagName('action')
     assert len(nodes) <= 1, nodes
@@ -943,6 +959,7 @@ def _initDCWorkflow(workflow,
                     variables,
                     worklists,
                     permissions,
+                    groups,
                     scripts,
                     context):
     """ Initialize a DC Workflow using values parsed from XML.
@@ -952,6 +969,7 @@ def _initDCWorkflow(workflow,
     workflow.manager_bypass = manager_bypass and 1 or 0
     workflow.state_var = state_variable
     workflow.initial_state = initial_state
+    workflow.groups = groups
 
     permissions = permissions[:]
     permissions.sort()
