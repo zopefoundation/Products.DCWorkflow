@@ -1,7 +1,7 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.2.5 (unreleased)
+2.2.5 (2016-07-06)
 ------------------
 
 - Raise proper BadRequest exception instead of a `Bad Request`
