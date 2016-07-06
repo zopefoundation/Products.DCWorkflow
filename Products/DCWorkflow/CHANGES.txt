@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.3.0 (unreleased)
 ------------------
 
+- Export / import workflow-managed groups.
+
 
 2.3.0-beta (2012-03-21)
 -----------------------

@@ -33,6 +33,10 @@ tal:condition="creation_guard/guard_expr">
 tal:content="creation_guard/guard_expr">EXPR</guard-expression></tal:case>
    </guard>
  </instance-creation-conditions></tal:case><tal:case 
+tal:condition="info/groups">
+ <group 
+tal:repeat="group info/groups"
+tal:content="group">GROUP</group></tal:case><tal:case 
 tal:condition="info/permissions">
  <permission 
 tal:repeat="permission info/permissions"
