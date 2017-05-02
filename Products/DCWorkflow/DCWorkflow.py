@@ -23,7 +23,7 @@ from DocumentTemplate.DT_Util import TemplateDict
 from OFS.Folder import Folder
 from OFS.ObjectManager import bad_id
 from zope.event import notify
-from zope.interface import implements
+from zope.interface import implementer
 
 from Products.CMFCore.interfaces import IWorkflowDefinition
 from Products.CMFCore.WorkflowCore import ObjectDeleted
@@ -50,6 +50,7 @@ def checkId(id):
     return 1
 
 
+@implementer(IDCWorkflowDefinition, IWorkflowDefinition)
 class DCWorkflowDefinition(WorkflowUIMixin, Folder):
 
     '''
@@ -57,8 +58,6 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
     workflow definition.
     UI methods are in WorkflowUIMixin.
     '''
-
-    implements(IDCWorkflowDefinition, IWorkflowDefinition)
 
     title = 'DC Workflow Definition'
     description = ''
