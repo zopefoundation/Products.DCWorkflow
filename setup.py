@@ -49,11 +49,15 @@ setup(
     setup_requires=['eggtestinfo', ],
     install_requires=[
         'setuptools',
-        'Zope2 >= 2.13.12',
+        'Zope2 >= 4.0a2',
         'Products.CMFCore',
         'Products.ExternalMethod',
         'Products.GenericSetup',
         'Products.PythonScripts',
+        # packages below this line should be removed once CMFCore if fixed to
+        # work with Zope 4
+        'ZServer',
+        'Products.ZCatalog',
     ],
     tests_require=[
         'zope.testing >= 3.7.0',
