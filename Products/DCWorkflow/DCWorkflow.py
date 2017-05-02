@@ -29,18 +29,19 @@ from Products.CMFCore.interfaces import IWorkflowDefinition
 from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved
 from Products.CMFCore.WorkflowCore import WorkflowException
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.events import AfterTransitionEvent
 from Products.DCWorkflow.events import BeforeTransitionEvent
 from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
 from Products.DCWorkflow.utils import Message as _
 from Products.DCWorkflow.utils import modifyRolesForGroup
 from Products.DCWorkflow.utils import modifyRolesForPermission
 from Products.DCWorkflow.WorkflowUIMixin import WorkflowUIMixin
+
 
 def checkId(id):
     res = bad_id(id)
@@ -141,7 +142,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
     def _getPortalRoot(self):
         return aq_parent(aq_inner(aq_parent(aq_inner(self))))
 
-    security.declarePrivate('getCatalogVariablesFor')
+    @security.private
     def getCatalogVariablesFor(self, ob):
         '''
         Allows this workflow to make workflow-specific variables
@@ -170,7 +171,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         res[state_var] = status.get(state_var, self.initial_state)
         return res
 
-    security.declarePrivate('listObjectActions')
+    @security.private
     def listObjectActions(self, info):
         '''
         Allows this workflow to
@@ -200,7 +201,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         res.sort()
         return [ result[1] for result in res ]
 
-    security.declarePrivate('listGlobalActions')
+    @security.private
     def listGlobalActions(self, info):
         '''
         Allows this workflow to
@@ -239,7 +240,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         res.sort()
         return [ result[1] for result in res ]
 
-    security.declarePrivate('isActionSupported')
+    @security.private
     def isActionSupported(self, ob, action, **kw):
         '''
         Returns a true value if the given action name
@@ -256,7 +257,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                 return 1
         return 0
 
-    security.declarePrivate('doActionFor')
+    @security.private
     def doActionFor(self, ob, action, comment='', **kw):
         '''
         Allows the user to request a workflow action.  This method
@@ -277,7 +278,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             raise Unauthorized(action)
         self._changeStateOf(ob, tdef, kw)
 
-    security.declarePrivate('isInfoSupported')
+    @security.private
     def isInfoSupported(self, ob, name):
         '''
         Returns a true value if the given info name is supported.
@@ -289,7 +290,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             return 0
         return 1
 
-    security.declarePrivate('getInfoFor')
+    @security.private
     def getInfoFor(self, ob, name, default):
         '''
         Allows the user to request information provided by the
@@ -314,7 +315,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
 
         return value
 
-    security.declarePrivate('allowCreate')
+    @security.private
     def allowCreate(self, container, type_name):
         """Returns true if the user is allowed to create a workflow instance.
 
@@ -325,7 +326,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                 getSecurityManager(), self, container)
         return 1
 
-    security.declarePrivate('notifyCreated')
+    @security.private
     def notifyCreated(self, ob):
         """Notifies this workflow after an object has been created and added.
         """
@@ -335,7 +336,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             # Swallow.
             pass
 
-    security.declarePrivate('notifyBefore')
+    @security.private
     def notifyBefore(self, ob, action):
         '''
         Notifies this workflow of an action before it happens,
@@ -345,21 +346,21 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         '''
         pass
 
-    security.declarePrivate('notifySuccess')
+    @security.private
     def notifySuccess(self, ob, action, result):
         '''
         Notifies this workflow that an action has taken place.
         '''
         pass
 
-    security.declarePrivate('notifyException')
+    @security.private
     def notifyException(self, ob, action, exc):
         '''
         Notifies this workflow that an action failed.
         '''
         pass
 
-    security.declarePrivate('updateRoleMappingsFor')
+    @security.private
     def updateRoleMappingsFor(self, ob):
         """Changes the object permissions according to the current state.
         """
@@ -537,5 +538,6 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             raise moved_exc
         else:
             return new_sdef
+
 
 InitializeClass(DCWorkflowDefinition)

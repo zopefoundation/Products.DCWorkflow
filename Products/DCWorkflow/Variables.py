@@ -22,9 +22,9 @@ from OFS.SimpleItem import SimpleItem
 from zExceptions import BadRequest
 
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
 
 
@@ -103,6 +103,7 @@ class VariableDefinition(SimpleItem):
         self.update_always = bool(update_always)
         if REQUEST is not None:
             return self.manage_properties(REQUEST, 'Properties changed.')
+
 
 InitializeClass(VariableDefinition)
 

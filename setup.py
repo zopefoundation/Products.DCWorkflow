@@ -58,6 +58,7 @@ setup(
         # work with Zope 4
         'ZServer',
         'Products.ZCatalog',
+        'docutils',
     ],
     tests_require=[
         'zope.testing >= 3.7.0',

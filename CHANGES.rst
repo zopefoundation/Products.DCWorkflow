@@ -4,6 +4,10 @@ Products.DCWorkflow Changelog
 2.3.0 (unreleased)
 ------------------
 
+- Import permissions directly from CMFCore.
+
+- Use decorators for ZCA and to declare security.
+
 - Export / import workflow-managed groups.
 
 
@@ -78,12 +82,12 @@ Products.DCWorkflow Changelog
 
 - moved the Zope dependency to version 2.12.0b3dev
 
-- Worklists: The catalog variable match setting can now be a 
-  formatted string (as before), but also a qualified TAL 
+- Worklists: The catalog variable match setting can now be a
+  formatted string (as before), but also a qualified TAL
   expression, meaning it has a prefix like "string:", "python:".
   (https://bugs.launchpad.net/zope-cmf/+bug/378292)
 
-- exportimport: Support for instance creation guards and manager 
+- exportimport: Support for instance creation guards and manager
   bypass added.
   (https://bugs.launchpad.net/zope-cmf/+bug/308947)
 
@@ -106,7 +110,7 @@ Products.DCWorkflow Changelog
 - Worklists and Transitions: Add icon expression properties to worklist
   and transition actions and their GenericSetup profiles.
 
-- Fixed an import error (Products.PageTemplates.TALES is gone on 
+- Fixed an import error (Products.PageTemplates.TALES is gone on
   Zope trunk).  Because we require Zope >= 2.10, we don't need a
   BBB conditional import.
 

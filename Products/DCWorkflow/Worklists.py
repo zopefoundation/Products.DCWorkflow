@@ -25,12 +25,12 @@ from Persistence import PersistentMapping
 from zope.component import getUtility
 
 from Products.CMFCore.interfaces import ICatalogTool
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.Expression import Expression
 from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
 
 tales_re = re.compile(r'(\w+:)?(.*)')
