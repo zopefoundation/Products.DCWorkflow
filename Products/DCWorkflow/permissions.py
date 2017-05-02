@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ DCWorkflow product permissions
 """
 from AccessControl import ModuleSecurityInfo

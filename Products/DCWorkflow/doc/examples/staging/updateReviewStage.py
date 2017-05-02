@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ## Script (Python) "updateReviewStage"
 ##parameters=sci
 # Copy the object in development to review.

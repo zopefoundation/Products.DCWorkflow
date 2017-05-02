@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ## Script (Python) "checkin"
 ##parameters=sci
 # Check in the object to a Zope version repository, disallowing changes.
