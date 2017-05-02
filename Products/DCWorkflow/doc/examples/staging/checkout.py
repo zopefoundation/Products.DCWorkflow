@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ## Script (Python) "checkout"
 ##parameters=sci
 # Check out the object from a repository, allowing changes.

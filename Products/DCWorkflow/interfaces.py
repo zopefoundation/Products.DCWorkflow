@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 Zope Foundation and Contributors.
@@ -29,13 +30,22 @@ class ITransitionEvent(IObjectEvent):
     """An event that's fired upon a workflow transition.
     """
 
-    workflow = Attribute(u"The workflow definition triggering the transition")
-    old_state = Attribute(u"The state definition of the workflow state before the transition")
-    new_state = Attribute(u"The state definition of the workflow state before after transition")
-    transition = Attribute(u"The transition definition taking place. "
-                            "May be None if this is the 'transition' to the initial state.")                                   
-    status = Attribute(u"The status dict of the object.")
-    kwargs = Attribute(u"Any keyword arguments passed to doActionFor() when the transition was invoked")
+    workflow = Attribute(u'The workflow definition triggering the transition')
+    old_state = Attribute(
+        u'The state definition of the workflow state before the transition'
+    )
+    new_state = Attribute(
+        u'The state definition of the workflow state before after transition'
+    )
+    transition = Attribute(
+        u'The transition definition taking place. '
+        u'May be None if this is the \'transition\' to the initial state.'
+    )
+    status = Attribute(u'The status dict of the object.')
+    kwargs = Attribute(
+        u'Any keyword arguments passed to doActionFor() when the transition '
+        u'was invoked'
+    )
 
 
 class IBeforeTransitionEvent(ITransitionEvent):

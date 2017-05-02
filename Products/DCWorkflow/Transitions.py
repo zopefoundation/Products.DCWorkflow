@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
@@ -22,9 +23,9 @@ from OFS.SimpleItem import SimpleItem
 from Persistence import PersistentMapping
 
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
 
 TRIGGER_AUTOMATIC = 0
@@ -214,6 +215,7 @@ class TransitionDefinition(SimpleItem):
 
             return self.manage_variables(REQUEST, 'Variables changed.')
 
+
 InitializeClass(TransitionDefinition)
 
 
@@ -256,5 +258,6 @@ class Transitions(ContainerTab):
             self._delObject(id)
         if REQUEST is not None:
             return self.manage_main(REQUEST, 'Transition(s) removed.')
+
 
 InitializeClass(Transitions)

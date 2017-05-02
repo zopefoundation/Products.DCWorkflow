@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 Zope Foundation and Contributors.
@@ -14,7 +15,6 @@
 """
 
 import unittest
-import Testing
 
 from AccessControl import getSecurityManager
 from zope.component import getSiteManager
@@ -270,4 +270,4 @@ class TestGuard(unittest.TestCase):
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestGuard),
-        ))
+    ))

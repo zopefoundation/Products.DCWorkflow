@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
@@ -22,7 +23,7 @@ from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
-from Products.DCWorkflow.permissions import ManagePortal
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.utils import _dtmldir
 
@@ -38,7 +39,7 @@ class WorkflowUIMixin(object):
     manage_properties = DTMLFile('workflow_properties', _dtmldir)
     manage_groups = PageTemplateFile('workflow_groups.pt', _dtmldir)
 
-    security.declareProtected(ManagePortal, 'setProperties')
+    @security.protected(ManagePortal)
     @postonly
     def setProperties(self, title, manager_bypass=0, props=None,
                       REQUEST=None, description=''):
@@ -58,7 +59,7 @@ class WorkflowUIMixin(object):
 
     _permissions_form = DTMLFile('workflow_permissions', _dtmldir)
 
-    security.declareProtected(ManagePortal, 'manage_permissions')
+    @security.protected(ManagePortal)
     def manage_permissions(self, REQUEST, manage_tabs_message=None):
         """Displays the form for choosing which permissions to manage.
         """
@@ -67,7 +68,7 @@ class WorkflowUIMixin(object):
                                       manage_tabs_message=manage_tabs_message,
                                       )
 
-    security.declareProtected(ManagePortal, 'addManagedPermission')
+    @security.protected(ManagePortal)
     @postonly
     def addManagedPermission(self, p, REQUEST=None):
         """Adds to the list of permissions to manage.
@@ -81,7 +82,7 @@ class WorkflowUIMixin(object):
             return self.manage_permissions(
                 REQUEST, manage_tabs_message='Permission added.')
 
-    security.declareProtected(ManagePortal, 'delManagedPermissions')
+    @security.protected(ManagePortal)
     @postonly
     def delManagedPermissions(self, ps, REQUEST=None):
         """Removes from the list of permissions to manage.
@@ -95,20 +96,20 @@ class WorkflowUIMixin(object):
             return self.manage_permissions(
                 REQUEST, manage_tabs_message='Permission(s) removed.')
 
-    security.declareProtected(ManagePortal, 'getPossiblePermissions')
+    @security.protected(ManagePortal)
     def getPossiblePermissions(self):
         """Returns the list of all permissions that can be managed.
         """
         # possible_permissions is in AccessControl.Role.RoleManager.
         return list(self.possible_permissions())
 
-    security.declareProtected(ManagePortal, 'getGroups')
+    @security.protected(ManagePortal)
     def getGroups(self):
         """Returns the names of groups managed by this workflow.
         """
         return tuple(self.groups)
 
-    security.declareProtected(ManagePortal, 'getAvailableGroups')
+    @security.protected(ManagePortal)
     def getAvailableGroups(self):
         """Returns a list of available group names.
         """
@@ -122,7 +123,7 @@ class WorkflowUIMixin(object):
         else:
             return [g['id'] for g in groups]
 
-    security.declareProtected(ManagePortal, 'addGroup')
+    @security.protected(ManagePortal)
     @postonly
     def addGroup(self, group, RESPONSE=None, REQUEST=None):
         """Adds a group by name.
@@ -135,7 +136,7 @@ class WorkflowUIMixin(object):
                 "%s/manage_groups?manage_tabs_message=Added+group."
                 % self.absolute_url())
 
-    security.declareProtected(ManagePortal, 'delGroups')
+    @security.protected(ManagePortal)
     @postonly
     def delGroups(self, groups, RESPONSE=None, REQUEST=None):
         """Removes groups by name.
@@ -146,7 +147,7 @@ class WorkflowUIMixin(object):
                 "%s/manage_groups?manage_tabs_message=Groups+removed."
                 % self.absolute_url())
 
-    security.declareProtected(ManagePortal, 'getAvailableRoles')
+    @security.protected(ManagePortal)
     def getAvailableRoles(self):
         """Returns the acquired roles mixed with base_cms roles.
         """
@@ -154,7 +155,7 @@ class WorkflowUIMixin(object):
         roles.sort()
         return roles
 
-    security.declareProtected(ManagePortal, 'getRoles')
+    @security.protected(ManagePortal)
     def getRoles(self):
         """Returns the list of roles managed by this workflow.
         """
@@ -162,7 +163,7 @@ class WorkflowUIMixin(object):
             return self.roles
         return self.valid_roles()
 
-    security.declareProtected(ManagePortal, 'setRoles')
+    @security.protected(ManagePortal)
     @postonly
     def setRoles(self, roles, RESPONSE=None, REQUEST=None):
         """Changes the list of roles mapped to groups by this workflow.
@@ -177,7 +178,7 @@ class WorkflowUIMixin(object):
                 "%s/manage_groups?manage_tabs_message=Roles+changed."
                 % self.absolute_url())
 
-    security.declareProtected(ManagePortal, 'getGuard')
+    @security.protected(ManagePortal)
     def getGuard(self):
         """Returns the initiation guard.
 
@@ -188,7 +189,7 @@ class WorkflowUIMixin(object):
         else:
             return Guard().__of__(self)  # Create a temporary guard.
 
-    security.declarePublic('guardExprDocs')
+    @security.public
     def guardExprDocs(self):
         """Returns documentation on guard expressions.
         """
@@ -201,5 +202,6 @@ class WorkflowUIMixin(object):
             f.close()
         from DocumentTemplate.DT_Var import structured_text
         return structured_text(text)
+
 
 InitializeClass(WorkflowUIMixin)

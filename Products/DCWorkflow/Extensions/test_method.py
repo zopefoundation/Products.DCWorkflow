@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 Zope Foundation and Contributors.
@@ -11,7 +12,8 @@
 #
 ##############################################################################
 """ External method used for unit tests - do not remove
-""" 
+"""
+
 
 def test(self):
     return None

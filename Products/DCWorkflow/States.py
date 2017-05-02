@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
@@ -23,8 +24,8 @@ from Persistence import PersistentMapping
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.ContainerTab import ContainerTab
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
 
 
@@ -248,6 +249,7 @@ class StateDefinition(SimpleItem):
                 "%s/manage_groups?manage_tabs_message=Groups+changed."
                 % self.absolute_url())
 
+
 InitializeClass(StateDefinition)
 
 
@@ -301,5 +303,6 @@ class States(ContainerTab):
         aq_parent(aq_inner(self)).initial_state = id
         if REQUEST is not None:
             return self.manage_main(REQUEST, 'Initial state selected.')
+
 
 InitializeClass(States)

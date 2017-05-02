@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Foundation and Contributors.
@@ -40,11 +41,12 @@ def ac_inherited_permissions(ob, all=0):
         if hasattr(ob, '_subobject_permissions'):
             for p in ob._subobject_permissions():
                 pname = p[0]
-                if not pname in d:
+                if pname not in d:
                     d[pname] = 1
                     r.append(p)
         r = list(perms) + r
     return r
+
 
 def modifyRolesForPermission(ob, pname, roles):
     '''
@@ -63,6 +65,7 @@ def modifyRolesForPermission(ob, pname, roles):
         p.setRoles(roles)
         return 1
     return 0
+
 
 def modifyRolesForGroup(ob, group, grant_roles, managed_roles):
     """Modifies local roles for one group.
@@ -99,6 +102,7 @@ def modifyRolesForGroup(ob, group, grant_roles, managed_roles):
             local_roles[group] = roles
         ob.__ac_local_roles__ = local_roles
     return changed
+
 
 security.declarePublic('Message')
 Message = _ = MessageFactory('cmf_default')
