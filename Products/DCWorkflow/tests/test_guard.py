@@ -15,7 +15,6 @@
 """
 
 import unittest
-import Testing
 
 from AccessControl import getSecurityManager
 from zope.component import getSiteManager
@@ -271,4 +270,4 @@ class TestGuard(unittest.TestCase):
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TestGuard),
-        ))
+    ))

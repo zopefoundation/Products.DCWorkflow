@@ -24,7 +24,7 @@ from MultiMapping import MultiMapping
 from Products.PageTemplates.Expressions import getEngine
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
-from Products.CMFCore.Expression import Expression # BBB: old location
+from Products.CMFCore.Expression import Expression  # BBB: old location
 from Products.CMFCore.interfaces import ISiteRoot
 from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved

@@ -15,12 +15,11 @@
 """
 
 import unittest
-import Testing
 
 from OFS.Folder import Folder
 from OFS.Application import Application
-from Products.DCWorkflow.utils \
-     import modifyRolesForPermission, modifyRolesForGroup
+from Products.DCWorkflow.utils import modifyRolesForGroup
+from Products.DCWorkflow.utils import modifyRolesForPermission
 
 
 class RoleMapTests(unittest.TestCase):
@@ -32,7 +31,7 @@ class RoleMapTests(unittest.TestCase):
         self.ob.__ac_local_roles__ = {
             '(Group) Administrators': ['Manager', 'Member'],
             '(Group) Users': ['Member'],
-            }
+        }
         self.ob._View_Permission = ('Member', 'Manager')
         self.ob._View_management_screens_Permission = ('Manager',)
 
@@ -43,7 +42,7 @@ class RoleMapTests(unittest.TestCase):
             self.ob, '(Group) Users', [], ['Member'])
         self.assertEqual(self.ob.__ac_local_roles__, {
             '(Group) Administrators': ['Manager', 'Owner'],
-            })
+        })
         modifyRolesForGroup(
             self.ob, '(Group) Administrators', ['Member'], ['Member', 'Owner'])
         modifyRolesForGroup(
@@ -51,7 +50,7 @@ class RoleMapTests(unittest.TestCase):
         self.assertEqual(self.ob.__ac_local_roles__, {
             '(Group) Administrators': ['Manager', 'Member'],
             '(Group) Users': ['Member'],
-            })
+        })
 
     def testModifyRolesForPermission(self):
         modifyRolesForPermission(self.ob, 'View', ['Manager'])
@@ -65,4 +64,4 @@ class RoleMapTests(unittest.TestCase):
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(RoleMapTests),
-        ))
+    ))

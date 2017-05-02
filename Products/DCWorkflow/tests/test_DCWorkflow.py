@@ -15,9 +15,8 @@
 """
 
 import unittest
-import Testing
-
 import transaction
+
 from AccessControl.SecurityManagement import newSecurityManager
 from zope.component import adapter
 from zope.component import getSiteManager
@@ -80,9 +79,12 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
         wf.variables.addVariable('comments')
         vdef = wf.variables['comments']
-        vdef.setProperties(description='',
-                 default_expr="python:state_change.kwargs.get('comment', '')",
-                 for_status=1, update_always=1)
+        vdef.setProperties(
+            description='',
+            default_expr="python:state_change.kwargs.get('comment', '')",
+            for_status=1,
+            update_always=1
+        )
 
         wf.worklists.addWorklist('published_documents')
 
@@ -199,8 +201,9 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
         wf.worklists.manage_renameObject('published_documents',
                                          'published_documents_new')
-        self.assertNotEqual(None,
-                          wf.worklists._getOb('published_documents_new', None))
+        self.assertNotEqual(
+            None,
+            wf.worklists._getOb('published_documents_new', None))
 
     def test_worklists(self):
         wf = self._getDummyWorkflow()
@@ -213,10 +216,7 @@ class DCWorkflowDefinitionTests(SecurityTest):
         wf.worklists.manage_main(self.REQUEST)
 
 
-    # XXX more tests...
-
-
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(DCWorkflowDefinitionTests),
-        ))
+    ))
