@@ -4,6 +4,12 @@ Products.DCWorkflow Changelog
 2.4.0 (unreleased)
 ------------------
 
+- Import permissions directly from CMFCore and deprecate the 
+  permissions module in Products.DCWorkflow
+
+- Use decorators for ZCA and to declare security.
+
+
 2.4.0b1 (2017-05-04)
 --------------------
 

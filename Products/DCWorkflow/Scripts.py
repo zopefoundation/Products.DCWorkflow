@@ -17,8 +17,8 @@ from AccessControl.SecurityInfo import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS.Folder import Folder
 
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.ContainerTab import ContainerTab
-from Products.DCWorkflow.permissions import ManagePortal
 
 
 class Scripts(ContainerTab):
@@ -35,5 +35,6 @@ class Scripts(ContainerTab):
         kw['management_view'] = 'Scripts'
         m = Folder.manage_main.__of__(self)
         return m(self, client, REQUEST, **kw)
+
 
 InitializeClass(Scripts)

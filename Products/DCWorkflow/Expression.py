@@ -109,6 +109,7 @@ class StateChangeInfo(object):
             date = self._date = DateTime()
         return date
 
+
 InitializeClass(StateChangeInfo)
 
 

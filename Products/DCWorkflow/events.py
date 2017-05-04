@@ -1,13 +1,14 @@
-from zope.interface import implements
+from zope.interface import implementer
 from zope.component.interfaces import ObjectEvent
 
 from Products.DCWorkflow.interfaces import IAfterTransitionEvent
 from Products.DCWorkflow.interfaces import IBeforeTransitionEvent
 from Products.DCWorkflow.interfaces import ITransitionEvent
 
+
+@implementer(ITransitionEvent)
 class TransitionEvent(ObjectEvent):
-    implements(ITransitionEvent)
-    
+
     def __init__(self, obj, workflow, old_state, new_state,
                  transition, status, kwargs):
         ObjectEvent.__init__(self, obj)
@@ -17,9 +18,13 @@ class TransitionEvent(ObjectEvent):
         self.transition = transition
         self.status = status
         self.kwargs = kwargs
-        
+
+
+@implementer(IBeforeTransitionEvent)
 class BeforeTransitionEvent(TransitionEvent):
-    implements(IBeforeTransitionEvent)
-    
+    pass
+
+
+@implementer(IAfterTransitionEvent)
 class AfterTransitionEvent(TransitionEvent):
-    implements(IAfterTransitionEvent)
+    pass

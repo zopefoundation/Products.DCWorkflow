@@ -24,10 +24,10 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import adapts
 
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _xmldir
 from Products.GenericSetup.interfaces import ISetupEnviron
 from Products.GenericSetup.utils import BodyAdapterBase
@@ -102,7 +102,7 @@ class WorkflowDefinitionConfigurator(Implicit):
     def __init__(self, obj):
         self._obj = obj
 
-    security.declareProtected(ManagePortal, 'getWorkflowInfo')
+    @security.protected(ManagePortal)
     def getWorkflowInfo(self, workflow_id):
         """ Return a mapping describing a given workflow.
 
@@ -132,20 +132,20 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return workflow_info
 
-    security.declareProtected(ManagePortal, 'generateWorkflowXML')
+    @security.protected(ManagePortal)
     def generateWorkflowXML(self):
         """ Pseudo API.
         """
         return self._workflowConfig(workflow_id=self._obj.getId())\
             .encode('utf-8')
 
-    security.declareProtected(ManagePortal, 'getWorkflowScripts')
+    @security.protected(ManagePortal)
     def getWorkflowScripts(self):
         """ Get workflow scripts information
         """
         return self._extractScripts(self._obj)
 
-    security.declareProtected(ManagePortal, 'parseWorkflowXML')
+    @security.protected(ManagePortal)
     def parseWorkflowXML(self, xml, encoding='utf-8'):
         """ Pseudo API.
         """
@@ -194,7 +194,7 @@ class WorkflowDefinitionConfigurator(Implicit):
     _workflowConfig = PageTemplateFile('wtcWorkflowExport.xml', _xmldir,
                                        __name__='workflowConfig')
 
-    security.declarePrivate('_extractDCWorkflowInfo')
+    @security.private
     def _extractDCWorkflowInfo(self, workflow, workflow_info):
         """ Append the information for a 'workflow' into 'workflow_info'
 
@@ -244,7 +244,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         workflow_info['worklist_info'] = self._extractWorklists(workflow)
         workflow_info['script_info'] = self._extractScripts(workflow)
 
-    security.declarePrivate('_extractCreationGuard')
+    @security.private
     def _extractCreationGuard(self, workflow):
         """ Return a mapping describing 'Instance creation conditions'
             if 'creation_guard' is initialized or None
@@ -257,7 +257,7 @@ class WorkflowDefinitionConfigurator(Implicit):
                     'guard_expr': guard.getExprText()}
             return info
 
-    security.declarePrivate('_extractVariables')
+    @security.private
     def _extractVariables(self, workflow):
         """ Return a sequence of mappings describing DCWorkflow variables.
 
@@ -316,7 +316,7 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return result
 
-    security.declarePrivate('_extractStates')
+    @security.private
     def _extractStates(self, workflow):
         """ Return a sequence of mappings describing DCWorkflow states.
 
@@ -391,7 +391,7 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return result
 
-    security.declarePrivate('_extractStatePermissions')
+    @security.private
     def _extractStatePermissions(self, state):
         """ Return a sequence of mappings for the permissions in a state.
 
@@ -417,7 +417,7 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return result
 
-    security.declarePrivate('_extractTransitions')
+    @security.private
     def _extractTransitions(self, workflow):
         """ Return a sequence of mappings describing DCWorkflow transitions.
 
@@ -505,7 +505,7 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return result
 
-    security.declarePrivate('_extractWorklists')
+    @security.private
     def _extractWorklists(self, workflow):
         """ Return a sequence of mappings describing DCWorkflow transitions.
 
@@ -570,7 +570,7 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return result
 
-    security.declarePrivate('_extractScripts')
+    @security.private
     def _extractScripts(self, workflow):
         """ Return a sequence of mappings describing DCWorkflow scripts.
 

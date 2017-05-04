@@ -24,9 +24,9 @@ from Persistence import Persistent
 
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.utils import _checkPermission
+from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.Expression import createExprContext
-from Products.DCWorkflow.permissions import ManagePortal
 from Products.DCWorkflow.utils import _dtmldir
 
 
@@ -90,7 +90,7 @@ class Guard(Persistent, Explicit):
                 return 0
         return 1
 
-    security.declareProtected(ManagePortal, 'getSummary')
+    @security.protected(ManagePortal)
     def getSummary(self):
         # Perhaps ought to be in DTML.
         res = []
@@ -142,29 +142,30 @@ class Guard(Persistent, Explicit):
             self.expr = Expression(s)
         return res
 
-    security.declareProtected(ManagePortal, 'getPermissionsText')
+    @security.protected(ManagePortal)
     def getPermissionsText(self):
         if not self.permissions:
             return ''
         return '; '.join(self.permissions)
 
-    security.declareProtected(ManagePortal, 'getRolesText')
+    @security.protected(ManagePortal)
     def getRolesText(self):
         if not self.roles:
             return ''
         return '; '.join(self.roles)
 
-    security.declareProtected(ManagePortal, 'getGroupsText')
+    @security.protected(ManagePortal)
     def getGroupsText(self):
         if not self.groups:
             return ''
         return '; '.join(self.groups)
 
-    security.declareProtected(ManagePortal, 'getExprText')
+    @security.protected(ManagePortal)
     def getExprText(self):
         if not self.expr:
             return ''
         return str(self.expr.text)
+
 
 InitializeClass(Guard)
 
