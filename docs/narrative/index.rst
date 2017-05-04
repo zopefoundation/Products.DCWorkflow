@@ -1,4 +1,4 @@
-DCWorfklow Narrative Documentation
+DCWorkflow Narrative Documentation
 ==================================
 
 Contents:
