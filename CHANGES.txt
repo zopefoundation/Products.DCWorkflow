@@ -4,7 +4,9 @@ Products.DCWorkflow Changelog
 2.4.0 (unreleased)
 ------------------
 
-- Import permissions directly from CMFCore and deprecate the 
+- Prepare for Python 2 / 3 compatibility
+
+- Import permissions directly from CMFCore and deprecate the
   permissions module in Products.DCWorkflow
 
 - Use decorators for ZCA and to declare security.
@@ -13,7 +15,7 @@ Products.DCWorkflow Changelog
 2.4.0b1 (2017-05-04)
 --------------------
 
-- Target use with Zope 4:  no longer support 2.13.x.
+- Target use with Zope 4: no longer support 2.13.x.
 
 
 2.3.0 (2017-05-04)

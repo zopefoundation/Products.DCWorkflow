@@ -34,6 +34,8 @@ from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.GenericSetup.tests.common import DummyExportContext
 from Products.GenericSetup.tests.common import DummyImportContext
 
+import six
+
 
 class _GuardChecker:
 
@@ -326,7 +328,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(type, 'int')
                 elif isinstance(value, float):
                     self.assertEqual(type, 'float')
-                elif isinstance(value, basestring):
+                elif isinstance(value, six.string_types):
                     self.assertEqual(type, 'string')
 
     def test_getWorkflowInfo_dcworkflow_transitions(self):
@@ -690,7 +692,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(v_info['type'], 'int')
                 elif isinstance(exp_value, float):
                     self.assertEqual(v_info['type'], 'float')
-                elif isinstance(exp_value, basestring):
+                elif isinstance(exp_value, six.string_types):
                     self.assertEqual(v_info['type'], 'string')
 
     def test_parseWorkflowXML_state_w_missing_acquired(self):
@@ -868,7 +870,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     exp_type = 'int'
                 elif isinstance(exp_value, float):
                     exp_type = 'float'
-                elif isinstance(exp_value, basestring):
+                elif isinstance(exp_value, six.string_types):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
@@ -944,7 +946,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     exp_type = 'int'
                 elif isinstance(exp_value, float):
                     exp_type = 'float'
-                elif isinstance(exp_value, basestring):
+                elif isinstance(exp_value, six.string_types):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
