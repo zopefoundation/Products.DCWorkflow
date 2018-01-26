@@ -34,6 +34,9 @@ from Products.DCWorkflow.utils import _xmldir
 from Products.GenericSetup.interfaces import ISetupEnviron
 from Products.GenericSetup.utils import BodyAdapterBase
 
+import six
+
+
 TRIGGER_TYPES = ( 'AUTOMATIC', 'USER' )
 _FILENAME = 'workflows.xml'
 
@@ -549,7 +552,7 @@ class WorkflowDefinitionConfigurator( Implicit ):
           'actbox_url' -- the URL of the "action" corresponding to the
             worklist
 
-          'actbox_icon' -- the icon URL of the "action" corresponding to 
+          'actbox_icon' -- the icon URL of the "action" corresponding to
             the worklist
 
           'actbox_category' -- the category of the "action" corresponding
@@ -967,7 +970,7 @@ def _guessVariableType( value ):
     if isinstance( value, float ):
         return 'float'
 
-    if isinstance( value, basestring ):
+    if isinstance(value, six.string_types):
         return 'string'
 
     return 'unknown'
@@ -985,7 +988,7 @@ def _convertVariableValue( value, type_id ):
 
     if type_id == 'bool':
 
-        if isinstance( value, basestring ):
+        if isinstance(value, six.string_types):
 
             value = str( value ).lower()
 
