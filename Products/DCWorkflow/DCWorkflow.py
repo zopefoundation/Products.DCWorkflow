@@ -419,7 +419,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         while 1:
             try:
                 sdef = self._executeTransition(ob, tdef, kwargs)
-            except ObjectMoved, moved_exc:
+            except ObjectMoved as moved_exc:
                 ob = moved_exc.getNewObject()
                 sdef = self._getWorkflowStateOf(ob)
                 # Re-raise after all transitions.
@@ -472,7 +472,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                 ob, self, former_status, tdef, old_sdef, new_sdef, kwargs)
             try:
                 script(sci)  # May throw an exception.
-            except ObjectMoved, moved_exc:
+            except ObjectMoved as moved_exc:
                 ob = moved_exc.getNewObject()
                 # Re-raise after transition
 

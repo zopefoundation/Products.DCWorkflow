@@ -38,6 +38,8 @@ from Products.GenericSetup.tests.common import DummyExportContext
 from Products.GenericSetup.tests.common import DummyImportContext
 from Products.GenericSetup.tests.common import TarballTester
 
+import six
+
 
 class _GuardChecker:
 
@@ -192,7 +194,7 @@ class _WorkflowSetup(WorkflowSetupBase):
                 raise ValueError, 'Unknown script type: %s' % v[ 0 ]
 
             dcworkflow.scripts._setObject( k, script )
-    
+
     def _initCreationGuard(self, dcworkflow) :
         props = self._genGuardProps(*_CREATION_GUARD)
         g = Guard()
@@ -474,7 +476,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
                                 , expected[ 2 ] % WF_ID )
             else:
                 self.assertEqual( info[ 'filename' ], expected[ 2 ] )
-    
+
     def test_getWorkflowInfo_dcworkflow_creation_guard(self) :
         WF_ID = 'dcworkflow_creation_guard'
 
@@ -761,7 +763,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
         , permissions
         , groups
         , scripts
-        , description 
+        , description
         , manager_bypass
         , creation_guard
         ) = configurator.parseWorkflowXML(
@@ -871,7 +873,7 @@ class WorkflowDefinitionConfiguratorTests( _WorkflowSetup, _GuardChecker ):
                     exp_type = 'int'
                 elif isinstance( exp_value, float ):
                     exp_type = 'float'
-                elif isinstance( exp_value, basestring ):
+                elif isinstance( exp_value, six.string_types ):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
@@ -2035,7 +2037,7 @@ class Test_exportUTFWorkflow(Test_exportWorkflow,TarballTester):
     def test_utf_strings( self ):
         from Products.CMFCore.exportimport.workflow import exportWorkflowTool
         from Products.GenericSetup.context import TarballExportContext
-        
+
         WF_ID_DC = 'workflow'
         WF_TITLE_DC = u'A workflow with special chars like è é'
         WF_DESCRIPTION_DC = u'A workflow with lots of special chars ç'
@@ -2053,28 +2055,28 @@ class Test_exportUTFWorkflow(Test_exportWorkflow,TarballTester):
         self._initTransitions( dcworkflow )
         self._initWorklists( dcworkflow )
         ctx = TarballExportContext(site)
-        
+
         context = DummyExportContext( site )
         exportWorkflowTool( context )
         self.assertEqual( len( context._wrote ), 2 )
         for filename, text, content_type in context._wrote:
             ctx.writeDataFile( filename, text, content_type)
         fileish = StringIO( ctx.getArchive() )
-        self._verifyTarballContents( fileish, 
+        self._verifyTarballContents( fileish,
                                      ['workflows/workflow', 'workflows',
                                       'workflows.xml',
                                       'workflows/workflow/definition.xml'])
-        self._verifyTarballEntry( fileish, 'workflows.xml', 
+        self._verifyTarballEntry( fileish, 'workflows.xml',
                                            context._wrote[0][1] )
-        self._verifyTarballEntry( fileish, 'workflows/workflow/definition.xml', 
+        self._verifyTarballEntry( fileish, 'workflows/workflow/definition.xml',
                                            context._wrote[1][1] )
-        
+
 
 class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
     layer = ExportImportZCMLLayer
 
-    def _importNormalWorkflow( self, wf_id, wf_title, 
+    def _importNormalWorkflow( self, wf_id, wf_title,
                                wf_description, wf_initial_state ):
         from Products.CMFCore.exportimport.workflow import importWorkflowTool
 
@@ -2085,7 +2087,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
         return site.portal_workflow
 
-    def _prepareImportNormalWorkflow(self, wf_id, wf_title, wf_description, 
+    def _prepareImportNormalWorkflow(self, wf_id, wf_title, wf_description,
                                      wf_initial_state, site=None, purge=True):
         if site is None:
             site = self._initSite()
@@ -2287,7 +2289,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
         # Now reimport without purge
         site, context = self._prepareImportNormalWorkflow(
-            WF_ID, WF_TITLE, WF_DESCRIPTION, WF_INITIAL_STATE, 
+            WF_ID, WF_TITLE, WF_DESCRIPTION, WF_INITIAL_STATE,
             site=site, purge=False)
         importWorkflowTool(context)
         workflow = site.portal_workflow.objectValues()[1]
@@ -2503,7 +2505,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         WF_DESCRIPTION = 'Testing Worklists'
         WF_INITIAL_STATE = 'closed'
 
-        tool = self._importNormalWorkflow( WF_ID, WF_TITLE, 
+        tool = self._importNormalWorkflow( WF_ID, WF_TITLE,
                                            WF_DESCRIPTION, WF_INITIAL_STATE )
 
         workflow = tool.objectValues()[ 1 ]
@@ -2572,7 +2574,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         WF_DESCRIPTION = 'Testing Scripts'
         WF_INITIAL_STATE = 'closed'
 
-        tool = self._importNormalWorkflow( WF_ID, WF_TITLE, 
+        tool = self._importNormalWorkflow( WF_ID, WF_TITLE,
                                            WF_DESCRIPTION, WF_INITIAL_STATE )
 
         workflow = tool.objectValues()[ 1 ]
@@ -2608,7 +2610,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         s_infos = [
             dict(script_id='invalid', meta_type='invalid',
                  filename='')]
-        self.assertRaises(ValueError, 
+        self.assertRaises(ValueError,
                           exportimport._initDCWorkflowScripts,
                           workflow, s_infos, None)
 
@@ -2634,7 +2636,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
             dict(script_id='bar', meta_type='Foo Script',
                  filename='')]
         exportimport._initDCWorkflowScripts(workflow, s_infos, None)
-        
+
         self.assertEqual(scripts['doc'].meta_type, 'DTML Document')
         self.assertEqual(scripts['bar'].meta_type, 'Script (Python)')
 
