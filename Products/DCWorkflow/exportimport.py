@@ -293,8 +293,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.variables.objectItems()
-        items.sort()
+        items = sorted(workflow.variables.objectItems())
 
         for k, v in items:
 
@@ -363,8 +362,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.states.objectItems()
-        items.sort()
+        items = sorted(workflow.states.objectItems())
 
         for k, v in items:
 
@@ -410,8 +408,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         perm_roles = state.permission_roles
 
         if perm_roles:
-            items = state.permission_roles.items()
-            items.sort()
+            items = sorted(state.permission_roles.items())
 
             for k, v in items:
                 result.append({'name': k,
@@ -475,8 +472,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.transitions.objectItems()
-        items.sort()
+        items = sorted(workflow.transitions.objectItems())
 
         for k, v in items:
 
@@ -546,8 +542,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.worklists.objectItems()
-        items.sort()
+        items = sorted(workflow.worklists.objectItems())
 
         for k, v in items:
 
@@ -597,8 +592,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.scripts.objectItems()
-        items.sort()
+        items = sorted(workflow.scripts.objectItems())
 
         for k, v in items:
 
