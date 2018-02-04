@@ -95,15 +95,15 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
 
     def __init__(self, id):
         self.id = id
-        from States import States
+        from .States import States
         self._addObject(States('states'))
-        from Transitions import Transitions
+        from .Transitions import Transitions
         self._addObject(Transitions('transitions'))
-        from Variables import Variables
+        from .Variables import Variables
         self._addObject(Variables('variables'))
-        from Worklists import Worklists
+        from .Worklists import Worklists
         self._addObject(Worklists('worklists'))
-        from Scripts import Scripts
+        from .Scripts import Scripts
         self._addObject(Scripts('scripts'))
 
     def _addObject(self, ob):
