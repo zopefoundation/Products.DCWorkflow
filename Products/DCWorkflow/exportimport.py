@@ -1000,8 +1000,10 @@ def _initDCWorkflowVariables(workflow, variables):
     from Products.DCWorkflow.Variables import VariableDefinition
 
     for v_info in variables:
-
-        id = str(v_info['variable_id']) # no unicode!
+        if six.PY2:
+            id = str(v_info['variable_id'])  # no unicode!
+        else:
+            id = v_info['variable_id']
         if not id in workflow.variables:
             v = VariableDefinition(id)
             workflow.variables._setObject(id, v)
@@ -1031,8 +1033,11 @@ def _initDCWorkflowStates(workflow, states):
     from Products.DCWorkflow.States import StateDefinition
 
     for s_info in states:
+        if six.PY2:
+            id = str(s_info['state_id'])  # no unicode!
+        else:
+            id = s_info['state_id']
 
-        id = str(s_info['state_id']) # no unicode!
         if not id in workflow.states:
             s = StateDefinition(id)
             workflow.states._setObject(id, s)
@@ -1183,7 +1188,7 @@ def _queryNodeAttribute(node, attr_name, default, encoding='utf-8'):
 
     value = attr_node.nodeValue
 
-    if encoding is not None:
+    if six.PY2 and encoding is not None:
         value = value.encode(encoding)
 
     return value
@@ -1236,7 +1241,7 @@ def _coalesceTextNodeChildren(node, encoding='utf-8'):
 
     joined = ''.join(fragments)
 
-    if encoding is not None:
+    if six.PY2 and encoding is not None:
         joined = joined.encode(encoding)
 
     return ''.join([ line.lstrip()
