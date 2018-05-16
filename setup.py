@@ -46,10 +46,10 @@ setup(name='Products.%s' % NAME,
       install_requires=[
           'setuptools',
           'six',
-          'Zope2 >= 2.13.12',
+          'Zope >= 4.0b4',
           'Products.CMFCore >= 2.4.0.dev0',
           'Products.ExternalMethod',
-          'Products.GenericSetup',
+          'Products.GenericSetup >= 2.0b1',
           'Products.PythonScripts',
           ],
       tests_require=[
