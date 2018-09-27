@@ -32,6 +32,9 @@ from Products.DCWorkflow.utils import _xmldir
 from Products.GenericSetup.interfaces import ISetupEnviron
 from Products.GenericSetup.utils import BodyAdapterBase
 
+import six
+
+
 TRIGGER_TYPES = ('AUTOMATIC', 'USER')
 _FILENAME = 'workflows.xml'
 
@@ -290,8 +293,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.variables.objectItems()
-        items.sort()
+        items = sorted(workflow.variables.objectItems())
 
         for k, v in items:
 
@@ -360,8 +362,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.states.objectItems()
-        items.sort()
+        items = sorted(workflow.states.objectItems())
 
         for k, v in items:
 
@@ -407,8 +408,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         perm_roles = state.permission_roles
 
         if perm_roles:
-            items = state.permission_roles.items()
-            items.sort()
+            items = sorted(state.permission_roles.items())
 
             for k, v in items:
                 result.append({'name': k,
@@ -472,8 +472,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.transitions.objectItems()
-        items.sort()
+        items = sorted(workflow.transitions.objectItems())
 
         for k, v in items:
 
@@ -543,8 +542,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.worklists.objectItems()
-        items.sort()
+        items = sorted(workflow.worklists.objectItems())
 
         for k, v in items:
 
@@ -594,8 +592,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         """
         result = []
 
-        items = workflow.scripts.objectItems()
-        items.sort()
+        items = sorted(workflow.scripts.objectItems())
 
         for k, v in items:
 
@@ -905,7 +902,7 @@ def _guessVariableType(value):
     if isinstance(value, float):
         return 'float'
 
-    if isinstance(value, basestring):
+    if isinstance(value, six.string_types):
         return 'string'
 
     return 'unknown'
@@ -922,7 +919,7 @@ def _convertVariableValue(value, type_id):
 
     if type_id == 'bool':
 
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
 
             value = str(value).lower()
 
@@ -1003,8 +1000,10 @@ def _initDCWorkflowVariables(workflow, variables):
     from Products.DCWorkflow.Variables import VariableDefinition
 
     for v_info in variables:
-
-        id = str(v_info['variable_id']) # no unicode!
+        if six.PY2:
+            id = str(v_info['variable_id'])  # no unicode!
+        else:
+            id = v_info['variable_id']
         if not id in workflow.variables:
             v = VariableDefinition(id)
             workflow.variables._setObject(id, v)
@@ -1034,8 +1033,11 @@ def _initDCWorkflowStates(workflow, states):
     from Products.DCWorkflow.States import StateDefinition
 
     for s_info in states:
+        if six.PY2:
+            id = str(s_info['state_id'])  # no unicode!
+        else:
+            id = s_info['state_id']
 
-        id = str(s_info['state_id']) # no unicode!
         if not id in workflow.states:
             s = StateDefinition(id)
             workflow.states._setObject(id, s)
@@ -1186,7 +1188,7 @@ def _queryNodeAttribute(node, attr_name, default, encoding='utf-8'):
 
     value = attr_node.nodeValue
 
-    if encoding is not None:
+    if six.PY2 and encoding is not None:
         value = value.encode(encoding)
 
     return value
@@ -1239,7 +1241,7 @@ def _coalesceTextNodeChildren(node, encoding='utf-8'):
 
     joined = ''.join(fragments)
 
-    if encoding is not None:
+    if six.PY2 and encoding is not None:
         joined = joined.encode(encoding)
 
     return ''.join([ line.lstrip()

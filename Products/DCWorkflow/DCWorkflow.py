@@ -95,15 +95,15 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
 
     def __init__(self, id):
         self.id = id
-        from States import States
+        from .States import States
         self._addObject(States('states'))
-        from Transitions import Transitions
+        from .Transitions import Transitions
         self._addObject(Transitions('transitions'))
-        from Variables import Variables
+        from .Variables import Variables
         self._addObject(Variables('variables'))
-        from Worklists import Worklists
+        from .Worklists import Worklists
         self._addObject(Worklists('worklists'))
-        from Scripts import Scripts
+        from .Scripts import Scripts
         self._addObject(Scripts('scripts'))
 
     def _addObject(self, ob):
@@ -415,7 +415,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         while 1:
             try:
                 sdef = self._executeTransition(ob, tdef, kwargs)
-            except ObjectMoved, moved_exc:
+            except ObjectMoved as moved_exc:
                 ob = moved_exc.getNewObject()
                 sdef = self._getWorkflowStateOf(ob)
                 # Re-raise after all transitions.
@@ -469,7 +469,7 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                 ob, self, former_status, tdef, old_sdef, new_sdef, kwargs)
             try:
                 script(sci)  # May throw an exception.
-            except ObjectMoved, moved_exc:
+            except ObjectMoved as moved_exc:
                 ob = moved_exc.getNewObject()
                 # Re-raise after transition
 

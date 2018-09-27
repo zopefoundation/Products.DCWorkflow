@@ -6,6 +6,8 @@
 .eggs
 .installed.cfg
 .mr.developer.cfg
+.tox
+.coverage*
 bin
 build
 _build

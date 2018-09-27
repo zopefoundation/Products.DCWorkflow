@@ -100,12 +100,10 @@ class ContainerTab(Folder):
         return self._mapping.keys()
 
     def items(self):
-        return map(lambda id, self=self: (id, self._getOb(id)),
-                   self._mapping.keys())
+        return [(id, self._getOb(id)) for id in self._mapping.keys()]
 
     def values(self):
-        return map(lambda id, self=self: self._getOb(id),
-                   self._mapping.keys())
+        return [self._getOb(id) for id in self._mapping.keys()]
 
     def manage_renameObjects(self, ids=[], new_ids=[], REQUEST=None):
         """Rename several sub-objects"""

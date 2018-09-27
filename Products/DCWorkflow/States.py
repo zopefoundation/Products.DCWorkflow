@@ -117,7 +117,7 @@ class StateDefinition(SimpleItem):
         """Set the properties for this State."""
         self.title = str(title)
         self.description = str(description)
-        self.transitions = tuple(map(str, transitions))
+        self.transitions = tuple(str(t) for t in transitions)
         if REQUEST is not None:
             return self.manage_properties(REQUEST, 'Properties changed.')
 

@@ -17,12 +17,12 @@ def initialize(context):
 
     from Products.CMFCore.utils import registerIcon
 
-    import DCWorkflow
-    import States
-    import Transitions
-    import Variables
-    import Worklists
-    import Scripts
+    from . import DCWorkflow
+    from . import States
+    from . import Transitions
+    from . import Variables
+    from . import Worklists
+    from . import Scripts
 
     context.registerHelp(directory='help')
     context.registerHelpTitle('DCWorkflow')

@@ -34,6 +34,8 @@ from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.GenericSetup.tests.common import DummyExportContext
 from Products.GenericSetup.tests.common import DummyImportContext
 
+import six
+
 
 class _GuardChecker:
 
@@ -326,7 +328,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(type, 'int')
                 elif isinstance(value, float):
                     self.assertEqual(type, 'float')
-                elif isinstance(value, basestring):
+                elif isinstance(value, six.string_types):
                     self.assertEqual(type, 'string')
 
     def test_getWorkflowInfo_dcworkflow_transitions(self):
@@ -690,7 +692,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(v_info['type'], 'int')
                 elif isinstance(exp_value, float):
                     self.assertEqual(v_info['type'], 'float')
-                elif isinstance(exp_value, basestring):
+                elif isinstance(exp_value, six.string_types):
                     self.assertEqual(v_info['type'], 'string')
 
     def test_parseWorkflowXML_state_w_missing_acquired(self):
@@ -868,7 +870,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     exp_type = 'int'
                 elif isinstance(exp_value, float):
                     exp_type = 'float'
-                elif isinstance(exp_value, basestring):
+                elif isinstance(exp_value, six.string_types):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
@@ -944,7 +946,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     exp_type = 'int'
                 elif isinstance(exp_value, float):
                     exp_type = 'float'
-                elif isinstance(exp_value, basestring):
+                elif isinstance(exp_value, six.string_types):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
@@ -2552,14 +2554,15 @@ class Test_exportWorkflow(_WorkflowSetup, _GuardChecker):
 
         # workflows list, wf defintion and 3 scripts
         self.assertEqual(len(context._wrote), 6)
+        # order is random in py3 so use doct-keys instead
+        wrote_dict = {i[0]: [i[1], i[2]] for i in context._wrote}
 
-        filename, text, content_type = context._wrote[0]
-        self.assertEqual(filename, 'workflows.xml')
+        text, content_type = wrote_dict['workflows.xml']
         self._compareDOM(text, _NORMAL_TOOL_EXPORT)
         self.assertEqual(content_type, 'text/xml')
 
-        filename, text, content_type = context._wrote[2]
-        self.assertEqual(filename, 'workflows/%s/definition.xml' % WF_ID_DC)
+        text, content_type = wrote_dict[
+            'workflows/%s/definition.xml' % WF_ID_DC]
         self._compareDOM(text,
                          _NORMAL_WORKFLOW_EXPORT
                          % {'workflow_id': WF_ID_DC,
@@ -2570,10 +2573,9 @@ class Test_exportWorkflow(_WorkflowSetup, _GuardChecker):
         self.assertEqual(content_type, 'text/xml')
 
         # just testing first script
-        filename, text, content_type = context._wrote[3]
-        self.assertEqual(filename,
-                         'workflows/%s/scripts/after_close.py' % WF_ID_DC)
-        self.assertEqual(text, _AFTER_CLOSE_SCRIPT)
+        text, content_type = wrote_dict[
+            'workflows/%s/scripts/after_close.py' % WF_ID_DC]
+        self.assertEqual(text, _AFTER_CLOSE_SCRIPT.encode('utf8'))
         self.assertEqual(content_type, 'text/plain')
 
     def test_with_filenames(self):
@@ -2601,14 +2603,15 @@ class Test_exportWorkflow(_WorkflowSetup, _GuardChecker):
 
         # workflows list, wf defintion and 3 scripts
         self.assertEqual(len(context._wrote), 5)
+        # order is random in py3 so use doct-keys instead
+        wrote_dict = {i[0]: [i[1], i[2]] for i in context._wrote}
 
-        filename, text, content_type = context._wrote[0]
-        self.assertEqual(filename, 'workflows.xml')
+        text, content_type = wrote_dict['workflows.xml']
         self._compareDOM(text, _FILENAME_TOOL_EXPORT)
         self.assertEqual(content_type, 'text/xml')
 
-        filename, text, content_type = context._wrote[1]
-        self.assertEqual(filename, 'workflows/name_with_spaces/definition.xml')
+        text, content_type = wrote_dict[
+            'workflows/name_with_spaces/definition.xml']
         self._compareDOM(text,
                          _NORMAL_WORKFLOW_EXPORT
                          % {'workflow_id': WF_ID_DC,
@@ -2619,10 +2622,9 @@ class Test_exportWorkflow(_WorkflowSetup, _GuardChecker):
         self.assertEqual(content_type, 'text/xml')
 
         # just testing first script
-        filename, text, content_type = context._wrote[2]
-        self.assertEqual(filename, 'workflows/%s/scripts/after_close.py' %
-                          WF_ID_DC.replace(' ', '_'))
-        self.assertEqual(text, _AFTER_CLOSE_SCRIPT)
+        text, content_type = wrote_dict['workflows/%s/scripts/after_close.py' %
+                          WF_ID_DC.replace(' ', '_')]
+        self.assertEqual(text, _AFTER_CLOSE_SCRIPT.encode('utf8'))
         self.assertEqual(content_type, 'text/plain')
 
 

@@ -91,7 +91,7 @@ class StateChangeInfo(object):
         wf_id = wf.id
         h = tool.getHistoryOf(wf_id, self.object)
         if h:
-            return map(lambda dict: dict.copy(), h)  # Don't allow mutation
+            return [d.copy() for d in h]  # Don't allow mutation
         else:
             return ()
 
