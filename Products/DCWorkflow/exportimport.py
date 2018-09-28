@@ -12,6 +12,7 @@
 ##############################################################################
 """DCWorkflow export / import support.
 """
+from __future__ import absolute_import
 
 import re
 from xml.dom.minidom import parseString
