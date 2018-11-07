@@ -1,8 +1,8 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.4.0 (unreleased)
-------------------
+2.4.0b2 (2018-11-07)
+--------------------
 
 - Prepare for Python 2 / 3 compatibility
 
