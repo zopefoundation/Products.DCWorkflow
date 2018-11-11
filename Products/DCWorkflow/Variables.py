@@ -72,8 +72,6 @@ class VariableDefinition(SimpleItem):
     _properties_form = DTMLFile('variable_properties', _dtmldir)
 
     def manage_properties(self, REQUEST, manage_tabs_message=None):
-        '''
-        '''
         return self._properties_form(REQUEST,
                                      management_view='Properties',
                                      manage_tabs_message=manage_tabs_message,
@@ -84,8 +82,6 @@ class VariableDefinition(SimpleItem):
                       for_catalog=0, for_status=0,
                       update_always=0,
                       props=None, REQUEST=None):
-        '''
-        '''
         self.description = str(description)
         self.default_value = str(default_value)
         if default_expr:
@@ -120,9 +116,10 @@ class Variables(ContainerTab):
 
     _manage_variables = DTMLFile('variables', _dtmldir)
 
+    security = ClassSecurityInfo()
+    security.declareObjectProtected(ManagePortal)
+
     def manage_main(self, REQUEST, manage_tabs_message=None):
-        '''
-        '''
         return self._manage_variables(
             REQUEST,
             management_view='Variables',
@@ -130,16 +127,12 @@ class Variables(ContainerTab):
             )
 
     def addVariable(self, id, REQUEST=None):
-        '''
-        '''
         vdef = VariableDefinition(id)
         self._setObject(id, vdef)
         if REQUEST is not None:
             return self.manage_main(REQUEST, 'Variable added.')
 
     def deleteVariables(self, ids, REQUEST=None):
-        '''
-        '''
         for id in ids:
             self._delObject(id)
         if REQUEST is not None:
@@ -156,8 +149,6 @@ class Variables(ContainerTab):
         return wf_def.state_var
 
     def setStateVar(self, id, REQUEST=None):
-        '''
-        '''
         wf_def = aq_parent(aq_inner(self))
         if id != wf_def.state_var:
             self._checkId(id)
