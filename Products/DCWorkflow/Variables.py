@@ -51,19 +51,25 @@ class VariableDefinition(SimpleItem):
     def __init__(self, id):
         self.id = id
 
+    @security.protected(ManagePortal)
     def getDefaultExprText(self):
+        """"""
         if not self.default_expr:
             return ''
         else:
             return self.default_expr.text
 
+    @security.protected(ManagePortal)
     def getInfoGuard(self):
+        """"""
         if self.info_guard is not None:
             return self.info_guard
         else:
             return Guard().__of__(self)  # Create a temporary guard.
 
+    @security.protected(ManagePortal)
     def getInfoGuardSummary(self):
+        """"""
         res = None
         if self.info_guard is not None:
             res = self.info_guard.getSummary()
@@ -71,17 +77,21 @@ class VariableDefinition(SimpleItem):
 
     _properties_form = DTMLFile('variable_properties', _dtmldir)
 
+    @security.protected(ManagePortal)
     def manage_properties(self, REQUEST, manage_tabs_message=None):
+        """"""
         return self._properties_form(REQUEST,
                                      management_view='Properties',
                                      manage_tabs_message=manage_tabs_message,
                                      )
 
+    @security.protected(ManagePortal)
     def setProperties(self, description,
                       default_value='', default_expr='',
                       for_catalog=0, for_status=0,
                       update_always=0,
                       props=None, REQUEST=None):
+        """"""
         self.description = str(description)
         self.default_value = str(default_value)
         if default_expr:
@@ -119,20 +129,26 @@ class Variables(ContainerTab):
     security = ClassSecurityInfo()
     security.declareObjectProtected(ManagePortal)
 
+    @security.protected(ManagePortal)
     def manage_main(self, REQUEST, manage_tabs_message=None):
+        """"""
         return self._manage_variables(
             REQUEST,
             management_view='Variables',
             manage_tabs_message=manage_tabs_message,
             )
 
+    @security.protected(ManagePortal)
     def addVariable(self, id, REQUEST=None):
+        """"""
         vdef = VariableDefinition(id)
         self._setObject(id, vdef)
         if REQUEST is not None:
             return self.manage_main(REQUEST, 'Variable added.')
 
+    @security.protected(ManagePortal)
     def deleteVariables(self, ids, REQUEST=None):
+        """"""
         for id in ids:
             self._delObject(id)
         if REQUEST is not None:
@@ -144,11 +160,15 @@ class Variables(ContainerTab):
             raise BadRequest('"%s" is used for keeping state.' % id)
         return ContainerTab._checkId(self, id, allow_dup)
 
+    @security.protected(ManagePortal)
     def getStateVar(self):
+        """"""
         wf_def = aq_parent(aq_inner(self))
         return wf_def.state_var
 
+    @security.protected(ManagePortal)
     def setStateVar(self, id, REQUEST=None):
+        """"""
         wf_def = aq_parent(aq_inner(self))
         if id != wf_def.state_var:
             self._checkId(id)
