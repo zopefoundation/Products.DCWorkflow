@@ -51,25 +51,19 @@ class VariableDefinition(SimpleItem):
     def __init__(self, id):
         self.id = id
 
-    @security.protected(ManagePortal)
     def getDefaultExprText(self):
-        """"""
         if not self.default_expr:
             return ''
         else:
             return self.default_expr.text
 
-    @security.protected(ManagePortal)
     def getInfoGuard(self):
-        """"""
         if self.info_guard is not None:
             return self.info_guard
         else:
             return Guard().__of__(self)  # Create a temporary guard.
 
-    @security.protected(ManagePortal)
     def getInfoGuardSummary(self):
-        """"""
         res = None
         if self.info_guard is not None:
             res = self.info_guard.getSummary()
@@ -77,7 +71,6 @@ class VariableDefinition(SimpleItem):
 
     _properties_form = DTMLFile('variable_properties', _dtmldir)
 
-    @security.protected(ManagePortal)
     def manage_properties(self, REQUEST, manage_tabs_message=None):
         """"""
         return self._properties_form(REQUEST,
@@ -160,13 +153,10 @@ class Variables(ContainerTab):
             raise BadRequest('"%s" is used for keeping state.' % id)
         return ContainerTab._checkId(self, id, allow_dup)
 
-    @security.protected(ManagePortal)
     def getStateVar(self):
-        """"""
         wf_def = aq_parent(aq_inner(self))
         return wf_def.state_var
 
-    @security.protected(ManagePortal)
     def setStateVar(self, id, REQUEST=None):
         """"""
         wf_def = aq_parent(aq_inner(self))
