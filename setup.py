@@ -25,7 +25,7 @@ setup(name='Products.%s' % NAME,
       classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Framework :: Plone",
-        "Framework :: Zope2",
+        "Framework :: Zope :: 2",
         "Framework :: Zope :: 4",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Zope Public License",
