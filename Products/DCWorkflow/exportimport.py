@@ -1144,6 +1144,8 @@ def _initDCWorkflowScripts(workflow, scripts, context):
 
         if filename:
             file = context.readDataFile(filename)
+            if six.PY3 and isinstance(file, six.binary_type):
+                file = file.decode('utf8')
 
         if meta_type == PythonScript.meta_type:
             script = PythonScript(id)
