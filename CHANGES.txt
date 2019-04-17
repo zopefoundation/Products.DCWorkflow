@@ -14,7 +14,7 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix import of scripts.
 
 
 2.4.0b2 (2018-11-07)
