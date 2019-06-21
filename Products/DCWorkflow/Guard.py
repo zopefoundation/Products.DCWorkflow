@@ -13,8 +13,6 @@
 """ Guard conditions in a web-configurable workflow.
 """
 
-from cgi import escape
-
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Explicit
 from Acquisition import aq_base
@@ -28,6 +26,11 @@ from Products.CMFCore.permissions import ManagePortal
 from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.utils import _dtmldir
+
+try:
+    from html import escape
+except ImportError:
+    from cgi import escape
 
 
 class Guard(Persistent, Explicit):
