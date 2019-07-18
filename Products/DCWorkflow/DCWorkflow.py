@@ -195,11 +195,11 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                             'name': tdef.actbox_name % info,
                             'url': tdef.actbox_url % info,
                             'icon': tdef.actbox_icon % info,
-                            'permissions': (), # Predetermined.
+                            'permissions': (),  # Predetermined.
                             'category': tdef.actbox_category,
                             'transition': tdef}))
         res.sort()
-        return [ result[1] for result in res ]
+        return [result[1] for result in res]
 
     @security.private
     def listGlobalActions(self, info):
@@ -234,11 +234,11 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
                                      'name': qdef.actbox_name % fmt_data,
                                      'url': qdef.actbox_url % fmt_data,
                                      'icon': qdef.actbox_icon % fmt_data,
-                                     'permissions': (), # Predetermined.
+                                     'permissions': (),  # Predetermined.
                                      'category': qdef.actbox_category}))
                     fmt_data._pop()
         res.sort()
-        return [ result[1] for result in res ]
+        return [result[1] for result in res]
 
     @security.private
     def isActionSupported(self, ob, action, **kw):
@@ -251,9 +251,9 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
             return 0
         if action in sdef.transitions:
             tdef = self.transitions.get(action, None)
-            if (tdef is not None and
-                tdef.trigger_type == TRIGGER_USER_ACTION and
-                self._checkTransitionGuard(tdef, ob, **kw)):
+            if tdef is not None and \
+               tdef.trigger_type == TRIGGER_USER_ACTION and \
+               self._checkTransitionGuard(tdef, ob, **kw):
                 return 1
         return 0
 
@@ -299,8 +299,8 @@ class DCWorkflowDefinition(WorkflowUIMixin, Folder):
         if name == self.state_var:
             return self._getWorkflowStateOf(ob, 1)
         vdef = self.variables[name]
-        if vdef.info_guard is not None and not vdef.info_guard.check(
-            getSecurityManager(), self, ob):
+        if vdef.info_guard is not None and \
+           not vdef.info_guard.check(getSecurityManager(), self, ob):
             return default
         status = self._getStatusOf(ob)
         if status is not None and name in status:

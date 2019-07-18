@@ -141,9 +141,8 @@ class TransitionDefinition(SimpleItem):
         '''
         '''
         return self._variables_form(REQUEST,
-                                     management_view='Variables',
-                                     manage_tabs_message=manage_tabs_message,
-                                     )
+                                    management_view='Variables',
+                                    manage_tabs_message=manage_tabs_message)
 
     def getVariableExprs(self):
         ''' get variable exprs for management UI
@@ -163,10 +162,10 @@ class TransitionDefinition(SimpleItem):
         '''
         wf_vars = self.getAvailableVarIds()
         if self.var_exprs is None:
-                return wf_vars
+            return wf_vars
         ret = []
         for vid in wf_vars:
-            if not vid in self.var_exprs:
+            if vid not in self.var_exprs:
                 ret.append(vid)
         return ret
 

@@ -138,7 +138,7 @@ class WorklistDefinition(SimpleItem):
                     self.var_matches[key] = Expression(v)
                 else:
                     # Falling back to formatted string
-                    v = [ var.strip() for var in v.split(';') ]
+                    v = [var.strip() for var in v.split(';')]
                     self.var_matches[key] = tuple(v)
 
             else:
@@ -228,5 +228,6 @@ class Worklists(ContainerTab):
             self._delObject(id)
         if REQUEST is not None:
             return self.manage_main(REQUEST, 'Worklist(s) removed.')
+
 
 InitializeClass(Worklists)

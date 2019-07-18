@@ -15,7 +15,6 @@
 
 import unittest
 
-import Testing
 from AccessControl import getSecurityManager
 from zope.component import getSiteManager
 from zope.testing.cleanup import cleanUp

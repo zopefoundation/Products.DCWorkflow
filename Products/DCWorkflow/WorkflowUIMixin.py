@@ -88,10 +88,10 @@ class WorkflowUIMixin(object):
         """Removes from the list of permissions to manage.
         """
         if ps:
-            l = list(self.permissions)
+            p_list = list(self.permissions)
             for p in ps:
-                l.remove(p)
-            self.permissions = tuple(l)
+                p_list.remove(p)
+            self.permissions = tuple(p_list)
         if REQUEST is not None:
             return self.manage_permissions(
                 REQUEST, manage_tabs_message='Permission(s) removed.')

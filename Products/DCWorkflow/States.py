@@ -61,8 +61,8 @@ class StateDefinition(SimpleItem):
         return aq_parent(aq_inner(aq_parent(aq_inner(self))))
 
     def getTransitions(self):
-        return [ t for t in self.transitions
-                 if t in self.getWorkflow().transitions ]
+        return [t for t in self.transitions
+                if t in self.getWorkflow().transitions]
 
     def getTransitionTitle(self, tid):
         t = self.getWorkflow().transitions.get(tid, None)
@@ -127,9 +127,8 @@ class StateDefinition(SimpleItem):
     def manage_variables(self, REQUEST, manage_tabs_message=None):
         """Show State variables ZMI form."""
         return self._variables_form(REQUEST,
-                                     management_view='Variables',
-                                     manage_tabs_message=manage_tabs_message,
-                                     )
+                                    management_view='Variables',
+                                    manage_tabs_message=manage_tabs_message)
 
     def getVariableValues(self):
         """Get VariableValues for management UI."""
@@ -148,7 +147,7 @@ class StateDefinition(SimpleItem):
             return wf_vars
         ret = []
         for vid in wf_vars:
-            if not vid in self.var_values:
+            if vid not in self.var_values:
                 ret.append(vid)
         return ret
 
@@ -190,9 +189,8 @@ class StateDefinition(SimpleItem):
     def manage_permissions(self, REQUEST, manage_tabs_message=None):
         """Present TTW UI for managing this State's permissions."""
         return self._permissions_form(REQUEST,
-                                     management_view='Permissions',
-                                     manage_tabs_message=manage_tabs_message,
-                                     )
+                                      management_view='Permissions',
+                                      manage_tabs_message=manage_tabs_message)
 
     @postonly
     def setPermissions(self, REQUEST):

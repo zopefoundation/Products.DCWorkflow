@@ -114,8 +114,8 @@ class Variables(ContainerTab):
 
     meta_type = 'Workflow Variables'
 
-    all_meta_types = ({'name':VariableDefinition.meta_type,
-                       'action':'addVariable',
+    all_meta_types = ({'name': VariableDefinition.meta_type,
+                       'action': 'addVariable',
                        'permission': ManagePortal,
                        },)
 
@@ -165,5 +165,6 @@ class Variables(ContainerTab):
             wf_def.state_var = str(id)
         if REQUEST is not None:
             return self.manage_main(REQUEST, 'Set state variable.')
+
 
 InitializeClass(Variables)

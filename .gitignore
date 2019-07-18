@@ -11,6 +11,7 @@
 bin
 build
 _build
+coverage.xml
 default.profraw
 develop-eggs
 dist

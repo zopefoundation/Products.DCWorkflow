@@ -15,7 +15,6 @@
 
 import unittest
 
-import Testing
 from OFS.Application import Application
 from OFS.Folder import Folder
 

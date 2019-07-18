@@ -77,7 +77,7 @@ class DCWorkflowDefinitionBodyAdapter(BodyAdapterBase):
          description,
          manager_bypass,
          creation_guard
-        ) = wfdc.parseWorkflowXML(body, encoding)
+         ) = wfdc.parseWorkflowXML(body, encoding)
 
         _initDCWorkflow(self.context,
                         title,
@@ -372,7 +372,7 @@ class WorkflowDefinitionConfigurator(Implicit):
         for k, v in items:
 
             groups = v.group_roles and list(v.group_roles.items()) or []
-            groups = [ x for x in groups if x[1] ]
+            groups = [x for x in groups if x[1]]
             groups.sort()
 
             variables = list(v.getVariableValues())
@@ -553,8 +553,8 @@ class WorkflowDefinitionConfigurator(Implicit):
 
             guard = v.getGuard()
 
-            var_match = [ (id, v.getVarMatchText(id))
-                          for id in v.getVarMatchKeys() ]
+            var_match = [(id, v.getVarMatchText(id))
+                         for id in v.getVarMatchKeys()]
 
             info = {'id': k,
                     'title': v.title,
@@ -619,6 +619,7 @@ class WorkflowDefinitionConfigurator(Implicit):
 
         return result
 
+
 InitializeClass(WorkflowDefinitionConfigurator)
 
 
@@ -633,6 +634,7 @@ def _getScriptFilename(workflow_id, script_id, meta_type):
 
     return 'workflows/%s/scripts/%s.%s' % (wf_dir, script_id, suffix)
 
+
 def _extractCreationGuard(root, encoding='utf-8'):
     icc = root.getElementsByTagName('instance-creation-conditions')
     assert len(icc) <= 1
@@ -642,6 +644,7 @@ def _extractCreationGuard(root, encoding='utf-8'):
     else:
         return None
 
+
 def _extractStateNodes(root, encoding='utf-8'):
     result = []
 
@@ -650,9 +653,9 @@ def _extractStateNodes(root, encoding='utf-8'):
                 'title': _getNodeAttribute(s_node, 'title', encoding),
                 'description': _extractDescriptionNode(s_node, encoding)}
 
-        info['transitions'] = [ _getNodeAttribute(x, 'transition_id', encoding)
-                                for x in s_node.getElementsByTagName(
-                                                           'exit-transition') ]
+        info['transitions'] = [_getNodeAttribute(x, 'transition_id', encoding)
+                               for x in s_node.getElementsByTagName(
+                                                           'exit-transition')]
 
         info['permissions'] = permission_map = {}
 
@@ -661,8 +664,8 @@ def _extractStateNodes(root, encoding='utf-8'):
             name = _getNodeAttribute(p_map, 'name', encoding)
             acquired = _queryNodeAttributeBoolean(p_map, 'acquired', False)
 
-            roles = [ _coalesceTextNodeChildren(x, encoding)
-                      for x in p_map.getElementsByTagName('permission-role') ]
+            roles = [_coalesceTextNodeChildren(x, encoding)
+                     for x in p_map.getElementsByTagName('permission-role')]
 
             if not acquired:
                 roles = tuple(roles)
@@ -675,8 +678,8 @@ def _extractStateNodes(root, encoding='utf-8'):
 
             name = _getNodeAttribute(g_map, 'name', encoding)
 
-            roles = [ _coalesceTextNodeChildren(x, encoding)
-                      for x in g_map.getElementsByTagName('group-role') ]
+            roles = [_coalesceTextNodeChildren(x, encoding)
+                     for x in g_map.getElementsByTagName('group-role')]
 
             group_map.append((name, tuple(roles)))
 
@@ -693,6 +696,7 @@ def _extractStateNodes(root, encoding='utf-8'):
         result.append(info)
 
     return result
+
 
 def _extractTransitionNodes(root, encoding='utf-8'):
     result = []
@@ -724,6 +728,7 @@ def _extractTransitionNodes(root, encoding='utf-8'):
 
     return result
 
+
 def _extractVariableNodes(root, encoding='utf-8'):
     result = []
 
@@ -733,17 +738,20 @@ def _extractVariableNodes(root, encoding='utf-8'):
                                                  encoding),
                 'description': _extractDescriptionNode(v_node, encoding),
                 'for_catalog': _queryNodeAttributeBoolean(v_node,
-                                                         'for_catalog', False),
+                                                          'for_catalog',
+                                                          False),
                 'for_status': _queryNodeAttributeBoolean(v_node, 'for_status',
                                                          False),
                 'update_always': _queryNodeAttributeBoolean(v_node,
-                                                       'update_always', False),
+                                                            'update_always',
+                                                            False),
                 'default': _extractDefaultNode(v_node, encoding),
                 'guard': _extractGuardNode(v_node, encoding)}
 
         result.append(info)
 
     return result
+
 
 def _extractWorklistNodes(root, encoding='utf-8'):
     result = []
@@ -761,6 +769,7 @@ def _extractWorklistNodes(root, encoding='utf-8'):
         result.append(info)
 
     return result
+
 
 def _extractScriptNodes(root, encoding='utf-8'):
     result = []
@@ -791,6 +800,7 @@ def _extractScriptNodes(root, encoding='utf-8'):
 
     return result
 
+
 def _extractPermissionNodes(root, encoding='utf-8'):
     result = []
 
@@ -800,6 +810,7 @@ def _extractPermissionNodes(root, encoding='utf-8'):
 
     return result
 
+
 def _extractGroupNodes(root, encoding='utf-8'):
     result = []
 
@@ -808,6 +819,7 @@ def _extractGroupNodes(root, encoding='utf-8'):
         result.append(_coalesceTextNodeChildren(p_node, encoding))
 
     return result
+
 
 def _extractActionNode(parent, encoding='utf-8'):
     nodes = parent.getElementsByTagName('action')
@@ -822,6 +834,7 @@ def _extractActionNode(parent, encoding='utf-8'):
             'url': _getNodeAttribute(node, 'url', encoding),
             'category': _getNodeAttribute(node, 'category', encoding),
             'icon': _queryNodeAttribute(node, 'icon', '', encoding)}
+
 
 def _extractGuardNode(parent, encoding='utf-8'):
     nodes = parent.getElementsByTagName('guard')
@@ -838,14 +851,15 @@ def _extractGuardNode(parent, encoding='utf-8'):
     expr_text = expr_nodes and _coalesceTextNodeChildren(expr_nodes[0],
                                                          encoding) or ''
 
-    return {'permissions': [ _coalesceTextNodeChildren(x, encoding)
-                             for x in node.getElementsByTagName(
-                                                         'guard-permission') ],
-            'roles': [ _coalesceTextNodeChildren(x, encoding)
-                       for x in node.getElementsByTagName('guard-role') ],
-            'groups': [ _coalesceTextNodeChildren(x, encoding)
-                        for x in node.getElementsByTagName('guard-group') ],
+    return {'permissions': [_coalesceTextNodeChildren(x, encoding)
+                            for x in node.getElementsByTagName(
+                                                         'guard-permission')],
+            'roles': [_coalesceTextNodeChildren(x, encoding)
+                      for x in node.getElementsByTagName('guard-role')],
+            'groups': [_coalesceTextNodeChildren(x, encoding)
+                       for x in node.getElementsByTagName('guard-group')],
             'expression': expr_text}
+
 
 def _extractDefaultNode(parent, encoding='utf-8'):
     nodes = parent.getElementsByTagName('default')
@@ -874,7 +888,9 @@ def _extractDefaultNode(parent, encoding='utf-8'):
 
     return {'value': value_text, 'type': value_type, 'expression': expr_text}
 
+
 _SEMICOLON_LIST_SPLITTER = re.compile(r';[ ]*')
+
 
 def _extractMatchNode(parent, encoding='utf-8'):
     nodes = parent.getElementsByTagName('match')
@@ -888,6 +904,7 @@ def _extractMatchNode(parent, encoding='utf-8'):
         result[name] = _SEMICOLON_LIST_SPLITTER.split(values)
 
     return result
+
 
 def _guessVariableType(value):
     from DateTime.DateTime import DateTime
@@ -911,6 +928,7 @@ def _guessVariableType(value):
         return 'string'
 
     return 'unknown'
+
 
 def _convertVariableValue(value, type_id):
     from DateTime.DateTime import DateTime
@@ -945,6 +963,7 @@ def _convertVariableValue(value, type_id):
 _METATYPE_SUFFIXES = {
     PythonScript.meta_type: 'py',
     DTMLMethod.meta_type: 'dtml'}
+
 
 def _initDCWorkflow(workflow,
                     title,
@@ -996,6 +1015,7 @@ def _initDCWorkflowCreationGuard(workflow, guard):
         g.changeFromProperties(props)
         workflow.creation_guard = g
 
+
 def _initDCWorkflowVariables(workflow, variables):
     """ Initialize DCWorkflow variables
     """
@@ -1006,7 +1026,7 @@ def _initDCWorkflowVariables(workflow, variables):
             id = str(v_info['variable_id'])  # no unicode!
         else:
             id = v_info['variable_id']
-        if not id in workflow.variables:
+        if id not in workflow.variables:
             v = VariableDefinition(id)
             workflow.variables._setObject(id, v)
         v = workflow.variables._getOb(id)
@@ -1029,6 +1049,7 @@ def _initDCWorkflowVariables(workflow, variables):
                         update_always=v_info['update_always'],
                         props=props)
 
+
 def _initDCWorkflowStates(workflow, states):
     """ Initialize DCWorkflow states
     """
@@ -1040,7 +1061,7 @@ def _initDCWorkflowStates(workflow, states):
         else:
             id = s_info['state_id']
 
-        if not id in workflow.states:
+        if id not in workflow.states:
             s = StateDefinition(id)
             workflow.states._setObject(id, s)
         s = workflow.states._getOb(id)
@@ -1063,6 +1084,7 @@ def _initDCWorkflowStates(workflow, states):
             value = _convertVariableValue(v_info['value'], v_info['type'])
             vmap[name] = value
 
+
 def _initDCWorkflowTransitions(workflow, transitions):
     """ Initialize DCWorkflow transitions
     """
@@ -1070,8 +1092,8 @@ def _initDCWorkflowTransitions(workflow, transitions):
 
     for t_info in transitions:
 
-        id = str(t_info['transition_id']) # no unicode!
-        if not id in workflow.transitions:
+        id = str(t_info['transition_id'])  # no unicode!
+        if id not in workflow.transitions:
             t = TransitionDefinition(id)
             workflow.transitions._setObject(id, t)
         t = workflow.transitions._getOb(id)
@@ -1097,9 +1119,10 @@ def _initDCWorkflowTransitions(workflow, transitions):
                         actbox_category=action['category'],
                         actbox_icon=action.get('icon', ''),
                         props=props)
-        var_mapping = [ (name, Expression(text))
-                        for name, text in t_info['variables'].items() ]
+        var_mapping = [(name, Expression(text))
+                       for name, text in t_info['variables'].items()]
         t.var_exprs = PersistentMapping(var_mapping)
+
 
 def _initDCWorkflowWorklists(workflow, worklists):
     """ Initialize DCWorkflow worklists
@@ -1108,8 +1131,8 @@ def _initDCWorkflowWorklists(workflow, worklists):
 
     for w_info in worklists:
 
-        id = str(w_info['worklist_id']) # no unicode!
-        if not id in workflow.worklists:
+        id = str(w_info['worklist_id'])  # no unicode!
+        if id not in workflow.worklists:
             w = WorklistDefinition(id)
             workflow.worklists._setObject(id, w)
         w = workflow.worklists._getOb(id)
@@ -1131,14 +1154,15 @@ def _initDCWorkflowWorklists(workflow, worklists):
 
         w.var_matches = PersistentMapping()
         for k, v in w_info['match'].items():
-            w.var_matches[str(k)] = tuple([ str(x) for x in v ])
+            w.var_matches[str(k)] = tuple([str(x) for x in v])
+
 
 def _initDCWorkflowScripts(workflow, scripts, context):
     """ Initialize DCWorkflow scripts
     """
     for s_info in scripts:
 
-        id = str(s_info['script_id']) # no unicode!
+        id = str(s_info['script_id'])  # no unicode!
         meta_type = s_info['meta_type']
         filename = s_info['filename']
         file = ''
@@ -1175,10 +1199,12 @@ def _initDCWorkflowScripts(workflow, scripts, context):
             workflow.scripts._delObject(id)
         workflow.scripts._setObject(id, script)
 
+
 #
 #   deprecated DOM parsing utilities
 #
 _marker = object()
+
 
 def _queryNodeAttribute(node, attr_name, default, encoding='utf-8'):
     """ Extract a string-valued attribute from node.
@@ -1197,6 +1223,7 @@ def _queryNodeAttribute(node, attr_name, default, encoding='utf-8'):
 
     return value
 
+
 def _getNodeAttribute(node, attr_name, encoding='utf-8'):
     """ Extract a string-valued attribute from node.
     """
@@ -1206,6 +1233,7 @@ def _getNodeAttribute(node, attr_name, encoding='utf-8'):
         raise ValueError('Invalid attribute: %s' % attr_name)
 
     return value
+
 
 def _queryNodeAttributeBoolean(node, attr_name, default):
     """ Extract a string-valued attribute from node.
@@ -1221,12 +1249,14 @@ def _queryNodeAttributeBoolean(node, attr_name, default):
 
     return value in ('true', 'yes', '1')
 
+
 def _getNodeAttributeBoolean(node, attr_name):
     """ Extract a string-valued attribute from node.
     """
     value = node.attributes[attr_name].nodeValue.lower()
 
     return value in ('true', 'yes', '1')
+
 
 def _coalesceTextNodeChildren(node, encoding='utf-8'):
     """ Concatenate all childe text nodes into a single string.
@@ -1248,8 +1278,9 @@ def _coalesceTextNodeChildren(node, encoding='utf-8'):
     if six.PY2 and encoding is not None:
         joined = joined.encode(encoding)
 
-    return ''.join([ line.lstrip()
-                     for line in joined.splitlines(True) ]).rstrip()
+    return ''.join([line.lstrip()
+                    for line in joined.splitlines(True)]).rstrip()
+
 
 def _extractDescriptionNode(parent, encoding='utf-8'):
     d_nodes = parent.getElementsByTagName('description')

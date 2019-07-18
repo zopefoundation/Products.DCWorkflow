@@ -13,6 +13,7 @@
 """ Web-configurable workflow.
 """
 
+
 def initialize(context):
 
     from Products.CMFCore.utils import registerIcon
