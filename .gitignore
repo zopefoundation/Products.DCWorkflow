@@ -11,10 +11,12 @@
 bin
 build
 _build
+default.profraw
 develop-eggs
 dist
 downloads
 eggs
+htmlcov
 local.cfg
 parts
 var
