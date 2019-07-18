@@ -58,15 +58,9 @@ setup(name='Products.%s' % NAME,
         'Products.GenericSetup >= 2.0b1',
         'Products.PythonScripts',
         ],
-      tests_require=[
-        'zope.testing >= 3.7.0',
-        'zope.testrunner',
-        ],
       extras_require={
         'docs': ['Sphinx', 'repoze.sphinx.autointerface', 'pkginfo']
         },
-      test_loader='zope.testrunner.eggsupport:SkipLayers',
-      test_suite='Products.%s.tests' % NAME,
       entry_points="""
       [zope2.initialize]
       Products.%s = Products.%s:initialize
