@@ -14,12 +14,13 @@
 """
 
 import unittest
-import Testing
 
-from OFS.Folder import Folder
+import Testing
 from OFS.Application import Application
-from Products.DCWorkflow.utils \
-     import modifyRolesForPermission, modifyRolesForGroup
+from OFS.Folder import Folder
+
+from Products.DCWorkflow.utils import modifyRolesForGroup
+from Products.DCWorkflow.utils import modifyRolesForPermission
 
 
 class RoleMapTests(unittest.TestCase):

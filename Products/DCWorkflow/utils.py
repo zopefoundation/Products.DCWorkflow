@@ -21,6 +21,7 @@ from AccessControl.SecurityInfo import ModuleSecurityInfo
 from App.Common import package_home
 from zope.i18nmessageid import MessageFactory
 
+
 security = ModuleSecurityInfo('Products.DCWorkflow.utils')
 
 _dtmldir = os.path.join(package_home(globals()), 'dtml')

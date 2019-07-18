@@ -17,23 +17,27 @@ from __future__ import absolute_import
 import re
 from xml.dom.minidom import parseString
 
+import six
+
 from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
+from OFS.DTMLMethod import DTMLMethod
 from Persistence import PersistentMapping
+from Products.ExternalMethod.ExternalMethod import ExternalMethod
+from Products.GenericSetup.interfaces import ISetupEnviron
+from Products.GenericSetup.utils import BodyAdapterBase
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from Products.PythonScripts.PythonScript import PythonScript
 from zope.component import adapts
 
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.permissions import ManagePortal
+
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
 from Products.DCWorkflow.utils import _xmldir
-from Products.GenericSetup.interfaces import ISetupEnviron
-from Products.GenericSetup.utils import BodyAdapterBase
-
-import six
 
 
 TRIGGER_TYPES = ('AUTOMATIC', 'USER')
@@ -937,9 +941,6 @@ def _convertVariableValue(value, type_id):
 
     return value
 
-from Products.PythonScripts.PythonScript import PythonScript
-from Products.ExternalMethod.ExternalMethod import ExternalMethod
-from OFS.DTMLMethod import DTMLMethod
 
 _METATYPE_SUFFIXES = {
     PythonScript.meta_type: 'py',

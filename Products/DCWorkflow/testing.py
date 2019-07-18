@@ -14,8 +14,8 @@
 """
 
 from Testing.ZopeTestCase.layer import ZopeLite
-from zope.testing.cleanup import cleanUp
 from Zope2.App import zcml
+from zope.testing.cleanup import cleanUp
 
 from Products.CMFCore.testing import _DUMMY_ZCML
 

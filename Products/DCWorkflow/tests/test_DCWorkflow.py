@@ -14,8 +14,8 @@
 """
 
 import unittest
-import Testing
 
+import Testing
 import transaction
 from AccessControl.SecurityManagement import newSecurityManager
 from zope.component import adapter
@@ -32,6 +32,7 @@ from Products.CMFCore.tests.base.dummy import DummyTool
 from Products.CMFCore.tests.base.security import OmnipotentUser
 from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFCore.WorkflowTool import WorkflowTool
+
 from Products.DCWorkflow.interfaces import IAfterTransitionEvent
 from Products.DCWorkflow.interfaces import IBeforeTransitionEvent
 

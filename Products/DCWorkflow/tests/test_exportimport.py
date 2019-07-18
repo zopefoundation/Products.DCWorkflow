@@ -14,27 +14,28 @@
 """
 
 import unittest
+
+import six
+
 import Testing
-
-from Products.PythonScripts.PythonScript import PythonScript
 from Products.ExternalMethod.ExternalMethod import ExternalMethod
+from Products.GenericSetup.tests.common import DummyExportContext
+from Products.GenericSetup.tests.common import DummyImportContext
+from Products.PythonScripts.PythonScript import PythonScript
 
-from Products.CMFCore.exportimport.tests.test_workflow \
-        import _BINDINGS_TOOL_EXPORT
-from Products.CMFCore.exportimport.tests.test_workflow \
-        import _EMPTY_TOOL_EXPORT
-from Products.CMFCore.exportimport.tests.test_workflow \
-        import _WorkflowSetup as WorkflowSetupBase
+from Products.CMFCore.exportimport.tests.test_workflow import \
+    _BINDINGS_TOOL_EXPORT
+from Products.CMFCore.exportimport.tests.test_workflow import \
+    _EMPTY_TOOL_EXPORT
+from Products.CMFCore.exportimport.tests.test_workflow import \
+    _WorkflowSetup as WorkflowSetupBase
 from Products.CMFCore.testing import DummyWorkflow
+
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from Products.DCWorkflow.Guard import Guard
 from Products.DCWorkflow.testing import ExportImportZCMLLayer
-from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
-from Products.GenericSetup.tests.common import DummyExportContext
-from Products.GenericSetup.tests.common import DummyImportContext
-
-import six
+from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
 
 
 class _GuardChecker:

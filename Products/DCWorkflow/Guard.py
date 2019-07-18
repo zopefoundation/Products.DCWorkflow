@@ -21,11 +21,13 @@ from App.special_dtml import DTMLFile
 from Persistence import Persistent
 
 from Products.CMFCore.Expression import Expression
-from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.utils import _checkPermission
+
 from Products.DCWorkflow.Expression import StateChangeInfo
 from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.utils import _dtmldir
+
 
 try:
     from html import escape

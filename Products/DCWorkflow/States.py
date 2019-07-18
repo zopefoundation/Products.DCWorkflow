@@ -19,11 +19,12 @@ from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import aq_inner
 from Acquisition import aq_parent
 from App.special_dtml import DTMLFile
-from Persistence import PersistentMapping
 from OFS.SimpleItem import SimpleItem
+from Persistence import PersistentMapping
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 from Products.CMFCore.permissions import ManagePortal
+
 from Products.DCWorkflow.ContainerTab import ContainerTab
 from Products.DCWorkflow.utils import _dtmldir
 

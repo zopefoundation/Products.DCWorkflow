@@ -2,6 +2,7 @@
 """
 from zope.deferredimport import deprecated
 
+
 deprecated(
     'Please import from Products.CMFCore.permissions.',
 	AccessContentsInformation='Products.CMFCore.permissions:AccessContentsInformation',
@@ -11,4 +12,3 @@ deprecated(
     ReviewPortalContent='Products.CMFCore.permissions:ReviewPortalContent',
     View='Products.CMFCore.permissions:View',
 )
-

@@ -18,6 +18,7 @@ from AccessControl.SecurityInfo import ClassSecurityInfo
 from OFS.Folder import Folder
 
 from Products.CMFCore.permissions import ManagePortal
+
 from Products.DCWorkflow.ContainerTab import ContainerTab
 
 

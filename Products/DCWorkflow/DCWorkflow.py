@@ -26,14 +26,15 @@ from zope.event import notify
 from zope.interface import implementer
 
 from Products.CMFCore.interfaces import IWorkflowDefinition
+from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved
 from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFCore.permissions import ManagePortal
+
 from Products.DCWorkflow.events import AfterTransitionEvent
 from Products.DCWorkflow.events import BeforeTransitionEvent
-from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.Expression import StateChangeInfo
+from Products.DCWorkflow.Expression import createExprContext
 from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
