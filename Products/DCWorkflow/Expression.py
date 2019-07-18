@@ -13,11 +13,11 @@
 """ Expressions in a web-configurable workflow.
 """
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from App.class_init import InitializeClass
 from DateTime.DateTime import DateTime
 from MultiMapping import MultiMapping
 from Products.PageTemplates.Expressions import getEngine

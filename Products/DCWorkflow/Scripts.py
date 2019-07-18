@@ -13,8 +13,8 @@
 """ Scripts in a web-configurable workflow.
 """
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
-from App.class_init import InitializeClass
 from OFS.Folder import Folder
 
 from Products.CMFCore.permissions import ManagePortal

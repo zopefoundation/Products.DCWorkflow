@@ -13,12 +13,12 @@
 """ Web-configurable workflow.
 """
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.SecurityManagement import getSecurityManager
 from AccessControl.unauthorized import Unauthorized
 from Acquisition import aq_inner
 from Acquisition import aq_parent
-from App.class_init import InitializeClass
 from DocumentTemplate.DT_Util import TemplateDict
 from OFS.Folder import Folder
 from OFS.ObjectManager import bad_id

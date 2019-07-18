@@ -13,10 +13,10 @@
 """ Guard conditions in a web-configurable workflow.
 """
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Explicit
 from Acquisition import aq_base
-from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from Persistence import Persistent
 

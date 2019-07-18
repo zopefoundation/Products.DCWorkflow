@@ -15,10 +15,10 @@
 
 import os
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.requestmethod import postonly
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import aq_get
-from App.class_init import InitializeClass
 from App.special_dtml import DTMLFile
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 

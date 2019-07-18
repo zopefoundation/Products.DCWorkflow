@@ -17,9 +17,9 @@ from __future__ import absolute_import
 import re
 from xml.dom.minidom import parseString
 
+from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Implicit
-from App.class_init import InitializeClass
 from Persistence import PersistentMapping
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zope.component import adapts
