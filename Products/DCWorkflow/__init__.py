@@ -25,9 +25,6 @@ def initialize(context):
     from . import Worklists
     from . import Scripts
 
-    context.registerHelp(directory='help')
-    context.registerHelpTitle('DCWorkflow')
-
     registerIcon(DCWorkflow.DCWorkflowDefinition,
                  'images/workflow.gif', globals())
     registerIcon(States.States,
