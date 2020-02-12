@@ -4,6 +4,8 @@ Products.DCWorkflow Changelog
 2.4.1 (unreleased)
 ------------------
 
+- Added compatibility with Zope 5 by not registering for the help system.
+
 
 2.4.0 (2019-07-19)
 ------------------
