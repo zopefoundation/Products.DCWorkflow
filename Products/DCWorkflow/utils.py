@@ -16,7 +16,7 @@
 import os
 
 from AccessControl.Permission import Permission
-from AccessControl.Role import gather_permissions
+from AccessControl.rolemanager import gather_permissions
 from AccessControl.SecurityInfo import ModuleSecurityInfo
 from App.Common import package_home
 from zope.i18nmessageid import MessageFactory
