@@ -26,8 +26,8 @@ from Products.CMFCore.tests.base.dummy import DummySite
 from Products.CMFCore.tests.base.dummy import DummyTool
 from Products.CMFCore.WorkflowTool import WorkflowTool
 
-from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
-from Products.DCWorkflow.Guard import Guard
+from ..DCWorkflow import DCWorkflowDefinition
+from ..Guard import Guard
 
 
 class TestGuard(unittest.TestCase):

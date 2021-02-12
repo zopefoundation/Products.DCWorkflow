@@ -30,11 +30,11 @@ from Products.CMFCore.exportimport.tests.test_workflow import \
     _WorkflowSetup as WorkflowSetupBase
 from Products.CMFCore.testing import DummyWorkflow
 
-from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
-from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.testing import ExportImportZCMLLayer
-from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
-from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
+from ..DCWorkflow import DCWorkflowDefinition
+from ..Guard import Guard
+from ..testing import ExportImportZCMLLayer
+from ..Transitions import TRIGGER_AUTOMATIC
+from ..Transitions import TRIGGER_USER_ACTION
 
 
 class _GuardChecker:
@@ -186,8 +186,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
     layer = ExportImportZCMLLayer
 
     def _getTargetClass(self):
-        from Products.DCWorkflow.exportimport \
-                import WorkflowDefinitionConfigurator
+        from ..exportimport import WorkflowDefinitionConfigurator
 
         return WorkflowDefinitionConfigurator
 
@@ -332,7 +331,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(type, 'string')
 
     def test_getWorkflowInfo_dcworkflow_transitions(self):
-        from Products.DCWorkflow.exportimport import TRIGGER_TYPES
+        from ..exportimport import TRIGGER_TYPES
 
         WF_ID = 'dcworkflow_transitions'
 
@@ -746,7 +745,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
             self.assertEqual(tuple(state['groups']), tuple(expected[4]))
 
     def test_parseWorkflowXML_normal_transitions(self):
-        from Products.DCWorkflow.exportimport import TRIGGER_TYPES
+        from ..exportimport import TRIGGER_TYPES
 
         WF_ID = 'normal'
         WF_TITLE = 'Normal DCWorkflow'
@@ -3107,7 +3106,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
         Otherwise the previous script will be added for that script.
         """
-        from Products.DCWorkflow import exportimport
+        from .. import exportimport
 
         tool = self._importNormalWorkflow(
             'dcworkflow_scripts', 'DC Workflow testing scripts',
@@ -3126,7 +3125,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         Constructors for meta_types other than those hard coded should
         be looked up.
         """
-        from Products.DCWorkflow import exportimport
+        from .. import exportimport
 
         tool = self._importNormalWorkflow(
             'dcworkflow_scripts', 'DC Workflow testing scripts',

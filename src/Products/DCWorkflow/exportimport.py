@@ -34,10 +34,10 @@ from zope.component import adapts
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.permissions import ManagePortal
 
-from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
-from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
-from Products.DCWorkflow.utils import _xmldir
+from .DCWorkflow import DCWorkflowDefinition
+from .Guard import Guard
+from .interfaces import IDCWorkflowDefinition
+from .utils import _xmldir
 
 
 TRIGGER_TYPES = ('AUTOMATIC', 'USER')
@@ -1019,7 +1019,7 @@ def _initDCWorkflowCreationGuard(workflow, guard):
 def _initDCWorkflowVariables(workflow, variables):
     """ Initialize DCWorkflow variables
     """
-    from Products.DCWorkflow.Variables import VariableDefinition
+    from .Variables import VariableDefinition
 
     for v_info in variables:
         if six.PY2:
@@ -1053,7 +1053,7 @@ def _initDCWorkflowVariables(workflow, variables):
 def _initDCWorkflowStates(workflow, states):
     """ Initialize DCWorkflow states
     """
-    from Products.DCWorkflow.States import StateDefinition
+    from .States import StateDefinition
 
     for s_info in states:
         if six.PY2:
@@ -1088,7 +1088,7 @@ def _initDCWorkflowStates(workflow, states):
 def _initDCWorkflowTransitions(workflow, transitions):
     """ Initialize DCWorkflow transitions
     """
-    from Products.DCWorkflow.Transitions import TransitionDefinition
+    from .Transitions import TransitionDefinition
 
     for t_info in transitions:
 
@@ -1127,7 +1127,7 @@ def _initDCWorkflowTransitions(workflow, transitions):
 def _initDCWorkflowWorklists(workflow, worklists):
     """ Initialize DCWorkflow worklists
     """
-    from Products.DCWorkflow.Worklists import WorklistDefinition
+    from .Worklists import WorklistDefinition
 
     for w_info in worklists:
 

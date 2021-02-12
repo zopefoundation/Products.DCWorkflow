@@ -1,9 +1,9 @@
 from zope.interface import implementer
 from zope.interface.interfaces import ObjectEvent
 
-from Products.DCWorkflow.interfaces import IAfterTransitionEvent
-from Products.DCWorkflow.interfaces import IBeforeTransitionEvent
-from Products.DCWorkflow.interfaces import ITransitionEvent
+from .interfaces import IAfterTransitionEvent
+from .interfaces import IBeforeTransitionEvent
+from .interfaces import ITransitionEvent
 
 
 @implementer(ITransitionEvent)

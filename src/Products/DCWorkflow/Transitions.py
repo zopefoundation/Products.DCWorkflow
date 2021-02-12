@@ -24,9 +24,9 @@ from Persistence import PersistentMapping
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.permissions import ManagePortal
 
-from Products.DCWorkflow.ContainerTab import ContainerTab
-from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.utils import _dtmldir
+from .ContainerTab import ContainerTab
+from .Guard import Guard
+from .utils import _dtmldir
 
 
 TRIGGER_AUTOMATIC = 0

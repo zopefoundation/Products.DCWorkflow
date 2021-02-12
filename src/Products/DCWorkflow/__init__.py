@@ -19,11 +19,11 @@ def initialize(context):
     from Products.CMFCore.utils import registerIcon
 
     from . import DCWorkflow
+    from . import Scripts
     from . import States
     from . import Transitions
     from . import Variables
     from . import Worklists
-    from . import Scripts
 
     registerIcon(DCWorkflow.DCWorkflowDefinition,
                  'images/workflow.gif', globals())

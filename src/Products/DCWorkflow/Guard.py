@@ -24,9 +24,9 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.utils import _checkPermission
 
-from Products.DCWorkflow.Expression import StateChangeInfo
-from Products.DCWorkflow.Expression import createExprContext
-from Products.DCWorkflow.utils import _dtmldir
+from .Expression import StateChangeInfo
+from .Expression import createExprContext
+from .utils import _dtmldir
 
 
 try:

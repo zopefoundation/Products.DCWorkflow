@@ -21,7 +21,7 @@ from Products.GenericSetup.interfaces import ISetupTool
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 
-from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+from ..DCWorkflow import DCWorkflowDefinition
 
 
 class DCWorkflowDefinitionAddView(AddWithPresettingsViewBase):

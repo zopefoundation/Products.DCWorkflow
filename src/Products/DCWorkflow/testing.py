@@ -26,6 +26,7 @@ class ExportImportZCMLLayer(ZopeLite):
     def setUp(cls):
         import Products.Five
         import Products.GenericSetup
+
         import Products.CMFCore
         import Products.CMFCore.exportimport
         import Products.DCWorkflow
