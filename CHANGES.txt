@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Avoid a deprecation warning when importing ``gather_permissions``
+  (`#20 <https://github.com/zopefoundation/Products.DCWorkflow/issues/20>`_)
 
 
 2.4.1 (2020-03-09)
@@ -276,4 +277,3 @@ Earlier releases
 For a complete list of changes before version 2.1.0-alpha, see the HISTORY.txt
 file on the CMF-2.1 branch:
 http://svn.zope.org/CMF/branches/2.1/HISTORY.txt?view=auto
-
