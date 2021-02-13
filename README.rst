@@ -1,4 +1,5 @@
 .. image:: https://github.com/zopefoundation/Products.DCWorkflow/workflows/tests/badge.svg
+        :target: https://github.com/zopefoundation/Products.DCWorkflow
 
 .. image:: https://coveralls.io/repos/github/zopefoundation/Products.DCWorkflow/badge.svg
         :target: https://coveralls.io/github/zopefoundation/Products.DCWorkflow
