@@ -1,5 +1,4 @@
-.. image:: https://travis-ci.com/zopefoundation/Products.DCWorkflow.svg?branch=master
-        :target: https://travis-ci.com/zopefoundation/Products.DCWorkflow
+![tests](https://github.com/zopefoundation/Products.DCWorkflow/workflows/tests/badge.svg)
 
 .. image:: https://coveralls.io/repos/github/zopefoundation/Products.DCWorkflow/badge.svg
         :target: https://coveralls.io/github/zopefoundation/Products.DCWorkflow
