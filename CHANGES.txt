@@ -10,7 +10,7 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Add support for Python 3.9.
 
 Bug fixes:
 
@@ -33,7 +33,7 @@ Bug fixes:
 2.4.0b3 (2019-06-27)
 --------------------
 
-- Add support for Python 3.8
+- Add support for Python 3.8.
 
 - Fix import of scripts.
 
