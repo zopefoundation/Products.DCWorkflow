@@ -18,8 +18,8 @@ import unittest
 from OFS.Application import Application
 from OFS.Folder import Folder
 
-from Products.DCWorkflow.utils import modifyRolesForGroup
-from Products.DCWorkflow.utils import modifyRolesForPermission
+from ..utils import modifyRolesForGroup
+from ..utils import modifyRolesForPermission
 
 
 class RoleMapTests(unittest.TestCase):

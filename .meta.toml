@@ -1,0 +1,39 @@
+# Generated from:
+# https://github.com/zopefoundation/meta/tree/master/config/zope-product
+[meta]
+template = "zope-product"
+commit-id = "4415752fead07401ce0e45c7d27ed81f6eeddf4f"
+
+[python]
+with-appveyor = false
+with-pypy = false
+with-legacy-python = true
+with-docs = true
+with-sphinx-doctests = false
+
+[coverage]
+fail-under = 76
+
+[isort]
+known_first_party = "Products.CMFCore"
+known_localfolder = "Products.DCWorkflow"
+
+[flake8]
+additional-config = [
+    "exclude =",
+    "    src/Products/DCWorkflow/doc/examples/*",
+    ]
+
+[manifest]
+additional-rules = [
+    "include buildout4.cfg",
+    "recursive-include src *.dtml",
+    "recursive-include src *.gif",
+    "recursive-include src *.xml",
+    ]
+
+[check-manifest]
+additional-ignores = [
+    "docs/_build/html/_sources/narrative/*",
+    "docs/_build/html/_sources/api/*",
+    ]

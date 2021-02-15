@@ -25,8 +25,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 from Products.CMFCore.permissions import ManagePortal
 
-from Products.DCWorkflow.ContainerTab import ContainerTab
-from Products.DCWorkflow.utils import _dtmldir
+from .ContainerTab import ContainerTab
+from .utils import _dtmldir
 
 
 class StateDefinition(SimpleItem):

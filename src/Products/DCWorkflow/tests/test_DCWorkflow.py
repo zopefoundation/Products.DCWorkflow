@@ -32,8 +32,8 @@ from Products.CMFCore.tests.base.security import OmnipotentUser
 from Products.CMFCore.tests.base.testcase import SecurityTest
 from Products.CMFCore.WorkflowTool import WorkflowTool
 
-from Products.DCWorkflow.interfaces import IAfterTransitionEvent
-from Products.DCWorkflow.interfaces import IBeforeTransitionEvent
+from ..interfaces import IAfterTransitionEvent
+from ..interfaces import IBeforeTransitionEvent
 
 
 class DCWorkflowDefinitionTests(SecurityTest):
@@ -54,12 +54,13 @@ class DCWorkflowDefinitionTests(SecurityTest):
 
     def test_interfaces(self):
         from Products.CMFCore.interfaces import IWorkflowDefinition
-        from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+
+        from ..DCWorkflow import DCWorkflowDefinition
 
         verifyClass(IWorkflowDefinition, DCWorkflowDefinition)
 
     def _constructDummyWorkflow(self):
-        from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
+        from ..DCWorkflow import DCWorkflowDefinition
 
         wtool = self.wtool
         wtool._setObject('wf', DCWorkflowDefinition('wf'))

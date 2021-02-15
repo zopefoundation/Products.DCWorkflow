@@ -31,17 +31,17 @@ from Products.CMFCore.WorkflowCore import ObjectDeleted
 from Products.CMFCore.WorkflowCore import ObjectMoved
 from Products.CMFCore.WorkflowCore import WorkflowException
 
-from Products.DCWorkflow.events import AfterTransitionEvent
-from Products.DCWorkflow.events import BeforeTransitionEvent
-from Products.DCWorkflow.Expression import StateChangeInfo
-from Products.DCWorkflow.Expression import createExprContext
-from Products.DCWorkflow.interfaces import IDCWorkflowDefinition
-from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
-from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION
-from Products.DCWorkflow.utils import Message as _
-from Products.DCWorkflow.utils import modifyRolesForGroup
-from Products.DCWorkflow.utils import modifyRolesForPermission
-from Products.DCWorkflow.WorkflowUIMixin import WorkflowUIMixin
+from .events import AfterTransitionEvent
+from .events import BeforeTransitionEvent
+from .Expression import StateChangeInfo
+from .Expression import createExprContext
+from .interfaces import IDCWorkflowDefinition
+from .Transitions import TRIGGER_AUTOMATIC
+from .Transitions import TRIGGER_USER_ACTION
+from .utils import Message as _
+from .utils import modifyRolesForGroup
+from .utils import modifyRolesForPermission
+from .WorkflowUIMixin import WorkflowUIMixin
 
 
 def checkId(id):

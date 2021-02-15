@@ -19,7 +19,7 @@ from OFS.Folder import Folder
 
 from Products.CMFCore.permissions import ManagePortal
 
-from Products.DCWorkflow.ContainerTab import ContainerTab
+from .ContainerTab import ContainerTab
 
 
 class Scripts(ContainerTab):

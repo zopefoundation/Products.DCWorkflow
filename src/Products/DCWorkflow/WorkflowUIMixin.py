@@ -24,8 +24,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 from Products.CMFCore.permissions import ManagePortal
 
-from Products.DCWorkflow.Guard import Guard
-from Products.DCWorkflow.utils import _dtmldir
+from .Guard import Guard
+from .utils import _dtmldir
 
 
 class WorkflowUIMixin(object):
