@@ -2,7 +2,7 @@
 # https://github.com/zopefoundation/meta/tree/master/config/zope-product
 [meta]
 template = "zope-product"
-commit-id = "5bbc534fb354cd72f49e773af8aac4994bf9b620"
+commit-id = "4415752fead07401ce0e45c7d27ed81f6eeddf4f"
 
 [python]
 with-appveyor = false
@@ -12,7 +12,7 @@ with-docs = true
 with-sphinx-doctests = false
 
 [coverage]
-fail-under = 75
+fail-under = 76
 
 [isort]
 known_first_party = "Products.CMFCore"
