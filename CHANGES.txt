@@ -17,6 +17,9 @@ Bug fixes:
 - Avoid a deprecation warning when importing ``gather_permissions``
   (`#20 <https://github.com/zopefoundation/Products.DCWorkflow/issues/20>`_)
 
+- Avoid a TypeError when adding a managed group to a workflow
+  (`#18 <https://github.com/zopefoundation/Products.DCWorkflow/issues/18>`_)
+
 
 2.4.1 (2020-03-09)
 ------------------
