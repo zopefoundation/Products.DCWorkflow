@@ -130,7 +130,7 @@ class WorkflowUIMixin(object):
         """
         if group not in self.getAvailableGroups():
             raise ValueError(group)
-        self.groups = self.groups + (group,)
+        self.groups = tuple(self.groups) + (group,)
         if RESPONSE is not None:
             RESPONSE.redirect(
                 "%s/manage_groups?manage_tabs_message=Added+group."
