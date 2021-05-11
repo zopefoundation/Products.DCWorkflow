@@ -2,7 +2,7 @@
 # https://github.com/zopefoundation/meta/tree/master/config/zope-product
 [meta]
 template = "zope-product"
-commit-id = "4415752fead07401ce0e45c7d27ed81f6eeddf4f"
+commit-id = "f8468b0bc5c92479b3043372d89cf5852176015d"
 
 [python]
 with-appveyor = false
@@ -29,7 +29,9 @@ additional-rules = [
     "include buildout4.cfg",
     "recursive-include src *.dtml",
     "recursive-include src *.gif",
+    "recursive-include src *.pt",
     "recursive-include src *.xml",
+    "recursive-include src *.zcml",
     ]
 
 [check-manifest]
@@ -37,3 +39,6 @@ additional-ignores = [
     "docs/_build/html/_sources/narrative/*",
     "docs/_build/html/_sources/api/*",
     ]
+
+[tox]
+use-flake8 = true
