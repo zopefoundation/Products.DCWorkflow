@@ -16,7 +16,7 @@ README = (_package_doc('README.rst') + _boundary + _package_doc('CHANGES.txt'))
 DESC = 'DCWorkflow product for the Zope Content Management Framework'
 
 setup(name='Products.%s' % NAME,
-      version='2.5.1.dev0',
+      version='2.6.0.dev0',
       description=DESC,
       long_description=README,
       classifiers=[
@@ -33,6 +33,7 @@ setup(name='Products.%s' % NAME,
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         ],
