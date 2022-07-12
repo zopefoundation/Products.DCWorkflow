@@ -1,7 +1,7 @@
 Products.DCWorkflow Changelog
 =============================
 
-2.6.0 (unreleased)
+2.6.0 (2022-07-12)
 ------------------
 
 New features:
