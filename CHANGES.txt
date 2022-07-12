@@ -4,17 +4,9 @@ Products.DCWorkflow Changelog
 2.6.0 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - Add support for Python 3.10.
-
-Bug fixes:
-
-- *add item here*
 
 
 2.5.0 (2021-04-26)
