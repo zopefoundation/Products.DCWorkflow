@@ -846,7 +846,7 @@ def _extractGuardNode(parent, encoding='utf-8'):
     node = nodes[0]
 
     expr_nodes = node.getElementsByTagName('guard-expression')
-    assert(len(expr_nodes) <= 1)
+    assert len(expr_nodes) <= 1
 
     expr_text = expr_nodes and _coalesceTextNodeChildren(expr_nodes[0],
                                                          encoding) or ''
@@ -871,7 +871,7 @@ def _extractDefaultNode(parent, encoding='utf-8'):
     node = nodes[0]
 
     value_nodes = node.getElementsByTagName('value')
-    assert(len(value_nodes) <= 1)
+    assert len(value_nodes) <= 1
 
     value_type = 'n/a'
     if value_nodes:
@@ -881,7 +881,7 @@ def _extractDefaultNode(parent, encoding='utf-8'):
                                                            encoding) or ''
 
     expr_nodes = node.getElementsByTagName('expression')
-    assert(len(expr_nodes) <= 1)
+    assert len(expr_nodes) <= 1
 
     expr_text = expr_nodes and _coalesceTextNodeChildren(expr_nodes[0],
                                                          encoding) or ''
