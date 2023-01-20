@@ -28,7 +28,7 @@ from .Guard import Guard
 from .utils import _dtmldir
 
 
-class WorkflowUIMixin(object):
+class WorkflowUIMixin:
 
     '''
     '''
@@ -195,7 +195,7 @@ class WorkflowUIMixin(object):
         """
         here = os.path.dirname(__file__)
         fn = os.path.join(here, 'doc', 'expressions.stx')
-        f = open(fn, 'rt')
+        f = open(fn)
         try:
             text = f.read()
         finally:

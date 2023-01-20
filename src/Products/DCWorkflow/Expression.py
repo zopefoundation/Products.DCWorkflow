@@ -44,7 +44,7 @@ class SafeMapping(MultiMapping):
     _pop = MultiMapping.pop
 
 
-class StateChangeInfo(object):
+class StateChangeInfo:
 
     '''
     Provides information for expressions and scripts.

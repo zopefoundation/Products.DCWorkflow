@@ -13,6 +13,8 @@
 """ Guard conditions in a web-configurable workflow.
 """
 
+from html import escape
+
 from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from Acquisition import Explicit
@@ -27,12 +29,6 @@ from Products.CMFCore.utils import _checkPermission
 from .Expression import StateChangeInfo
 from .Expression import createExprContext
 from .utils import _dtmldir
-
-
-try:
-    from html import escape
-except ImportError:
-    from cgi import escape
 
 
 class Guard(Persistent, Explicit):

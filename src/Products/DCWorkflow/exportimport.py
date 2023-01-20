@@ -12,12 +12,9 @@
 ##############################################################################
 """DCWorkflow export / import support.
 """
-from __future__ import absolute_import
 
 import re
 from xml.dom.minidom import parseString
-
-import six
 
 from AccessControl.class_init import InitializeClass
 from AccessControl.SecurityInfo import ClassSecurityInfo
@@ -632,7 +629,7 @@ def _getScriptFilename(workflow_id, script_id, meta_type):
     if suffix is None:
         return ''
 
-    return 'workflows/%s/scripts/%s.%s' % (wf_dir, script_id, suffix)
+    return 'workflows/{}/scripts/{}.{}'.format(wf_dir, script_id, suffix)
 
 
 def _extractCreationGuard(root, encoding='utf-8'):
@@ -924,7 +921,7 @@ def _guessVariableType(value):
     if isinstance(value, float):
         return 'float'
 
-    if isinstance(value, six.string_types):
+    if isinstance(value, str):
         return 'string'
 
     return 'unknown'
@@ -942,7 +939,7 @@ def _convertVariableValue(value, type_id):
 
     if type_id == 'bool':
 
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
 
             value = str(value).lower()
 
@@ -1022,10 +1019,7 @@ def _initDCWorkflowVariables(workflow, variables):
     from .Variables import VariableDefinition
 
     for v_info in variables:
-        if six.PY2:
-            id = str(v_info['variable_id'])  # no unicode!
-        else:
-            id = v_info['variable_id']
+        id = v_info['variable_id']
         if id not in workflow.variables:
             v = VariableDefinition(id)
             workflow.variables._setObject(id, v)
@@ -1056,10 +1050,7 @@ def _initDCWorkflowStates(workflow, states):
     from .States import StateDefinition
 
     for s_info in states:
-        if six.PY2:
-            id = str(s_info['state_id'])  # no unicode!
-        else:
-            id = s_info['state_id']
+        id = s_info['state_id']
 
         if id not in workflow.states:
             s = StateDefinition(id)
@@ -1169,7 +1160,7 @@ def _initDCWorkflowScripts(workflow, scripts, context):
 
         if filename:
             file = context.readDataFile(filename)
-            if six.PY3 and isinstance(file, six.binary_type):
+            if isinstance(file, bytes):
                 file = file.decode('utf8')
 
         if meta_type == PythonScript.meta_type:
@@ -1216,12 +1207,7 @@ def _queryNodeAttribute(node, attr_name, default, encoding='utf-8'):
     if attr_node is _marker:
         return default
 
-    value = attr_node.nodeValue
-
-    if six.PY2 and encoding is not None:
-        value = value.encode(encoding)
-
-    return value
+    return attr_node.nodeValue
 
 
 def _getNodeAttribute(node, attr_name, encoding='utf-8'):
@@ -1274,9 +1260,6 @@ def _coalesceTextNodeChildren(node, encoding='utf-8'):
         child = child.nextSibling
 
     joined = ''.join(fragments)
-
-    if six.PY2 and encoding is not None:
-        joined = joined.encode(encoding)
 
     return ''.join([line.lstrip()
                     for line in joined.splitlines(True)]).rstrip()

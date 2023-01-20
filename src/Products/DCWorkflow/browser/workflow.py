@@ -31,7 +31,7 @@ class DCWorkflowDefinitionAddView(AddWithPresettingsViewBase):
 
     klass = DCWorkflowDefinition
 
-    description = u'Add a web-configurable workflow.'
+    description = 'Add a web-configurable workflow.'
 
     def getProfileInfos(self):
         profiles = []

@@ -203,7 +203,7 @@ class StateDefinition(SimpleItem):
             roles = []
             acquired = REQUEST.get('acquire_' + p, 0)
             for r in self.getAvailableRoles():
-                if REQUEST.get('%s|%s' % (p, r), 0):
+                if REQUEST.get('{}|{}'.format(p, r), 0):
                     roles.append(r)
             roles.sort()
             if not acquired:
@@ -237,7 +237,7 @@ class StateDefinition(SimpleItem):
         for group in self.getWorkflow().getGroups():
             roles = []
             for role in all_roles:
-                if REQUEST.get('%s|%s' % (group, role), 0):
+                if REQUEST.get('{}|{}'.format(group, role), 0):
                     roles.append(role)
             roles.sort()
             roles = tuple(roles)

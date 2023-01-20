@@ -22,14 +22,10 @@ setup(name='Products.%s' % NAME,
       classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Plone',
-        'Framework :: Zope :: 4',
+        'Framework :: Zope :: 5',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Zope Public License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -53,10 +49,9 @@ setup(name='Products.%s' % NAME,
       include_package_data=True,
       namespace_packages=['Products'],
       zip_safe=False,
-      python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*',
+      python_requires='>=3.7',
       install_requires=[
         'setuptools',
-        'six',
         'Zope >= 4.0b4',
         'Products.CMFCore >= 2.4.0',
         'Products.ExternalMethod',
@@ -68,8 +63,8 @@ setup(name='Products.%s' % NAME,
         },
       entry_points="""
       [zope2.initialize]
-      Products.%s = Products.%s:initialize
+      Products.{} = Products.{}:initialize
       [distutils.commands]
       ftest = zope.testrunner.eggsupport:ftest
-      """ % (NAME, NAME),
+      """.format(NAME, NAME),
       )
