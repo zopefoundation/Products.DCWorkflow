@@ -13,8 +13,6 @@
 """ Unit tests for DCWorkflow module.
 """
 
-import unittest
-
 import transaction
 from AccessControl.SecurityManagement import newSecurityManager
 from zope.component import adapter
@@ -214,9 +212,3 @@ class DCWorkflowDefinitionTests(SecurityTest):
         wf.worklists.manage_main(self.REQUEST)
 
     # XXX more tests...
-
-
-def test_suite():
-    return unittest.TestSuite((
-        unittest.makeSuite(DCWorkflowDefinitionTests),
-        ))

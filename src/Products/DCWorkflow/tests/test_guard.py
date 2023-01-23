@@ -269,5 +269,5 @@ class TestGuard(unittest.TestCase):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(TestGuard),
+        unittest.defaultTestLoader.loadTestsFromTestCase(TestGuard),
         ))

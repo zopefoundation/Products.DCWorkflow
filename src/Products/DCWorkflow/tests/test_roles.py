@@ -63,5 +63,5 @@ class RoleMapTests(unittest.TestCase):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(RoleMapTests),
+        unittest.defaultTestLoader.loadTestsFromTestCase(RoleMapTests),
         ))

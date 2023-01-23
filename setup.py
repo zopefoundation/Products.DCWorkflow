@@ -16,20 +16,16 @@ README = (_package_doc('README.rst') + _boundary + _package_doc('CHANGES.txt'))
 DESC = 'DCWorkflow product for the Zope Content Management Framework'
 
 setup(name='Products.%s' % NAME,
-      version='2.7.1.dev0',
+      version='3.0.dev0',
       description=DESC,
       long_description=README,
       classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Plone',
-        'Framework :: Zope :: 4',
+        'Framework :: Zope :: 5',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Zope Public License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -53,11 +49,10 @@ setup(name='Products.%s' % NAME,
       include_package_data=True,
       namespace_packages=['Products'],
       zip_safe=False,
-      python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*',
+      python_requires='>=3.7',
       install_requires=[
         'setuptools',
-        'six',
-        'Zope >= 4.0b4',
+        'Zope >= 5.0',
         'Products.CMFCore >= 2.4.0',
         'Products.ExternalMethod',
         'Products.GenericSetup >= 2.0b1',
@@ -66,10 +61,10 @@ setup(name='Products.%s' % NAME,
       extras_require={
         'docs': ['Sphinx', 'repoze.sphinx.autointerface', 'pkginfo']
         },
-      entry_points="""
+      entry_points=f"""
       [zope2.initialize]
-      Products.%s = Products.%s:initialize
+      Products.{NAME} = Products.{NAME}:initialize
       [distutils.commands]
       ftest = zope.testrunner.eggsupport:ftest
-      """ % (NAME, NAME),
+      """,
       )

@@ -15,8 +15,6 @@
 
 import unittest
 
-import six
-
 from Products.ExternalMethod.ExternalMethod import ExternalMethod
 from Products.GenericSetup.tests.common import DummyExportContext
 from Products.GenericSetup.tests.common import DummyImportContext
@@ -110,7 +108,7 @@ class _WorkflowSetup(WorkflowSetupBase):
 
             for group_id, roles in v[4]:
                 for role in roles:
-                    faux_request['%s|%s' % (group_id, role)] = True
+                    faux_request[f'{group_id}|{role}'] = True
 
             state.setGroups(REQUEST=faux_request)
 
@@ -327,7 +325,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(type, 'int')
                 elif isinstance(value, float):
                     self.assertEqual(type, 'float')
-                elif isinstance(value, six.string_types):
+                elif isinstance(value, str):
                     self.assertEqual(type, 'string')
 
     def test_getWorkflowInfo_dcworkflow_transitions(self):
@@ -691,7 +689,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     self.assertEqual(v_info['type'], 'int')
                 elif isinstance(exp_value, float):
                     self.assertEqual(v_info['type'], 'float')
-                elif isinstance(exp_value, six.string_types):
+                elif isinstance(exp_value, str):
                     self.assertEqual(v_info['type'], 'string')
 
     def test_parseWorkflowXML_state_w_missing_acquired(self):
@@ -869,7 +867,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     exp_type = 'int'
                 elif isinstance(exp_value, float):
                     exp_type = 'float'
-                elif isinstance(exp_value, six.string_types):
+                elif isinstance(exp_value, str):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
@@ -945,7 +943,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                     exp_type = 'int'
                 elif isinstance(exp_value, float):
                     exp_type = 'float'
-                elif isinstance(exp_value, six.string_types):
+                elif isinstance(exp_value, str):
                     exp_type = 'string'
                 else:
                     exp_type = 'XXX'
@@ -3149,7 +3147,8 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(WorkflowDefinitionConfiguratorTests),
-        unittest.makeSuite(Test_exportWorkflow),
-        unittest.makeSuite(Test_importWorkflow),
+        unittest.defaultTestLoader.loadTestsFromTestCase(
+            WorkflowDefinitionConfiguratorTests),
+        unittest.defaultTestLoader.loadTestsFromTestCase(Test_exportWorkflow),
+        unittest.defaultTestLoader.loadTestsFromTestCase(Test_importWorkflow),
         ))
