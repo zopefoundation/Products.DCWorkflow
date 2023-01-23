@@ -629,7 +629,7 @@ def _getScriptFilename(workflow_id, script_id, meta_type):
     if suffix is None:
         return ''
 
-    return 'workflows/{}/scripts/{}.{}'.format(wf_dir, script_id, suffix)
+    return f'workflows/{wf_dir}/scripts/{script_id}.{suffix}'
 
 
 def _extractCreationGuard(root, encoding='utf-8'):

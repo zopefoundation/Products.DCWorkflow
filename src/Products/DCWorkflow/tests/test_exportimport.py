@@ -108,7 +108,7 @@ class _WorkflowSetup(WorkflowSetupBase):
 
             for group_id, roles in v[4]:
                 for role in roles:
-                    faux_request['{}|{}'.format(group_id, role)] = True
+                    faux_request[f'{group_id}|{role}'] = True
 
             state.setGroups(REQUEST=faux_request)
 

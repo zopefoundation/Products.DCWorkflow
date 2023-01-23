@@ -52,7 +52,7 @@ setup(name='Products.%s' % NAME,
       python_requires='>=3.7',
       install_requires=[
         'setuptools',
-        'Zope >= 4.0b4',
+        'Zope >= 5.0',
         'Products.CMFCore >= 2.4.0',
         'Products.ExternalMethod',
         'Products.GenericSetup >= 2.0b1',
@@ -61,10 +61,10 @@ setup(name='Products.%s' % NAME,
       extras_require={
         'docs': ['Sphinx', 'repoze.sphinx.autointerface', 'pkginfo']
         },
-      entry_points="""
+      entry_points=f"""
       [zope2.initialize]
-      Products.{} = Products.{}:initialize
+      Products.{NAME} = Products.{NAME}:initialize
       [distutils.commands]
       ftest = zope.testrunner.eggsupport:ftest
-      """.format(NAME, NAME),
+      """,
       )
