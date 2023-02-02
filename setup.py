@@ -12,7 +12,7 @@ def _package_doc(name):
 NAME = 'DCWorkflow'
 here = os.path.abspath(os.path.dirname(__file__))
 _boundary = '\n' + ('-' * 60) + '\n\n'
-README = (_package_doc('README.rst') + _boundary + _package_doc('CHANGES.txt'))
+README = (_package_doc('README.rst') + _boundary + _package_doc('CHANGES.rst'))
 DESC = 'DCWorkflow product for the Zope Content Management Framework'
 
 setup(name='Products.%s' % NAME,
