@@ -16,7 +16,7 @@ README = (_package_doc('README.rst') + _boundary + _package_doc('CHANGES.rst'))
 DESC = 'DCWorkflow product for the Zope Content Management Framework'
 
 setup(name='Products.%s' % NAME,
-      version='3.0.dev0',
+      version='3.0',
       description=DESC,
       long_description=README,
       classifiers=[
@@ -34,9 +34,9 @@ setup(name='Products.%s' % NAME,
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         ],
-      keywords='web application server zope zope2 cmf',
+      keywords='web application server zope cmf',
       author='Zope Foundation and Contributors',
-      author_email='zope-cmf@zope.org',
+      author_email='zope-dev@zope.dev',
       url='https://pypi.org/project/Products.DCWorkflow',
       project_urls={
         'Issue Tracker': ('https://github.com/zopefoundation/'
