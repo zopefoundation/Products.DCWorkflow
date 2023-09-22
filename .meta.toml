@@ -2,7 +2,7 @@
 # https://github.com/zopefoundation/meta/tree/master/config/zope-product
 [meta]
 template = "zope-product"
-commit-id = "297a7d23"
+commit-id = "b21fbbf2"
 
 [python]
 with-pypy = false
@@ -27,6 +27,7 @@ additional-config = [
 
 [manifest]
 additional-rules = [
+    "include *.yaml",
     "recursive-include src *.dtml",
     "recursive-include src *.gif",
     "recursive-include src *.pt",

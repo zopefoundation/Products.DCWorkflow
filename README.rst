@@ -1,3 +1,7 @@
+.. image:: https://readthedocs.org/projects/productsdcworkflow/badge/?version=latest
+    :target: https://productsdcworkflow.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 .. image:: https://github.com/zopefoundation/Products.DCWorkflow/workflows/tests/badge.svg
         :target: https://github.com/zopefoundation/Products.DCWorkflow/actions?query=workflow%3Atests
 
