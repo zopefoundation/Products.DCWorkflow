@@ -5,6 +5,8 @@ Products.DCWorkflow Changelog
 ----------------
 
 
+- Drop support for Python 3.7.
+
 3.0 (2023-02-02)
 ----------------
 
