@@ -21,6 +21,7 @@ import sys
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.append(os.path.abspath('.'))
 import Products
+
 Products.__path__.append(os.path.abspath('../Products'))
 
 # -- General configuration -----------------------------------------------------
@@ -39,7 +40,7 @@ extensions = [
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = {'.rst': 'restructuredtext'}
 
 # The encoding of source files.
 #source_encoding = 'utf-8'
@@ -101,7 +102,6 @@ pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
-
 
 # -- Options for HTML output ---------------------------------------------------
 
@@ -176,7 +176,6 @@ html_last_updated_fmt = '%b %d, %Y'
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'DCWorklfowdoc'
 
-
 # -- Options for LaTeX output --------------------------------------------------
 
 # The paper size ('letter' or 'a4').
@@ -188,8 +187,8 @@ htmlhelp_basename = 'DCWorklfowdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'DCWorkflow.tex', u'DCWorkflow Documentation',
-   u'Zope Foundation & Contributors', 'manual'),
+    ('index', 'DCWorkflow.tex', u'DCWorkflow Documentation',
+     u'Zope Foundation & Contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -209,6 +208,5 @@ latex_documents = [
 # If false, no module index is generated.
 #latex_use_modindex = True
 
-
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/2/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/', None)}
