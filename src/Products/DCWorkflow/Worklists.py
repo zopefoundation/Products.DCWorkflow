@@ -211,7 +211,7 @@ class Worklists(ContainerTab):
             REQUEST,
             management_view='Worklists',
             manage_tabs_message=manage_tabs_message,
-            )
+        )
 
     def addWorklist(self, id, REQUEST=None):
         '''

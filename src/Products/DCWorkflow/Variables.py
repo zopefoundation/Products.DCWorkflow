@@ -47,7 +47,7 @@ class VariableDefinition(SimpleItem):
 
     manage_options = (
         {'label': 'Properties', 'action': 'manage_properties'},
-        )
+    )
 
     def __init__(self, id):
         self.id = id
@@ -128,7 +128,7 @@ class Variables(ContainerTab):
             REQUEST,
             management_view='Variables',
             manage_tabs_message=manage_tabs_message,
-            )
+        )
 
     def addVariable(self, id, REQUEST=None):
         '''

@@ -121,20 +121,20 @@ def createExprContext(sci):
     wf = sci.workflow
     container = aq_parent(aq_inner(ob))
     data = {
-        'here':         ob,
-        'object':       ob,
-        'container':    container,
-        'folder':       container,
-        'nothing':      None,
-        'root':         ob.getPhysicalRoot(),
-        'request':      getattr(ob, 'REQUEST', None),
-        'modules':      SecureModuleImporter,
-        'user':         getSecurityManager().getUser(),
+        'here': ob,
+        'object': ob,
+        'container': container,
+        'folder': container,
+        'nothing': None,
+        'root': ob.getPhysicalRoot(),
+        'request': getattr(ob, 'REQUEST', None),
+        'modules': SecureModuleImporter,
+        'user': getSecurityManager().getUser(),
         'state_change': sci,
-        'transition':   sci.transition,
-        'status':       sci.status,
-        'kwargs':       sci.kwargs,
-        'workflow':     wf,
-        'scripts':      wf.scripts,
-        }
+        'transition': sci.transition,
+        'status': sci.status,
+        'kwargs': sci.kwargs,
+        'workflow': wf,
+        'scripts': wf.scripts,
+    }
     return getEngine().getContext(data)

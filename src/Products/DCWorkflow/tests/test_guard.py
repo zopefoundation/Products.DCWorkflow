@@ -70,7 +70,7 @@ class TestGuard(unittest.TestCase):
                        'guard_roles': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 0)
+        self.assertEqual(res, 0)
 
         # Test default values
         self.assertEqual(guard.getPermissionsText(), '')
@@ -82,7 +82,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
@@ -92,7 +92,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         # With one space after the ';'
         self.assertEqual(guard.getRolesText(), 'Manager; ')
         self.assertEqual(guard.getPermissionsText(), '')
@@ -103,7 +103,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         # With one space after the ';'
         self.assertEqual(guard.getRolesText(), 'Manager; Member')
         self.assertEqual(guard.getPermissionsText(), '')
@@ -114,7 +114,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         # With one space after the ';'
         self.assertEqual(guard.getRolesText(), 'Manager; Member')
         self.assertEqual(guard.getPermissionsText(), '')
@@ -125,7 +125,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), '')
         self.assertEqual(guard.getExprText(), '')
@@ -135,7 +135,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': 'ManagePortal;',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal; ')
         self.assertEqual(guard.getExprText(), '')
@@ -145,7 +145,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': 'ManagePortal',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal')
         self.assertEqual(guard.getExprText(), '')
@@ -155,7 +155,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': 'ManagePortal',
                        'guard_expr': 'python:1'}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal')
         self.assertEqual(guard.getExprText(), 'python:1')
@@ -165,7 +165,7 @@ class TestGuard(unittest.TestCase):
                        'guard_permissions': 'ManagePortal',
                        'guard_expr': 'string:'}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 1)
+        self.assertEqual(res, 1)
         self.assertEqual(guard.getRolesText(), 'Manager')
         self.assertEqual(guard.getPermissionsText(), 'ManagePortal')
         self.assertEqual(guard.getExprText(), 'string:')
@@ -186,7 +186,7 @@ class TestGuard(unittest.TestCase):
                        'guard_roles': '',
                        'guard_expr': ''}
         res = guard.changeFromProperties(guard_props)
-        self.assertTrue(res == 0)
+        self.assertEqual(res, 0)
 
         # No API on DCWorkflow guard to reset properly....
         guard.permissions = ''
@@ -270,4 +270,4 @@ class TestGuard(unittest.TestCase):
 def test_suite():
     return unittest.TestSuite((
         unittest.defaultTestLoader.loadTestsFromTestCase(TestGuard),
-        ))
+    ))
