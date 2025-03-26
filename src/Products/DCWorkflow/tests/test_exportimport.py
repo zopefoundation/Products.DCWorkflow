@@ -49,17 +49,17 @@ class _GuardChecker:
         self.assertEqual(len(info['guard_permissions']), len(permissions))
 
         for expected in permissions:
-            self.assertTrue(expected in info['guard_permissions'])
+            self.assertIn(expected, info['guard_permissions'])
 
         self.assertEqual(len(info['guard_roles']), len(roles))
 
         for expected in roles:
-            self.assertTrue(expected in info['guard_roles'])
+            self.assertIn(expected, info['guard_roles'])
 
         self.assertEqual(len(info['guard_groups']), len(groups))
 
         for expected in groups:
-            self.assertTrue(expected in info['guard_groups'])
+            self.assertIn(expected, info['guard_groups'])
 
         self.assertEqual(info['guard_expr'], expr)
 
@@ -223,7 +223,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
         self.assertEqual(len(permissions), len(_WF_PERMISSIONS))
 
         for permission in _WF_PERMISSIONS:
-            self.assertTrue(permission in permissions)
+            self.assertIn(permission, permissions)
 
     def test_getWorkflowInfo_dcworkflow_variables(self):
         WF_ID = 'dcworkflow_variables'
@@ -241,7 +241,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
         ids = [x['id'] for x in variable_info]
 
         for k in _WF_VARIABLES.keys():
-            self.assertTrue(k in ids)
+            self.assertIn(k, ids)
 
         for info in variable_info:
 
@@ -277,7 +277,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
         ids = [x['id'] for x in state_info]
 
         for k in _WF_STATES.keys():
-            self.assertTrue(k in ids)
+            self.assertIn(k, ids)
 
         for info in state_info:
 
@@ -301,7 +301,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                 self.assertEqual(len(fp['roles']), len(ep_roles))
 
                 for ep_role in ep_roles:
-                    self.assertTrue(ep_role in fp['roles'])
+                    self.assertIn(ep_role, fp['roles'])
 
             groups = info['groups']
             self.assertEqual(len(groups), len(expected[4]))
@@ -346,7 +346,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
         ids = [x['id'] for x in transition_info]
 
         for k in _WF_TRANSITIONS.keys():
-            self.assertTrue(k in ids)
+            self.assertIn(k, ids)
 
         for info in transition_info:
 
@@ -387,7 +387,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
         ids = [x['id'] for x in worklist_info]
 
         for k in _WF_WORKLISTS.keys():
-            self.assertTrue(k in ids)
+            self.assertIn(k, ids)
 
         for info in worklist_info:
 
@@ -410,7 +410,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
                 self.assertEqual(len(values), len(e_values))
 
                 for e_value in e_values:
-                    self.assertTrue(e_value in values)
+                    self.assertIn(e_value, values)
 
             self._assertGuard(info, *expected[-4:])
 
@@ -430,7 +430,7 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
         ids = [x['id'] for x in script_info]
 
         for k in _WF_SCRIPTS.keys():
-            self.assertTrue(k in ids)
+            self.assertIn(k, ids)
 
         for info in script_info:
 
@@ -615,12 +615,12 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(workflow_id, WF_ID)
         self.assertEqual(title, WF_TITLE)
@@ -653,26 +653,26 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(states), len(_WF_STATES))
 
         for state in states:
 
             state_id = state['state_id']
-            self.assertTrue(state_id in _WF_STATES)
+            self.assertIn(state_id, _WF_STATES)
 
             expected = _WF_STATES[state_id]
 
             self.assertEqual(state['title'], expected[0])
 
             description = ''.join(state['description'])
-            self.assertTrue(expected[1] in description)
+            self.assertIn(expected[1], description)
 
             self.assertEqual(tuple(state['transitions']), expected[2])
             self.assertEqual(state['permissions'], expected[3])
@@ -717,26 +717,26 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _WORKFLOW_EXPORT_WO_ACQUIRED
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _WORKFLOW_EXPORT_WO_ACQUIRED
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(states), len(_WF_STATES_MISSING_ACQUIRED))
 
         for state in states:
 
             state_id = state['state_id']
-            self.assertTrue(state_id in _WF_STATES_MISSING_ACQUIRED)
+            self.assertIn(state_id, _WF_STATES_MISSING_ACQUIRED)
 
             expected = _WF_STATES_MISSING_ACQUIRED[state_id]
 
             self.assertEqual(state['title'], expected[0])
 
             description = ''.join(state['description'])
-            self.assertTrue(expected[1] in description)
+            self.assertIn(expected[1], description)
 
             self.assertEqual(tuple(state['transitions']), expected[2])
             self.assertEqual(state['permissions'], expected[3])
@@ -769,26 +769,26 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(transitions), len(_WF_TRANSITIONS))
 
         for transition in transitions:
 
             transition_id = transition['transition_id']
-            self.assertTrue(transition_id in _WF_TRANSITIONS)
+            self.assertIn(transition_id, _WF_TRANSITIONS)
 
             expected = _WF_TRANSITIONS[transition_id]
 
             self.assertEqual(transition['title'], expected[0])
 
             description = ''.join(transition['description'])
-            self.assertTrue(expected[1] in description)
+            self.assertIn(expected[1], description)
 
             self.assertEqual(transition['new_state'], expected[2])
             self.assertEqual(transition['trigger'], TRIGGER_TYPES[expected[3]])
@@ -834,24 +834,24 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(variables), len(_WF_VARIABLES))
 
         for variable in variables:
 
             variable_id = variable['variable_id']
-            self.assertTrue(variable_id in _WF_VARIABLES)
+            self.assertIn(variable_id, _WF_VARIABLES)
 
             expected = _WF_VARIABLES[variable_id]
 
             description = ''.join(variable['description'])
-            self.assertTrue(expected[0] in description)
+            self.assertIn(expected[0], description)
 
             default = variable['default']
             self.assertEqual(default['value'], expected[1])
@@ -910,24 +910,24 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _WORKFLOW_EXPORT_W_MISSING_VARIABLE_ATTRS
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _WORKFLOW_EXPORT_W_MISSING_VARIABLE_ATTRS
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(variables), len(_WF_VARIABLES_MISSING_ATTRS))
 
         for variable in variables:
 
             variable_id = variable['variable_id']
-            self.assertTrue(variable_id in _WF_VARIABLES_MISSING_ATTRS)
+            self.assertIn(variable_id, _WF_VARIABLES_MISSING_ATTRS)
 
             expected = _WF_VARIABLES_MISSING_ATTRS[variable_id]
 
             description = ''.join(variable['description'])
-            self.assertTrue(expected[0] in description)
+            self.assertIn(expected[0], description)
 
             default = variable['default']
             self.assertEqual(default['value'], expected[1])
@@ -986,25 +986,25 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(worklists), len(_WF_WORKLISTS))
 
         for worklist in worklists:
             worklist_id = worklist['worklist_id']
-            self.assertTrue(worklist_id in _WF_WORKLISTS)
+            self.assertIn(worklist_id, _WF_WORKLISTS)
 
             expected = _WF_WORKLISTS[worklist_id]
 
             self.assertEqual(worklist['title'], expected[0])
 
             description = ''.join(worklist['description'])
-            self.assertTrue(expected[1] in description)
+            self.assertIn(expected[1], description)
             self.assertEqual(tuple(worklist['match']), tuple(expected[2]))
 
             action = worklist['action']
@@ -1044,17 +1044,17 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(permissions), len(_WF_PERMISSIONS))
 
         for permission in permissions:
-            self.assertTrue(permission in _WF_PERMISSIONS)
+            self.assertIn(permission, _WF_PERMISSIONS)
 
     def test_parseWorkflowXML_normal_groups(self):
         WF_ID = 'normal'
@@ -1081,12 +1081,12 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(set(groups), set(_WF_GROUPS))
 
@@ -1115,18 +1115,18 @@ class WorkflowDefinitionConfiguratorTests(_WorkflowSetup, _GuardChecker):
          _manager_bypass,
          _creation_guard
          ) = configurator.parseWorkflowXML(
-                          _NORMAL_WORKFLOW_EXPORT
-                          % {'workflow_id': WF_ID,
-                             'title': WF_TITLE,
-                             'description': WF_DESCRIPTION,
-                             'initial_state': WF_INITIAL_STATE,
-                             'workflow_filename': WF_ID.replace(' ', '_')})
+            _NORMAL_WORKFLOW_EXPORT
+            % {'workflow_id': WF_ID,
+               'title': WF_TITLE,
+               'description': WF_DESCRIPTION,
+               'initial_state': WF_INITIAL_STATE,
+               'workflow_filename': WF_ID.replace(' ', '_')})
 
         self.assertEqual(len(scripts), len(_WF_SCRIPTS))
 
         for script in scripts:
             script_id = script['script_id']
-            self.assertTrue(script_id in _WF_SCRIPTS)
+            self.assertIn(script_id, _WF_SCRIPTS)
 
             expected = _WF_SCRIPTS[script_id]
 
@@ -2888,7 +2888,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         self.assertEqual(len(permissions), len(_WF_PERMISSIONS))
 
         for permission in permissions:
-            self.assertTrue(permission in _WF_PERMISSIONS)
+            self.assertIn(permission, _WF_PERMISSIONS)
 
     def test_from_empty_dcworkflow_workflow_variables(self):
         WF_ID = 'dcworkflow_variables'
@@ -2908,7 +2908,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         for id, variable in variables.objectItems():
 
             expected = _WF_VARIABLES[variable.getId()]
-            self.assertTrue(expected[0] in variable.description)
+            self.assertIn(expected[0], variable.description)
             self.assertEqual(variable.default_value, expected[1])
             self.assertEqual(variable.getDefaultExprText(), expected[2])
             self.assertEqual(variable.for_catalog, expected[3])
@@ -2940,12 +2940,12 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         for id, state in states.objectItems():
             expected = _WF_STATES[state.getId()]
             self.assertEqual(state.title, expected[0])
-            self.assertTrue(expected[1] in state.description)
+            self.assertIn(expected[1], state.description)
 
             self.assertEqual(len(state.transitions), len(expected[2]))
 
             for transition_id in state.transitions:
-                self.assertTrue(transition_id in expected[2])
+                self.assertIn(transition_id, expected[2])
 
             for permission in state.getManagedPermissions():
                 p_info = state.getPermissionInfo(permission)
@@ -2957,7 +2957,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
                 self.assertEqual(len(p_info['roles']), len(p_expected))
 
                 for role in p_info['roles']:
-                    self.assertFalse(role not in p_expected)
+                    self.assertIn(role, p_expected)
 
             group_roles = state.group_roles or {}
             self.assertEqual(len(group_roles), len(expected[4]))
@@ -2966,7 +2966,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
                 self.assertEqual(len(state.getGroupInfo(group_id)),
                                  len(exp_roles))
                 for role in state.getGroupInfo(group_id):
-                    self.assertTrue(role in exp_roles)
+                    self.assertIn(role, exp_roles)
 
             self.assertEqual(len(state.getVariableValues()), len(expected[5]))
 
@@ -2991,7 +2991,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
         for id, transition in transitions.objectItems():
             expected = _WF_TRANSITIONS[transition.getId()]
             self.assertEqual(transition.title, expected[0])
-            self.assertTrue(expected[1] in transition.description)
+            self.assertIn(expected[1], transition.description)
             self.assertEqual(transition.new_state_id, expected[2])
             self.assertEqual(transition.trigger_type, expected[3])
             self.assertEqual(transition.script_name, expected[4])
@@ -3032,7 +3032,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
 
         for id, worklist in worklists.objectItems():
             expected = _WF_WORKLISTS[worklist.getId()]
-            self.assertTrue(expected[1] in worklist.description)
+            self.assertIn(expected[1], worklist.description)
 
             var_matches = worklist.var_matches
 
@@ -3043,7 +3043,7 @@ class Test_importWorkflow(_WorkflowSetup, _GuardChecker):
                 self.assertEqual(len(values), len(exp_values))
 
                 for value in values:
-                    self.assertTrue(value in exp_values, values)
+                    self.assertIn(value, exp_values, values)
 
             self.assertEqual(worklist.actbox_name, expected[3])
             self.assertEqual(worklist.actbox_url, expected[4])
@@ -3151,4 +3151,4 @@ def test_suite():
             WorkflowDefinitionConfiguratorTests),
         unittest.defaultTestLoader.loadTestsFromTestCase(Test_exportWorkflow),
         unittest.defaultTestLoader.loadTestsFromTestCase(Test_importWorkflow),
-        ))
+    ))

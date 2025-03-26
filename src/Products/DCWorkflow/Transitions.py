@@ -241,7 +241,7 @@ class Transitions(ContainerTab):
             REQUEST,
             management_view='Transitions',
             manage_tabs_message=manage_tabs_message,
-            )
+        )
 
     def addTransition(self, id, REQUEST=None):
         '''

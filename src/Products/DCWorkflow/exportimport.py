@@ -652,7 +652,7 @@ def _extractStateNodes(root, encoding='utf-8'):
 
         info['transitions'] = [_getNodeAttribute(x, 'transition_id', encoding)
                                for x in s_node.getElementsByTagName(
-                                                           'exit-transition')]
+            'exit-transition')]
 
         info['permissions'] = permission_map = {}
 
@@ -850,12 +850,12 @@ def _extractGuardNode(parent, encoding='utf-8'):
 
     return {'permissions': [_coalesceTextNodeChildren(x, encoding)
                             for x in node.getElementsByTagName(
-                                                         'guard-permission')],
-            'roles': [_coalesceTextNodeChildren(x, encoding)
-                      for x in node.getElementsByTagName('guard-role')],
-            'groups': [_coalesceTextNodeChildren(x, encoding)
-                       for x in node.getElementsByTagName('guard-group')],
-            'expression': expr_text}
+        'guard-permission')],
+        'roles': [_coalesceTextNodeChildren(x, encoding)
+                  for x in node.getElementsByTagName('guard-role')],
+        'groups': [_coalesceTextNodeChildren(x, encoding)
+                   for x in node.getElementsByTagName('guard-group')],
+        'expression': expr_text}
 
 
 def _extractDefaultNode(parent, encoding='utf-8'):
