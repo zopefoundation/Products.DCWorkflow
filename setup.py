@@ -1,6 +1,5 @@
 import os
 
-from setuptools import find_packages
 from setuptools import setup
 
 
@@ -26,11 +25,11 @@ setup(name='Products.%s' % NAME,
           'Intended Audience :: Developers',
           'License :: OSI Approved :: Zope Public License',
           'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.9',
           'Programming Language :: Python :: 3.10',
           'Programming Language :: Python :: 3.11',
           'Programming Language :: Python :: 3.12',
           'Programming Language :: Python :: 3.13',
+          'Programming Language :: Python :: 3.14',
           'Topic :: Software Development',
           'Topic :: Software Development :: Libraries'
           ' :: Application Frameworks',
@@ -45,14 +44,8 @@ setup(name='Products.%s' % NAME,
           'Sources': 'https://github.com/zopefoundation/Products.DCWorkflow',
       },
       license='ZPL-2.1',
-      packages=find_packages('src'),
-      package_dir={'': 'src'},
-      include_package_data=True,
-      namespace_packages=['Products'],
-      zip_safe=False,
-      python_requires='>=3.9',
+      python_requires='>=3.10',
       install_requires=[
-          'setuptools',
           'Zope >= 5.0',
           'Products.CMFCore >= 2.4.0',
           'Products.ExternalMethod',
@@ -60,7 +53,7 @@ setup(name='Products.%s' % NAME,
           'Products.PythonScripts',
       ],
       extras_require={
-          'docs': ['Sphinx', 'repoze.sphinx.autointerface', 'pkginfo']
+          'docs': ['Sphinx', 'repoze.sphinx.autointerface', 'furo']
       },
       entry_points=f"""
       [zope2.initialize]

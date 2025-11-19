@@ -4,13 +4,12 @@ Products.DCWorkflow Changelog
 3.1 (unreleased)
 ----------------
 
-- Add support for Python 3.13.
+- Switch to PEP 420 native namespace.
 
-- Drop support for Python 3.8.
+- Add support for Python 3.12, 3.13 and 3.14.
 
-- Add support for Python 3.12.
+- Drop support for Python 3.7, 3.8 and 3.9.
 
-- Drop support for Python 3.7.
 
 3.0 (2023-02-02)
 ----------------
