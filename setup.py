@@ -15,7 +15,7 @@ README = (_package_doc('README.rst') + _boundary + _package_doc('CHANGES.rst'))
 DESC = 'DCWorkflow product for the Zope Content Management Framework'
 
 setup(name='Products.%s' % NAME,
-      version='3.1.dev0',
+      version='4.0',
       description=DESC,
       long_description=README,
       classifiers=[
@@ -55,6 +55,7 @@ setup(name='Products.%s' % NAME,
       extras_require={
           'docs': ['Sphinx', 'repoze.sphinx.autointerface', 'furo']
       },
+      include_package_data=True,
       entry_points=f"""
       [zope2.initialize]
       Products.{NAME} = Products.{NAME}:initialize
