@@ -53,7 +53,7 @@
 <p>
   <b>Note:</b> Renaming a transition will not automatically update all
   items in the workflow affected by it. You will need to fix them manually.
-</p> 
+</p>
 <input type="submit" name="manage_renameForm:method" value="Rename" />
 <input type="submit" name="deleteTransitions:method" value="Delete" />
 </dtml-if>

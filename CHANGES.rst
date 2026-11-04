@@ -4,6 +4,10 @@ Products.DCWorkflow Changelog
 4.1 (unreleased)
 ----------------
 
+- Add support for Python 3.15.
+
+- Drop support for Python 3.10.
+
 - Move package metadata from setup.py to pyproject.toml.
 
 

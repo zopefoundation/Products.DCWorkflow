@@ -16,4 +16,3 @@ browser Package
     :members:
     :undoc-members:
     :show-inheritance:
-

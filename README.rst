@@ -19,5 +19,5 @@
 Products.DCWorkflow
 ===================
 
-This product provides fully customizable workflows for the CMF 
+This product provides fully customizable workflows for the CMF
 portal_workflow tool.
